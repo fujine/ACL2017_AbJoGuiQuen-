@@ -20,7 +20,6 @@ class JeuTest {
     @Test
     void evolve() {
         Jeu j = new Jeu();
-
         // test déplacement sans collision
         j.evolve("b");
         assertEquals(2,j.getHero().getPosY(), "Erreur deplacement bas");
