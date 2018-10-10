@@ -7,7 +7,7 @@ public class Jeu {
 
     public Jeu(){
         this.hero = new Hero();
-        this.fini = true;
+        this.fini = false;
     }
 
     public void evolve(String cmd){
@@ -31,7 +31,7 @@ public class Jeu {
 
     }
 
-    public void isFinished(){
+    public boolean isFinished(){
         return this.fini;
     }
 
