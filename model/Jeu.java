@@ -2,14 +2,12 @@ package ACL2018_AbJoGuiQuen.model;
 
 public class Jeu {
 
-    private boolean fini;
-    private Hero hero;
+    private boolean fini = false;
+    private Hero hero = new Hero();
 
-    public Jeu(){
-        this.hero = new Hero();
-        this.fini = false;
-    }
-
+    /**
+     * @param cmd Input de l'utilisateur
+     */
     public void evolve(String cmd){
         switch (cmd){
             case "h" :
@@ -31,13 +29,17 @@ public class Jeu {
 
     }
 
+    /**
+     * @return true si partie terminée, false sinon
+     */
     public boolean isFinished(){
         return this.fini;
     }
 
+    /**
+     * @return Le hero lié au jeu
+     */
     public Hero getHero(){
         return this.hero;
     }
-
-
 }

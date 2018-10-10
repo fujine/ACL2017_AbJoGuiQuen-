@@ -1,0 +1,41 @@
+@startuml
+	Class Hero {
+		private posX : int
+		private posY : int
+		private plateau : Plateau
+
+		public Hero()
+		public deplacementHaut() : void
+		public deplacementBas() : void
+		public deplacementGauche() : void
+		public deplacementDroit() : void
+		public getPlateau() : Plateau
+		public getPosX() : int
+		public getPosY() : int
+		public setPlateau() : void
+        public setPosX(int posX) : void
+        public setPosY(int posY) : void
+	}
+	Class Plateau {
+        private plateau : boolean[][]
+        public static HAUTEUR : int
+        public static LARGEUR : int
+
+        public Plateau()
+        estLibre(int posX, int posY) : boolean
+        affichageText() : void
+
+	}
+	Class Jeu {
+        private fini : boolean
+        private hero : Hero
+
+        public Jeu()
+        public isFinished() : boolean
+        public getHero() : Hero
+        public setHero(Hero hero) : void
+	}
+
+	Jeu -down- "1" Hero
+	Hero -right- "1" Plateau
+@enduml
