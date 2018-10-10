@@ -8,9 +8,10 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class JeuTest {
+    private Jeu j = new Jeu();
+
     @BeforeEach
     void setUp() {
-
     }
 
     @AfterEach
@@ -19,7 +20,6 @@ class JeuTest {
 
     @Test
     void evolve() {
-        Jeu j = new Jeu();
 
         // test déplacement sans collision
         j.evolve("b");
