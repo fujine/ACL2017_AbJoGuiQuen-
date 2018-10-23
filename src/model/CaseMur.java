@@ -9,7 +9,6 @@ public class CaseMur  implements Case{
 
     @Override
     public void appliquerEffet() {
-
     }
 
 }

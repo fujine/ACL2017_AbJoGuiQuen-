@@ -35,37 +35,40 @@
         public getHero() : Hero
         public setHero(Hero hero) : void
         public setFini(boolean fini) : void
+        public estMort() : void
+        public appliquerDegat(int nbDegats) : void
 	}
 
-	Interface Case {
+	Interface ICase {
 	    public estTraversable() : boolean
-	    public appliquerEffet() : boolean
+	}
+
+	Interface Objet {
+	    public appliquerEffet() : void
 	}
 
 	Class CaseMur {
 	    public estTraversable() : boolean
-	    public appliquerEffet() : boolean
 	}
 
-	Class CaseTresor {
+	Class ObjetTresor {
+	    public appliquerEffet() : void
+	}
+
+	Class Case {
 	    public estTraversable() : boolean
-	    public appliquerEffet() : boolean
 	}
 
-	Class CaseVide {
-	    public estTraversable() : boolean
-	    public appliquerEffet() : boolean
+	Class ObjetPiege {
+	    public appliquerEffet() : void
 	}
 
-	Class CasePiege {
-	    public estTraversable() : boolean
-        public appliquerEffet() : boolean
-	}
-
-    Case <.. CaseVide
-    Case <.. CaseMur
-    Case <.. CaseTresor
-    Plateau -- "*" Case
+    Objet <.. ObjetPiege
+    ICase <.. Case
+    ICase <.. CaseMur
+    Objet <.. ObjetTresor
+    Case -- "1" Objet
+    Plateau -- "*" ICase
 	Jeu "1" -down- "1" Hero
 	Jeu -right- "1" Plateau
 @enduml
