@@ -2,9 +2,18 @@ package model;
 
 public class Jeu {
 
+    private static Jeu instance;
     private boolean fini = false;
     private Hero hero = new Hero(this);
     private Plateau plateau = new Plateau();
+
+    private Jeu() {};
+
+    public static Jeu getInstance() {
+        if(instance == null)
+            instance = new Jeu();
+        return instance;
+    }
 
     /**
      * @param cmd Input de l'utilisateur
