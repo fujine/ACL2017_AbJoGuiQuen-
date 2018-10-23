@@ -74,4 +74,8 @@ public class Jeu {
     public void estMort() {
         fini = true;
     }
+
+    public void appliquerDegats(int nbDegats) {
+        hero.subirDegat(nbDegats);
+    }
 }

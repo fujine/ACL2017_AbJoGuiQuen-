@@ -3,7 +3,7 @@ package model;
 public class Hero {
     private int posX = 1;
     private int posY = 1;
-    private int pdv = 10;
+    private int pdv = 4;
 
     private Jeu jeu;
 
@@ -50,8 +50,10 @@ public class Hero {
 
     public void subirDegat(int nbDegats) {
         this.pdv = pdv - nbDegats;
+        System.out.println("aie");
         if (pdv <= 0 ){
             jeu.estMort();
+            System.out.println("je suis mort");
         }
     }
 

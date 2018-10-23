@@ -25,6 +25,7 @@ public class Plateau {
             }
         }
         plateau[1][3] = new CaseTresor();
+        plateau[3][1] = new CasePiege();
     }
 
     /**
