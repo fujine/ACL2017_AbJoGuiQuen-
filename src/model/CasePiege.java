@@ -1,14 +1,16 @@
 package model;
 
-public class CaseMur  implements ICase {
+public class CasePiege implements ICase {
+
 
     @Override
     public boolean estTraversable() {
-        return false;
+        return true;
     }
 
     @Override
     public void appliquerEffet() {
+        Jeu.getInstance().appliquerDegats(2);
     }
 
 }

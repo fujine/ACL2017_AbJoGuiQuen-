@@ -70,4 +70,12 @@ public class Jeu {
     public Hero getHero(){
         return this.hero;
     }
+
+    public void estMort() {
+        fini = true;
+    }
+
+    public void appliquerDegats(int nbDegats) {
+        hero.subirDegat(nbDegats);
+    }
 }
