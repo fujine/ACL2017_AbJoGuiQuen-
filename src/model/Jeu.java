@@ -70,4 +70,8 @@ public class Jeu {
     public Hero getHero(){
         return this.hero;
     }
+
+    public void estMort() {
+        fini = true;
+    }
 }

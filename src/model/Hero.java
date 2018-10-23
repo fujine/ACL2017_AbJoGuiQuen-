@@ -3,6 +3,7 @@ package model;
 public class Hero {
     private int posX = 1;
     private int posY = 1;
+    private int pdv = 10;
 
     private Jeu jeu;
 
@@ -42,4 +43,20 @@ public class Hero {
     public void setPosY(int posY) {
         this.posY = posY;
     }
+
+    public int getPdv() {
+        return pdv;
+    }
+
+    public void subirDegat(int nbDegats) {
+        this.pdv = pdv - nbDegats;
+        if (pdv <= 0 ){
+            jeu.estMort();
+        }
+    }
+
+    public boolean estVivant() {
+        return this.pdv <= 0;
+    }
+
 }
