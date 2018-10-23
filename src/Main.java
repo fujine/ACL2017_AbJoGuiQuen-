@@ -9,7 +9,7 @@ public class Main {
         Scanner sc = new Scanner(System.in);
 
         //initialisation du jeu
-        Jeu j = new Jeu();
+        Jeu j = Jeu.getInstance();
 
         //Boucle de jeu
         while (!j.isFinished()) {

@@ -2,10 +2,11 @@
 	Class Hero {
 		private posX : int
 		private posY : int
-		private plateau : Plateau
+		private jeu : Jeu
 
 		public Hero()
 		public deplacer(int x, int y) : void
+		public subirDegat(int nbDegats) : void
 		public getPosX() : int
 		public getPosY() : int
         public setPosX(int posX) : void
@@ -33,6 +34,7 @@
         public getPlateau() : Plateau
         public getHero() : Hero
         public setHero(Hero hero) : void
+        public setFini(boolean fini) : void
 	}
 
 	Interface Case {
@@ -53,6 +55,11 @@
 	Class CaseVide {
 	    public estTraversable() : boolean
 	    public appliquerEffet() : boolean
+	}
+
+	Class CasePiege {
+	    public estTraversable() : boolean
+        public appliquerEffet() : boolean
 	}
 
     Case <.. CaseVide

@@ -24,6 +24,7 @@ public class Plateau {
                 }
             }
         }
+        plateau[1][3] = new CaseTresor();
     }
 
     /**
@@ -34,6 +35,10 @@ public class Plateau {
      */
     public boolean estLibre(int posx, int posy) {
         return plateau[posx][posy].estTraversable();
+    }
+
+    public void appliquerEffetCase(int posx, int posy) {
+        plateau[posx][posy].appliquerEffet();
     }
 
     /**

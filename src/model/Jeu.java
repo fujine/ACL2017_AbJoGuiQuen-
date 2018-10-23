@@ -38,9 +38,19 @@ public class Jeu {
                 this.fini = true;
                 break;
         }
-        if(plateau.estLibre(x,y))
-            hero.deplacer(x,y);
+        if(plateau.estLibre(x,y)) {
+            hero.deplacer(x, y);
+            plateau.appliquerEffetCase(x,y);
+        }
 
+    }
+
+    public boolean isFini() {
+        return fini;
+    }
+
+    public void setFini(boolean fini) {
+        this.fini = fini;
     }
 
     public Plateau getPlateau() {
