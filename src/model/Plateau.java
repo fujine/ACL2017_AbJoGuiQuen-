@@ -20,12 +20,12 @@ public class Plateau {
                     if(j == 0 || j == LARGEUR-1)
                         plateau[i][j] = new CaseMur();
                     else
-                        plateau[i][j] = new CaseVide();
+                        plateau[i][j] = new Case();
                 }
             }
         }
-        plateau[1][3] = new CaseTresor();
-        plateau[3][1] = new CasePiege();
+        plateau[1][3] = new Case(new ObjetTresor());
+        plateau[3][1] = new Case(new ObjetPiege());
     }
 
     /**

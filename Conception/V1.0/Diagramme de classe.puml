@@ -23,7 +23,7 @@
         affichageText() : void
 
 	}
-	Class Jeu {
+	Class Jeu <<Singleton>>{
 	    private static instance : Jeu
         private fini : boolean
         private hero : Hero
@@ -41,14 +41,16 @@
 
 	Interface ICase {
 	    public estTraversable() : boolean
+	    public appliquerEffet() : void
 	}
 
-	Interface Objet {
+	Interface Objet <<Strategie>>{
 	    public appliquerEffet() : void
 	}
 
 	Class CaseMur {
 	    public estTraversable() : boolean
+	    public appliquerEffet() : void
 	}
 
 	Class ObjetTresor {
@@ -56,7 +58,9 @@
 	}
 
 	Class Case {
+	    public objet : Objet
 	    public estTraversable() : boolean
+	    public appliquerEffet() : void
 	}
 
 	Class ObjetPiege {
