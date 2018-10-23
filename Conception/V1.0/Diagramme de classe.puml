@@ -5,14 +5,9 @@
 		private plateau : Plateau
 
 		public Hero()
-		public deplacementHaut() : void
-		public deplacementBas() : void
-		public deplacementGauche() : void
-		public deplacementDroit() : void
-		public getPlateau() : Plateau
+		public deplacer(int x, int y) : void
 		public getPosX() : int
 		public getPosY() : int
-		public setPlateau() : void
         public setPosX(int posX) : void
         public setPosY(int posY) : void
 	}
@@ -32,10 +27,12 @@
 
         public Jeu()
         public isFinished() : boolean
+        public getPlateau() : Plateau
         public getHero() : Hero
         public setHero(Hero hero) : void
 	}
+	
 
-	Jeu -down- "1" Hero
-	Hero -right- "1" Plateau
+	Jeu "1" -down- "1" Hero
+	Jeu -right- "1" Plateau
 @enduml

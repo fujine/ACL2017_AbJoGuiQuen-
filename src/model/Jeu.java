@@ -1,32 +1,41 @@
-package ACL2018_AbJoGuiQuen.model;
+package model;
 
 public class Jeu {
 
     private boolean fini = false;
-    private Hero hero = new Hero();
+    private Hero hero = new Hero(this);
+    private Plateau plateau = new Plateau();
 
     /**
      * @param cmd Input de l'utilisateur
      */
     public void evolve(String cmd){
+        int x = hero.getPosX();
+        int y = hero.getPosY();
         switch (cmd){
             case "h" :
-                this.hero.deplacementHaut();
+                y--;
                 break;
             case "b" :
-                this.hero.deplacementBas();
+                y++;
                 break;
             case "g" :
-                this.hero.deplacementGauche();
+                x--;
                 break;
             case "d" :
-                this.hero.deplacementDroit();
+                x++;
                 break;
             case "f" :
                 this.fini = true;
                 break;
         }
+        if(plateau.estLibre(x,y))
+            hero.deplacer(x,y);
 
+    }
+
+    public Plateau getPlateau() {
+        return plateau;
     }
 
     /**

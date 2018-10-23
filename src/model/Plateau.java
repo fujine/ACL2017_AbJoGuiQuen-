@@ -1,4 +1,4 @@
-package ACL2018_AbJoGuiQuen.model;
+package model;
 
 public class Plateau {
     private boolean plateau[][];

@@ -1,6 +1,5 @@
-package ACL2018_AbJoGuiQuen.test;
 
-import ACL2018_AbJoGuiQuen.model.Jeu;
+import model.Jeu;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -60,7 +59,7 @@ class JeuTest {
     // TEST  collisions
     @Test
     void evolve_droite_colision() {
-        for (int i = j.getHero().getPosX(); i < j.getHero().getPlateau().LARGEUR-1 ; i++){
+        for (int i = j.getHero().getPosX(); i < j.getPlateau().LARGEUR-1 ; i++){
             j.evolve("d");
         }
         j.evolve("d");
@@ -69,7 +68,7 @@ class JeuTest {
 
     @Test
     void evolve_bas_colision() {
-        for (int i = j.getHero().getPosY(); i < j.getHero().getPlateau().LARGEUR-1 ; i++){
+        for (int i = j.getHero().getPosY(); i < j.getPlateau().LARGEUR-1 ; i++){
             j.evolve("b");
         }
         j.evolve("d");

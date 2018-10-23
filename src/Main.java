@@ -1,6 +1,4 @@
-package ACL2018_AbJoGuiQuen;
-
-import ACL2018_AbJoGuiQuen.model.Jeu;
+import model.*;
 
 import java.util.Scanner;
 
