@@ -1,6 +1,6 @@
 package model;
 
-public interface Case {
+public interface ICase {
 
     boolean estTraversable();
     void appliquerEffet();

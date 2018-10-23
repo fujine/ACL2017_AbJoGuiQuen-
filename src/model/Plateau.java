@@ -1,7 +1,7 @@
 package model;
 
 public class Plateau {
-    private Case plateau[][];
+    private ICase plateau[][];
     public static int HAUTEUR = 10;
     public static int LARGEUR = 10;
 
@@ -9,7 +9,7 @@ public class Plateau {
      * Constructeur par défaut avec mur sur les bordures
      */
     public Plateau() {
-        plateau = new Case[HAUTEUR][LARGEUR];
+        plateau = new ICase[HAUTEUR][LARGEUR];
 
         //Génère un tableau avec un mur sur les 4 bordures
         for(int i = 0; i < HAUTEUR; i++) {

@@ -1,6 +1,6 @@
 package model;
 
-public class CasePiege implements Case {
+public class CasePiege implements ICase {
 
 
     @Override

@@ -1,6 +1,6 @@
 package model;
 
-public class CaseMur  implements Case{
+public class CaseMur  implements ICase {
 
     @Override
     public boolean estTraversable() {

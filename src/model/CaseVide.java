@@ -1,6 +1,6 @@
 package model;
 
-public class CaseVide implements Case {
+public class CaseVide implements ICase {
 
 
     @Override
