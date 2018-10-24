@@ -1,26 +1,25 @@
+import controller.Controller;
 import model.*;
+import engine.GameEngineGraphical;
+import vue.Painter;
 
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
 
         //Permet de récuper l'entrée de l'utilisateur
         Scanner sc = new Scanner(System.in);
 
         //initialisation du jeu
         Jeu j = Jeu.getInstance();
+        Painter painter = new Painter(j);
+        Controller controller = new Controller();
 
-        //Boucle de jeu
-        while (!j.isFinished()) {
-            System.out.println("Choisir une action: (h,b,g,d,f)");
-            String cmd = sc.next();
-            j.evolve(cmd);
-            System.out.println();
-            System.out.println("Hero(" + j.getHero().getPosX() + "," + j.getHero().getPosY() + ")");
-        }
+        GameEngineGraphical engine = new GameEngineGraphical(j,painter,controller);
+        engine.run();
 
-        System.out.println("Fin du jeu!");
+        System.out.println("Partie finie!");
 
         //Libération du Scanner
         sc.close();

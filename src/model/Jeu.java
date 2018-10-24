@@ -1,8 +1,10 @@
 package model;
 
+import engine.Cmd;
+import engine.Game;
 import model.plateau.Plateau;
 
-public class Jeu {
+public class Jeu implements Game {
 
     private static Jeu instance;
     private boolean fini = false;
@@ -20,27 +22,27 @@ public class Jeu {
     /**
      * @param cmd Input de l'utilisateur
      */
-    public void evolve(String cmd){
+    public void evolve(Cmd cmd){
         int x = hero.getPosX();
         int y = hero.getPosY();
         switch (cmd){
-            case "h" :
+            case UP :
                 y--;
                 break;
-            case "b" :
+            case DOWN :
                 y++;
                 break;
-            case "g" :
+            case LEFT:
                 x--;
                 break;
-            case "d" :
+            case RIGHT:
                 x++;
                 break;
-            case "f" :
+            case END:
                 this.fini = true;
                 break;
         }
-        if(plateau.estLibre(x,y)) {
+        if(cmd != Cmd.IDLE && plateau.estLibre(x,y)) {
             hero.deplacer(x, y);
             plateau.appliquerEffetCase(x,y);
         }
@@ -58,6 +60,8 @@ public class Jeu {
     public Plateau getPlateau() {
         return plateau;
     }
+
+    @Override
 
     /**
      * @return true si partie terminée, false sinon

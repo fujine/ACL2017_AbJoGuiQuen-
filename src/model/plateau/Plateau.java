@@ -19,17 +19,18 @@ public class Plateau {
         for(int i = 0; i < HAUTEUR; i++) {
             for(int j = 0; j < LARGEUR; j++) {
                 if(i == 0 || i == HAUTEUR - 1)
-                    plateau[i][j] = CaseFactory.creerCase(CaseFactory.MUR);
+                    plateau[i][j] = CaseFactory.creerCase(ECase.MUR);
                 else {
                     if(j == 0 || j == LARGEUR-1)
-                        plateau[i][j] = CaseFactory.creerCase(CaseFactory.MUR);
+                        plateau[i][j] = CaseFactory.creerCase(ECase.MUR);
                     else
-                        plateau[i][j] = CaseFactory.creerCase(CaseFactory.CASEVIDE);
+                        plateau[i][j] = CaseFactory.creerCase(ECase.VIDE);
                 }
             }
         }
-        plateau[1][3] = CaseFactory.creerCase(CaseFactory.CASETRESOR);
-        plateau[3][1] = CaseFactory.creerCase(CaseFactory.CASEPIEGE);
+        plateau[1][3] = CaseFactory.creerCase(ECase.TRESOR);
+        plateau[3][1] = CaseFactory.creerCase(ECase.PIEGE);
+        plateau[6][5] = CaseFactory.creerCase(ECase.MUR);
     }
 
     /**
@@ -44,6 +45,10 @@ public class Plateau {
 
     public void appliquerEffetCase(int posx, int posy) {
         plateau[posx][posy].appliquerEffet();
+    }
+
+    public ECase getType(int x,int y){
+        return plateau[x][y].getType();
     }
 
     /**

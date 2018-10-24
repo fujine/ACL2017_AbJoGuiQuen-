@@ -1,5 +1,12 @@
 package model.plateau.objet;
 
-public interface Objet {
-    public void appliquerEffet();
+import model.plateau.ECase;
+
+public abstract class Objet {
+    protected ECase type;
+
+    public abstract void appliquerEffet();
+    public ECase getType() {
+        return type;
+    }
 }
