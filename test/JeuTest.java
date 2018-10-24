@@ -11,6 +11,8 @@ class JeuTest {
 
     @BeforeEach
     void setUp() {
+        j.getHero().setPosX(1);
+        j.getHero().setPosY(1);
     }
 
     @AfterEach
@@ -71,7 +73,7 @@ class JeuTest {
         for (int i = j.getHero().getPosY(); i < j.getPlateau().LARGEUR-1 ; i++){
             j.evolve("b");
         }
-        j.evolve("d");
+        j.evolve("b");
         assertEquals(8,j.getHero().getPosY(), "Erreur deplacement bas : collision");
     }
 

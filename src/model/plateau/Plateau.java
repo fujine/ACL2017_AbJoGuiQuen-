@@ -1,4 +1,8 @@
-package model;
+package model.plateau;
+
+import model.factory.CaseFactory;
+import model.plateau.objet.ObjetPiege;
+import model.plateau.objet.ObjetTresor;
 
 public class Plateau {
     private ICase plateau[][];
@@ -15,17 +19,17 @@ public class Plateau {
         for(int i = 0; i < HAUTEUR; i++) {
             for(int j = 0; j < LARGEUR; j++) {
                 if(i == 0 || i == HAUTEUR - 1)
-                    plateau[i][j] = new CaseMur();
+                    plateau[i][j] = CaseFactory.creerCase(CaseFactory.MUR);
                 else {
                     if(j == 0 || j == LARGEUR-1)
-                        plateau[i][j] = new CaseMur();
+                        plateau[i][j] = CaseFactory.creerCase(CaseFactory.MUR);
                     else
-                        plateau[i][j] = new Case();
+                        plateau[i][j] = CaseFactory.creerCase(CaseFactory.CASEVIDE);
                 }
             }
         }
-        plateau[1][3] = new Case(new ObjetTresor());
-        plateau[3][1] = new Case(new ObjetPiege());
+        plateau[1][3] = CaseFactory.creerCase(CaseFactory.CASETRESOR);
+        plateau[3][1] = CaseFactory.creerCase(CaseFactory.CASEPIEGE);
     }
 
     /**

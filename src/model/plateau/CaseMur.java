@@ -1,4 +1,4 @@
-package model;
+package model.plateau;
 
 public class CaseMur  implements ICase {
 

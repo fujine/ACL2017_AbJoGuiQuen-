@@ -1,4 +1,6 @@
-package model;
+package model.plateau;
+
+import model.plateau.objet.Objet;
 
 public class Case implements ICase {
 

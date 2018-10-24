@@ -39,6 +39,14 @@
         public appliquerDegat(int nbDegats) : void
 	}
 
+	Class CaseFactory <<Factory>>{
+	    public static creerCase(String type) : ICase
+	}
+
+	Class ObjetFactory <<Factory>>{
+	    public static creerObjet() : Objet
+	}
+
 	Interface ICase {
 	    public estTraversable() : boolean
 	    public appliquerEffet() : void
@@ -75,4 +83,5 @@
     Plateau -- "*" ICase
 	Jeu "1" -down- "1" Hero
 	Jeu -right- "1" Plateau
+	CaseFactory -[hidden]- ObjetFactory
 @enduml

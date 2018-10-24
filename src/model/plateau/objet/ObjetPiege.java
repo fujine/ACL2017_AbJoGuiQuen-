@@ -1,4 +1,6 @@
-package model;
+package model.plateau.objet;
+
+import model.Jeu;
 
 public class ObjetPiege implements Objet {
 

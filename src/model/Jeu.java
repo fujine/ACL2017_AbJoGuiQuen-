@@ -1,5 +1,7 @@
 package model;
 
+import model.plateau.Plateau;
+
 public class Jeu {
 
     private static Jeu instance;

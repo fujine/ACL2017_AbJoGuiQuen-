@@ -1,4 +1,4 @@
-package model;
+package model.plateau;
 
 public interface ICase {
 
