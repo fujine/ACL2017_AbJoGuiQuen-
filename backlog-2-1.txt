@@ -1,0 +1,8 @@
+Liste des Fonctionnalités réalisées :
+    - Passage à l'interface graphique
+    - Ajout des monstres avec deplacement aleatoire
+    - Ajout de la téléportation
+
+ToDo:
+    - Ajout de case avec gain de vie
+    - Génerer niveau en fonction de celui selectionné

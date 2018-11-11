@@ -54,21 +54,29 @@ public class Painter implements GamePainter {
 				switch (type) {
 					case MUR:
 						crayon.setColor(Color.black);
-						crayon.fillRect(i*ECHELLE,j*ECHELLE,ECHELLE,ECHELLE);
 						break;
 					case PIEGE:
 						crayon.setColor(Color.red);
-						crayon.fillRect(i*ECHELLE,j*ECHELLE,ECHELLE,ECHELLE);
 						break;
 					case TRESOR:
 						crayon.setColor(Color.yellow);
-						crayon.fillRect(i*ECHELLE,j*ECHELLE,ECHELLE,ECHELLE);
+						break;
+					case TELEPORTEUR:
+						crayon.setColor(Color.pink);
 						break;
 					default:
 						crayon.setColor(Color.white);
-						crayon.fillRect(i*ECHELLE,j*ECHELLE,ECHELLE,ECHELLE);
 				}
+				crayon.fillRect(i*ECHELLE,j*ECHELLE,ECHELLE,ECHELLE);
 			}
+		}
+
+		crayon.setColor(Color.blue);
+		for(int i = 0; i <10; i++) {
+			crayon.drawLine(i*ECHELLE,0,i*ECHELLE,10*ECHELLE);
+		}
+		for (int j = 0; j < 10; j++) {
+			crayon.drawLine(0,j*ECHELLE,10*ECHELLE,j*ECHELLE);
 		}
 	}
 

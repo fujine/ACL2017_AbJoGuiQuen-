@@ -1,0 +1,231 @@
+@startuml
+	Class Hero extends Entites {
+		private posX : int
+		private posY : int
+		private jeu : Jeu
+
+		public Hero()
+		public deplacer(int x, int y) : void
+		public subirDegat(int nbDegats) : void
+		public getPosX() : int
+		public getPosY() : int
+        public setPosX(int posX) : void
+        public setPosY(int posY) : void
+	}
+
+	Abstract Entites {
+	    private Point coord
+	    private int vie
+	}
+
+	Class Chevalier {
+	    public void deplacer()
+	}
+
+	Class Fantome {
+    	    public void deplacer()
+    }
+
+	Interface Monstre extends Entites{
+	    public void deplacer()
+	}
+
+	Class Plateau {
+        private plateau : boolean[][]
+        public static HAUTEUR : int
+        public static LARGEUR : int
+
+        public Plateau()
+        estLibre(int posX, int posY) : boolean
+        appliquerEffetCase(int posX, int posY) : void
+        affichageText() : void
+
+	}
+
+	Class CaseFactory <<Factory>>{
+	    public static creerCase(String type) : ICase
+	    public static creerCase(String type, Object arguments) : ICase
+	}
+
+	Class ObjetFactory <<Factory>>{
+	    public static creerObjet() : Objet
+	}
+
+	Interface ICase {
+	    public estTraversable() : boolean
+	    public appliquerEffet() : void
+	}
+
+	Interface Objet <<Strategie>>{
+	    public appliquerEffet() : void
+	}
+
+	Class CaseMur {
+	    public estTraversable() : boolean
+	    public appliquerEffet() : void
+	}
+
+	Class ObjetTresor {
+	    public appliquerEffet() : void
+	}
+
+	Class ObjetTp {
+	    public appliquerEffet() : void
+	}
+
+	Class Case {
+	    public objet : Objet
+	    public estTraversable() : boolean
+	    public appliquerEffet() : void
+	}
+
+    Class DrawingPanel {
+        private static final long serialVersionU
+        private painter : GamePainter
+        private nextImage : BufferedImage
+        private currentImage : BufferedImage
+        private width : int
+        private height : int
+        public DrawingPanel(GamePainter painter)
+        public drawGame() : void
+        public paint(Graphics g) : void
+    }
+
+    Interface Game {
+        public evolve(Cmd userCmd) : void
+        public isFinished() : boolean
+    }
+
+    Interface GameController extends KeyListener {
+        public getCommand() : Cmd
+    }
+
+    Class KeyListener
+
+    Class GameEngineGraphical {
+    	private Game game
+    	private GamePainter gamePainter
+    	private GameController gameController
+    	private GraphicalInterface gui
+    	public GameEngineGraphical(Game game, GamePainter gamePainter, GameController gameController)
+    	public void run() throws InterruptedException
+
+    }
+
+    interface GamePainter {
+    	public abstract void draw(BufferedImage image);
+    	public abstract int getWidth();
+    	public abstract int getHeight();
+    }
+
+    class GraphicalInterface  {
+    	private DrawingPanel panel;
+    	private JFrame f = new JFrame();
+    	public GraphicalInterface(GamePainter gamePainter, GameController gameController)
+    	public void paint(
+    	public void close()
+    }
+
+	Class ObjetPiege {
+	    public appliquerEffet() : void
+	}
+
+	Enum Cmd
+
+	class Controller implements GameController{
+    	private Cmd commandeEnCours
+    	public Controller()
+    	public Cmd getCommand()
+    	public void keyPressed(KeyEvent e)
+    	public void keyReleased(KeyEvent e)
+    	public void keyTyped(KeyEvent e)
+
+    }
+
+    class Painter implements GamePainter {
+    	protected static final int WIDTH = 1000
+    	protected static final int HEIGHT = 1000
+    	protected static final int ECHELLE = 100
+    	private Jeu jeu
+    	public Painter(Jeu jeu)
+    	public void draw(BufferedImage im)
+    	public void drawPlateau(BufferedImage im)
+    	public int getWidth()
+    	public int getHeight()
+    }
+
+    class Jeu <<Singleton>> implements Game {
+
+        private static Jeu instance
+        private boolean fini
+        private Hero hero
+        private ArrayList<Monstre> monstres
+        private Plateau plateau = new Plateau()
+        private Jeu() {}
+        public static Jeu getInstance()
+        public void evolve(Cmd cmd)
+        public boolean isFini()
+        public void setFini(boolean fini)
+        public Plateau getPlateau()
+        public boolean isFinished()
+        public Hero getHero()
+        public void estMort()
+        public void appliquerDegats(int nbDegats)
+        public boolean verifLibre(Point coord)
+    }
+
+    abstract DaoFactory {
+           public abstract JeuDao getJeuDao()
+           public static DaoFactory getInstance(String type)
+       }
+
+       class DaoFactoryTexte {
+           private static DaoFactoryCSV instance
+           public JeuDao getJeuDao()
+           public static DaoFactoryCSV getInstance()
+       }
+
+       Interface JeuDao {
+           public void save(Jeu jeu)
+           public Jeu load()
+       }
+
+       class JeuDaoTexte{
+           public void save(Jeu jeu)
+           public Jeu load()
+       }
+
+    class MonstreFactory {
+        public static Monstre creerMonstre(String type, Point coord)
+    }
+
+    GamePainter -- "1" DrawingPanel
+    GraphicalInterface -- "1" DrawingPanel
+    JFrame "1" -- GraphicalInterface
+    GameEngineGraphical -- "1" Game
+    GameEngineGraphical -- "1" GamePainter
+    GameEngineGraphical -- "1" GameController
+    GameEngineGraphical -- "1" GraphicalInterface
+    Objet <.. ObjetPiege
+    ICase <.. Case
+    ICase <.. CaseMur
+    Objet <.. ObjetTresor
+    Objet <.. ObjetTp
+    Case -- "1" Objet
+    Plateau -- "*" ICase
+    Plateau "1" -right- Entites
+	Jeu -down- "1-*" Entites
+	Jeu -down- "1" Plateau
+	CaseFactory -[hidden]- ObjetFactory
+	JPanel <|-left- DrawingPanel
+	BufferedImage "2" -right- DrawingPanel
+	Plateau -[hidden]left- MonstreFactory
+	DaoFactory <|-- DaoFactoryTexte
+    JeuDao <.. JeuDaoTexte
+    Entites -[hidden]right- JeuDao
+    JeuDao -[hidden]right- DaoFactory
+    Monstre <.. Chevalier
+    Monstre <.. Fantome
+    MonstreFactory -[hidden]- CaseFactory
+
+@enduml

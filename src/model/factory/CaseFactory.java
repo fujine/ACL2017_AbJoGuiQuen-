@@ -17,7 +17,16 @@ public class CaseFactory {
             case TRESOR:
                 return new Case(ObjetFactory.creerObjet(type));
             default:
-                return null;
+                return new Case();
+        }
+    }
+
+    public static ICase creerCase(ECase type, Object arguments) {
+        switch (type) {
+            case TELEPORTEUR:
+                return new Case(ObjetFactory.creerObjet(type,arguments));
+            default:
+                return new Case();
         }
     }
 }

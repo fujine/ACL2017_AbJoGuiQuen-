@@ -4,6 +4,8 @@ import model.factory.CaseFactory;
 import model.plateau.objet.ObjetPiege;
 import model.plateau.objet.ObjetTresor;
 
+import java.awt.*;
+
 public class Plateau {
     private ICase plateau[][];
     public static int HAUTEUR = 10;
@@ -28,9 +30,6 @@ public class Plateau {
                 }
             }
         }
-        plateau[1][3] = CaseFactory.creerCase(ECase.TRESOR);
-        plateau[3][1] = CaseFactory.creerCase(ECase.PIEGE);
-        plateau[6][5] = CaseFactory.creerCase(ECase.MUR);
     }
 
     /**
@@ -41,6 +40,15 @@ public class Plateau {
      */
     public boolean estLibre(int posx, int posy) {
         return plateau[posx][posy].estTraversable();
+    }
+
+    public void modifierCase() {
+        plateau[1][3] = CaseFactory.creerCase(ECase.TRESOR);
+        plateau[3][1] = CaseFactory.creerCase(ECase.PIEGE);
+        plateau[6][5] = CaseFactory.creerCase(ECase.MUR);
+        plateau[5][5] = CaseFactory.creerCase(ECase.MUR);
+        plateau[8][8] = CaseFactory.creerCase(ECase.TELEPORTEUR,new Point(1,1));
+        plateau[1][1] = CaseFactory.creerCase(ECase.TELEPORTEUR,new Point(8,1));
     }
 
     public void appliquerEffetCase(int posx, int posy) {

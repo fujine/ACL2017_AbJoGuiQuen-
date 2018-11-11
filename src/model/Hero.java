@@ -5,11 +5,6 @@ public class Hero {
     private int posY = 1;
     private int pdv = 4;
 
-    private Jeu jeu;
-
-    public Hero(Jeu jeu) {
-        this.jeu = jeu;
-    }
 
     public void deplacer(int x, int y) {
         posX = x;
@@ -52,7 +47,7 @@ public class Hero {
         this.pdv = pdv - nbDegats;
         System.out.println("aie");
         if (pdv <= 0 ){
-            jeu.estMort();
+            Jeu.getInstance().estMort();
             System.out.println("je suis mort");
         }
     }

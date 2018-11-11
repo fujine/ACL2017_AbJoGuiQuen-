@@ -4,14 +4,21 @@ import engine.Cmd;
 import engine.Game;
 import model.plateau.Plateau;
 
+import java.awt.*;
+
 public class Jeu implements Game {
 
     private static Jeu instance;
     private boolean fini = false;
-    private Hero hero = new Hero(this);
+    private Hero hero = new Hero();
     private Plateau plateau = new Plateau();
 
-    private Jeu() {};
+    private Jeu() {
+    };
+
+    public void modifierPlateau() {
+        plateau.modifierCase();
+    }
 
     public static Jeu getInstance() {
         if(instance == null)
@@ -83,5 +90,9 @@ public class Jeu implements Game {
 
     public void appliquerDegats(int nbDegats) {
         hero.subirDegat(nbDegats);
+    }
+
+    public boolean verifLibre(Point coord) {
+        return plateau.estLibre(coord.x,coord.y);
     }
 }

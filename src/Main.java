@@ -13,6 +13,7 @@ public class Main {
 
         //initialisation du jeu
         Jeu j = Jeu.getInstance();
+        j.modifierPlateau();
         Painter painter = new Painter(j);
         Controller controller = new Controller();
 
@@ -20,6 +21,7 @@ public class Main {
         engine.run();
 
         System.out.println("Partie finie!");
+
 
         //Libération du Scanner
         sc.close();
