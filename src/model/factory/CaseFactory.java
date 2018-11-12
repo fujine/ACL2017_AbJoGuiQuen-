@@ -6,6 +6,11 @@ package model.factory;
         import model.plateau.ECase;
 
 public class CaseFactory {
+    /**
+     * Créer un case en fonction d'un type donné
+     * @param type de case
+     * @return la case correspondant au type
+     */
     public static ICase creerCase(ECase type) {
         switch (type) {
             case MUR:
@@ -21,6 +26,12 @@ public class CaseFactory {
         }
     }
 
+    /**
+     * Créer un case en fonction d'un type donné et de paramètre pour la création d'objet
+     * @param type de case
+     * @param arguments parametre pour la création d'objet
+     * @return la case avec l'objet correspondant
+     */
     public static ICase creerCase(ECase type, Object arguments) {
         switch (type) {
             case TELEPORTEUR:

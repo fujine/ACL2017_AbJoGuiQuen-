@@ -11,6 +11,11 @@ import model.plateau.objet.ObjetTresor;
 import java.awt.*;
 
 public class ObjetFactory {
+    /**
+     * Créer un objet en fonction d'un type donné
+     * @param type d'objet
+     * @return l'objet correspondant au type
+     */
     public static Objet creerObjet(ECase type) {
         switch (type){
             case PIEGE:
@@ -22,6 +27,12 @@ public class ObjetFactory {
         }
     }
 
+    /**
+     * Créer un objet en fonction d'un type donné et de paramètre pour la création d'objet
+     * @param type d'objet
+     * @param arguments parametre pour la création d'objet
+     * @return l'objet correspondant
+     */
     public static Objet creerObjet(ECase type, Object arguments) {
         switch (type){
             case TELEPORTEUR:

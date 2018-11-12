@@ -7,11 +7,19 @@ import java.awt.*;
 import java.util.Random;
 
 public class Chevalier extends Monstre {
+    /**
+     * Constructeur à partir d'une position et d'un plateau avec définition de la vie du chevalier
+     * @param coord Coordonnée du Chevalier sur le plateau
+     * @param plateau Plateau au qu'elle appartient le Chevalier
+     */
     public Chevalier(Point coord, Plateau plateau) {
         super(coord, plateau);
         vie = 10;
     }
 
+    /**
+     * Calcul et vérifie le déplacement du chevalier avant de la deplacer
+     */
     @Override
     public void deplacer() {
         Random r = new Random();
@@ -36,7 +44,8 @@ public class Chevalier extends Monstre {
                 posX++;
                 break;
         }
-        if(mod.verifLibre(new Point(posX,posY)) && !mod.collisionEntites(this,new Point(posX,posY)))
+        //Vérification de la case du plateau si elle est libre et vérifie la collision avec d'autres entités
+        if(plateau.estLibre(posX,posY) && !mod.collisionEntites(this,new Point(posX,posY)))
             coord.move(posX,posY);
     }
 }
