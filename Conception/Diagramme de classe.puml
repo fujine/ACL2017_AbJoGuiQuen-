@@ -174,26 +174,9 @@
         public boolean verifLibre(Point coord)
     }
 
-    abstract DaoFactory {
-           public abstract JeuDao getJeuDao()
-           public static DaoFactory getInstance(String type)
-       }
-
-       class DaoFactoryTexte {
-           private static DaoFactoryCSV instance
-           public JeuDao getJeuDao()
-           public static DaoFactoryCSV getInstance()
-       }
-
-       Interface JeuDao {
-           public void save(Jeu jeu)
-           public Jeu load()
-       }
-
-       class JeuDaoTexte{
-           public void save(Jeu jeu)
-           public Jeu load()
-       }
+    class LectureFichier {
+         public static ICase[][] lireFichier(String txt)
+    }
 
     class MonstreFactory {
         public static Monstre creerMonstre(String type, Point coord)
@@ -220,10 +203,6 @@
 	JPanel <|-left- DrawingPanel
 	BufferedImage "2" -right- DrawingPanel
 	Plateau -[hidden]left- MonstreFactory
-	DaoFactory <|-- DaoFactoryTexte
-    JeuDao <.. JeuDaoTexte
-    Entites -[hidden]right- JeuDao
-    JeuDao -[hidden]right- DaoFactory
     Monstre <.. Chevalier
     Monstre <.. Fantome
     MonstreFactory -[hidden]- CaseFactory
