@@ -13,7 +13,7 @@ public class Main {
 
         //initialisation du jeu
         Jeu j = Jeu.getInstance();
-        j.modifierPlateau();
+       // j.modifierPlateau();
         Painter painter = new Painter(j);
         Controller controller = new Controller();
 

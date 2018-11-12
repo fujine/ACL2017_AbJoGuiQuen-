@@ -15,7 +15,7 @@ public class CaseFactory {
         switch (type) {
             case MUR:
                 return new CaseMur();
-            case VIDE:
+            case SOL:
                 return new Case();
             case PIEGE:
                 return new Case(ObjetFactory.creerObjet(type));

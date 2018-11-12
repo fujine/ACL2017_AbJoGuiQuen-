@@ -17,6 +17,7 @@ public class ObjetTp extends Objet {
     public ObjetTp(Point coord) {
         type = ECase.TELEPORTEUR;
         this.coord = coord;
+        System.out.println(coord.toString());
     }
 
     /**

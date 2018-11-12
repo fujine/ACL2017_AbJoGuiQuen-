@@ -36,7 +36,7 @@ public class ObjetFactory {
     public static Objet creerObjet(ECase type, Object arguments) {
         switch (type){
             case TELEPORTEUR:
-                if (arguments instanceof Point && Jeu.getInstance().verifLibre((Point)arguments))
+                if (arguments instanceof Point)
                     return new ObjetTp((Point)arguments);
             default:
                 return null;

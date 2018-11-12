@@ -1,0 +1,10 @@
+M,M,M,M,M,M,M,M,M,M
+M,O,O,O,O,P,O,O,O,M
+M,O,O,O,O,O,O,O,O,M
+M,O,O,O,O,O,O,O,O,M
+M,O,O,O,O,O,O,O,O,M
+M,O,O,O,O,O,O,O,O,M
+M,O,O,O,O,O,O,O,O,M
+M,O,O,O,O,O,O,O,O,M
+M,T.8.1,O,O,O,O,O,O,T,M
+M,M,M,M,M,M,M,M,M,M
