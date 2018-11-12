@@ -14,7 +14,7 @@ public class Jeu implements Game {
     private Plateau plateau;
 
     private Jeu() {
-        plateau = new Plateau(LectureFichier.lireFichier("plateau1.txt"));
+        plateau = LectureFichier.lireFichier("src\\ACL2018_AbJoGuiQuen\\src\\plateau1.txt");
     };
 
     public void modifierPlateau() {

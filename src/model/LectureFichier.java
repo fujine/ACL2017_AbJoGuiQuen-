@@ -1,9 +1,12 @@
 package model;
 
+import model.factory.CaseFactory;
+import model.factory.ObjetFactory;
 import model.plateau.*;
 import model.plateau.objet.ObjetPiege;
 import model.plateau.objet.ObjetTresor;
 
+import java.awt.*;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -14,48 +17,60 @@ public class LectureFichier {
 
 
 
-    public static ICase[][] lireFichier(String txt) {
+    public static Plateau lireFichier(String txt) {
 
-
+        Plateau plateau;
         try {
             boolean first = true;
-            File f = new File(txt);
+            File f = new File(System.getProperty("user.dir") + File.separator + txt);
             FileReader fr = new FileReader(f);
             BufferedReader br = new BufferedReader(fr);
             Scanner sc = new Scanner(br);
             String line;
-            String split[];
-            String tmp[]; // permet de faire les splits temporaires pour les teleporteurs etc
+            String splitVirgule[];
+            String[] splitTmp; // permet de faire les splits temporaires pour les teleporteurs etc
             int i=0;
             line = sc.nextLine();
-            split = line.split(",");
-            ICase plateau[][] = new ICase[split.length][split.length];
+            splitVirgule = line.split(",");
+
+            ICase plat[][] = new ICase[splitVirgule.length][splitVirgule.length];
+
             while (sc.hasNextLine()){
                 if (!first) {
                     line = sc.nextLine();
-                    split = line.split(",");
+                    splitVirgule = line.split(",");
+                }else{
+                    first = false;
                 }
-                for(int j=0; j<split.length ; j++){
-                    if (split[j].length() == 1){
-                        switch (split[j]){
-                            case "M": plateau[i][j] = new CaseMur();
+
+                for(int j=0; j<splitVirgule.length ; j++){
+                    if (splitVirgule[j].length() == 1){
+                        switch (splitVirgule[j]){
+                            case "M": plat[i][j] = CaseFactory.creerCase(ECase.MUR);
                                 break;
-                            case "O": plateau[i][j] = new Case();
+                            case "O": plat[i][j] = CaseFactory.creerCase(ECase.SOL);
                                 break;
-                            case "P": plateau[i][j] = new Case(new ObjetPiege());
+                            case "P": plat[i][j] = CaseFactory.creerCase(ECase.PIEGE);
                                 break;
-                            case "T": plateau[i][j] = new Case(new ObjetTresor());
+                            case "T": plat[i][j] = CaseFactory.creerCase(ECase.TRESOR);
                                 break;
-                            case "V": plateau[i][j] = new CaseVide();
+                            case "V": plat[i][j] = CaseFactory.creerCase(ECase.VIDE);
                                 break;
                         }
                     }else{
 
+                        switch (""+splitVirgule[j].charAt(0)){
+                            case "T" :
+                                String x = ""+splitVirgule[j].charAt(2);
+                                String y = ""+splitVirgule[j].charAt(2);
+                                plat[i][j] = CaseFactory.creerCase(ECase.TELEPORTEUR, new Point(Integer.parseInt(x),Integer.parseInt(y)));
+                                break;
+                        }
                     }
                 }
                 i++;
             }
-
+            plateau = new Plateau(plat);
             return plateau;
 
         } catch (FileNotFoundException e) {
