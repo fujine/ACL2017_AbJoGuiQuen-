@@ -7,6 +7,7 @@ import java.awt.*;
 import java.util.Random;
 
 public class Chevalier extends Monstre {
+
     /**
      * Constructeur à partir d'une position et d'un plateau avec définition de la vie du chevalier
      * @param coord Coordonnée du Chevalier sur le plateau

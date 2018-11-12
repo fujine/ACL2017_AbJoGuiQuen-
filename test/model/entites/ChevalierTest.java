@@ -1,5 +1,6 @@
 package model.entites;
 
+import model.Jeu;
 import model.factory.CaseFactory;
 import model.plateau.ECase;
 import model.plateau.Plateau;
@@ -22,24 +23,27 @@ public class ChevalierTest {
 
     @Test
     void deplacerSimple() {
-        r = EasyMock.createMock(Random.class);
-        Plateau p = new Plateau();
-        Point coord = new Point(1,1);
-        Chevalier c = new Chevalier(new Point(coord),p);
+        for (int i = 0; i < 100000; i++) {
+            Plateau p = new Plateau();
+            Point coord = new Point(6,6);
+            Chevalier c = new Chevalier(new Point(coord),p);
 
-        c.deplacer();
-        assertEquals(1, c.getCoord().distance(coord));
+            c.deplacer();
+            assertEquals(1, c.getCoord().distance(coord));
+        }
     }
 
     @Test
     void deplacerCollisionMur() {
-        Plateau p = new Plateau();
-        p.setCase(CaseFactory.creerCase(ECase.MUR), new Point(2,1));
-        p.setCase(CaseFactory.creerCase(ECase.MUR), new Point(1,2));
-        Point coord = new Point(1,1);
-        Chevalier c = new Chevalier(new Point(coord),p);
+        for (int i = 0; i < 100000; i++) {
+            Plateau p = new Plateau();
+            p.setCase(CaseFactory.creerCase(ECase.MUR), new Point(2, 1));
+            p.setCase(CaseFactory.creerCase(ECase.MUR), new Point(1, 2));
+            Point coord = new Point(1, 1);
+            Chevalier c = new Chevalier(new Point(coord), p);
 
-        c.deplacer();
-        assertEquals(1, c.getCoord().distance(coord));
+            c.deplacer();
+            assertEquals(0, c.getCoord().distance(coord));
+        }
     }
 }
