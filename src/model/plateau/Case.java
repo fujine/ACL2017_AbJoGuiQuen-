@@ -27,7 +27,7 @@ public class Case implements ICase {
      * Crée une case vide sans objet
      */
     public Case() {
-        type = ECase.VIDE;
+        type = ECase.SOL;
     }
 
     /**

@@ -52,13 +52,16 @@ public class Jeu implements Game {
      * Constructeur du jeu par défaut qui instancie un plateau un héro et des monstre par défaut.
      */
     private Jeu() {
-        plateau = new Plateau();
+
+        plateau = LectureFichier.lireFichier("src\\ACL2018_AbJoGuiQuen\\src\\plateau1.txt");
         hero = new Hero(new Point(1,1),plateau);
         monstres = new ArrayList<>();
         cimetiere = new ArrayList<>();
         monstres.add(new Chevalier(new Point(4,4),plateau));
         monstres.add(new Chevalier(new Point(2,4),plateau));
         compteur = 0;
+
+
     };
 
     /**

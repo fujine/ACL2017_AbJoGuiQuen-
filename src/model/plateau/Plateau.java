@@ -1,8 +1,6 @@
 package model.plateau;
 
 import model.factory.CaseFactory;
-import model.plateau.objet.ObjetPiege;
-import model.plateau.objet.ObjetTresor;
 
 import java.awt.*;
 
@@ -29,10 +27,17 @@ public class Plateau {
                     if(j == 0 || j == largeur-1)
                         plateau[i][j] = CaseFactory.creerCase(ECase.MUR);
                     else
-                        plateau[i][j] = CaseFactory.creerCase(ECase.VIDE);
+                        plateau[i][j] = CaseFactory.creerCase(ECase.SOL);
                 }
             }
         }
+    }
+
+    public Plateau(ICase[][] p){
+        this.plateau = p;
+        this.hauteur = this.plateau[0].length;
+        this.largeur = this.plateau[0].length;
+
     }
 
     /**
