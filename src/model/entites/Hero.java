@@ -15,7 +15,11 @@ public class Hero extends Entites {
 
 
     public void deplacer(Point coord) {
-        this.coord = coord;
+        Jeu mod = Jeu.getInstance();
+        if(mod.verifLibre(coord) && !mod.collisionEntites(this,coord)) {
+            this.coord = coord;
+            Jeu.getInstance().getPlateau().appliquerEffetCase(coord);
+        }
     }
 
     public void subirDegat(int nbDegats) {

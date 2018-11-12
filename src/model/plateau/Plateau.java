@@ -43,7 +43,6 @@ public class Plateau {
     }
 
     public void modifierCase() {
-        plateau[1][3] = CaseFactory.creerCase(ECase.TRESOR);
         plateau[3][1] = CaseFactory.creerCase(ECase.PIEGE);
         plateau[6][5] = CaseFactory.creerCase(ECase.MUR);
         plateau[5][5] = CaseFactory.creerCase(ECase.MUR);

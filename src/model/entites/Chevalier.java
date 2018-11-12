@@ -9,13 +9,13 @@ import java.util.Random;
 public class Chevalier extends Monstre {
     public Chevalier(Point coord, Plateau plateau) {
         super(coord, plateau);
-        vie = 3;
+        vie = 10;
     }
 
     @Override
     public void deplacer() {
         Random r = new Random();
-        int dep = r.nextInt(4);
+        int dep = r.nextInt(6);
         int posX = getCoord().x;
         int posY = getCoord().y;
         Jeu mod = Jeu.getInstance();
@@ -25,18 +25,18 @@ public class Chevalier extends Monstre {
                 posY--;
                 break;
                 //Bas
-            case 1:
+            case 1: case 4:
                 posY++;
                 break;
                 //Gauche
             case 2:
                 posX--;
                 break;
-            case 3 :
+            case 3 : case 5:
                 posX++;
                 break;
         }
-        if(mod.verifLibre(new Point(posX,posY)))
+        if(mod.verifLibre(new Point(posX,posY)) && !mod.collisionEntites(this,new Point(posX,posY)))
             coord.move(posX,posY);
     }
 }

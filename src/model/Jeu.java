@@ -3,6 +3,7 @@ package model;
 import engine.Cmd;
 import engine.Game;
 import model.entites.Chevalier;
+import model.entites.Entites;
 import model.entites.Hero;
 import model.entites.Monstre;
 import model.plateau.Plateau;
@@ -16,6 +17,7 @@ public class Jeu implements Game {
     private boolean fini = false;
     private Hero hero;
     private ArrayList<Monstre> monstres;
+    private ArrayList<Monstre> cimetiere;
     private Plateau plateau;
     private int compteur;
 
@@ -23,6 +25,7 @@ public class Jeu implements Game {
         plateau = new Plateau();
         hero = new Hero(new Point(1,1),plateau);
         monstres = new ArrayList<>();
+        cimetiere = new ArrayList<>();
         monstres.add(new Chevalier(new Point(4,4),plateau));
         monstres.add(new Chevalier(new Point(2,4),plateau));
         compteur = 0;
@@ -61,16 +64,35 @@ public class Jeu implements Game {
                 this.fini = true;
                 break;
         }
-        if(cmd != Cmd.IDLE && plateau.estLibre(x,y)) {
+        if(cmd != Cmd.IDLE) {
             hero.deplacer(new Point(x,y));
-            plateau.appliquerEffetCase(hero.getCoord());
         }
+        retirerMonstre();
         compteur++;
         if(compteur == 3) {
             deplacerMonstre();
             compteur = 0;
         }
 
+    }
+
+    public void addCimetiere(Monstre m) {
+        cimetiere.add(m);
+    }
+
+    public void retirerMonstre() {
+        for(Monstre m : cimetiere){
+            monstres.remove(m);
+        }
+    }
+
+    public boolean collisionEntites(Entites e, Point coord) {
+        if(!e.equals(hero) && coord.equals(hero.getCoord()))
+            return true;
+        for(Monstre m : monstres)
+            if(!e.equals(m) && coord.equals(m.getCoord()))
+                return true;
+        return false;
     }
 
     public ArrayList<Monstre> getMonstres() {
