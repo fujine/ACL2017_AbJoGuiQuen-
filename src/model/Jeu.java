@@ -2,18 +2,30 @@ package model;
 
 import engine.Cmd;
 import engine.Game;
+import model.entites.Chevalier;
+import model.entites.Hero;
+import model.entites.Monstre;
 import model.plateau.Plateau;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 public class Jeu implements Game {
 
     private static Jeu instance;
     private boolean fini = false;
-    private Hero hero = new Hero();
-    private Plateau plateau = new Plateau();
+    private Hero hero;
+    private ArrayList<Monstre> monstres;
+    private Plateau plateau;
+    private int compteur;
 
     private Jeu() {
+        plateau = new Plateau();
+        hero = new Hero(new Point(1,1),plateau);
+        monstres = new ArrayList<>();
+        monstres.add(new Chevalier(new Point(4,4),plateau));
+        monstres.add(new Chevalier(new Point(2,4),plateau));
+        compteur = 0;
     };
 
     public void modifierPlateau() {
@@ -30,8 +42,8 @@ public class Jeu implements Game {
      * @param cmd Input de l'utilisateur
      */
     public void evolve(Cmd cmd){
-        int x = hero.getPosX();
-        int y = hero.getPosY();
+        int x = hero.getCoord().x;
+        int y = hero.getCoord().y;
         switch (cmd){
             case UP :
                 y--;
@@ -50,10 +62,29 @@ public class Jeu implements Game {
                 break;
         }
         if(cmd != Cmd.IDLE && plateau.estLibre(x,y)) {
-            hero.deplacer(x, y);
-            plateau.appliquerEffetCase(x,y);
+            hero.deplacer(new Point(x,y));
+            plateau.appliquerEffetCase(hero.getCoord());
+        }
+        compteur++;
+        if(compteur == 3) {
+            deplacerMonstre();
+            compteur = 0;
         }
 
+    }
+
+    public ArrayList<Monstre> getMonstres() {
+        return monstres;
+    }
+
+    public void setMonstres(ArrayList<Monstre> monstres) {
+        this.monstres = monstres;
+    }
+
+    public void deplacerMonstre() {
+        for( Monstre m : monstres) {
+            m.deplacer();
+        }
     }
 
     public boolean isFini() {

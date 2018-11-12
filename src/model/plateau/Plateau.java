@@ -8,8 +8,8 @@ import java.awt.*;
 
 public class Plateau {
     private ICase plateau[][];
-    public static int HAUTEUR = 10;
-    public static int LARGEUR = 10;
+    public static int HAUTEUR = 50;
+    public static int LARGEUR = 50;
 
     /**
      * Constructeur par défaut avec mur sur les bordures
@@ -51,12 +51,12 @@ public class Plateau {
         plateau[1][1] = CaseFactory.creerCase(ECase.TELEPORTEUR,new Point(8,1));
     }
 
-    public void appliquerEffetCase(int posx, int posy) {
-        plateau[posx][posy].appliquerEffet();
+    public void appliquerEffetCase(Point coord) {
+        plateau[coord.x][coord.y].appliquerEffet();
     }
 
-    public ECase getType(int x,int y){
-        return plateau[x][y].getType();
+    public ECase getType(Point coord){
+        return plateau[coord.x][coord.y].getType();
     }
 
     /**

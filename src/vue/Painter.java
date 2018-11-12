@@ -2,6 +2,7 @@ package vue;
 
 import engine.GamePainter;
 import model.Jeu;
+import model.entites.Monstre;
 import model.plateau.ECase;
 import model.plateau.Plateau;
 
@@ -21,7 +22,7 @@ public class Painter implements GamePainter {
 	 */
 	protected static final int WIDTH = 1000;
 	protected static final int HEIGHT = 1000;
-	protected static final int ECHELLE = 100;
+	protected static final int ECHELLE = HEIGHT / Plateau.HAUTEUR;
 	private Jeu jeu;
 
 	/**
@@ -41,16 +42,23 @@ public class Painter implements GamePainter {
 	public void draw(BufferedImage im) {
 		drawPlateau(im);
 		Graphics2D crayon = (Graphics2D) im.getGraphics();
+		for (Monstre m : jeu.getMonstres())
+			drawMonstre(im,crayon,m);
 		crayon.setColor(Color.blue);
-		crayon.fillOval(jeu.getHero().getPosX()*ECHELLE,jeu.getHero().getPosY()*ECHELLE,ECHELLE,ECHELLE);
+		crayon.fillOval(jeu.getHero().getCoord().x*ECHELLE,jeu.getHero().getCoord().y*ECHELLE,ECHELLE,ECHELLE);
+	}
+
+	public void drawMonstre(BufferedImage im, Graphics2D crayon, Monstre m) {
+		crayon.setColor(Color.green);
+		crayon.fillOval(m.getCoord().x*ECHELLE,m.getCoord().y*ECHELLE,ECHELLE,ECHELLE);
 	}
 
 	public void drawPlateau(BufferedImage im) {
 		Graphics2D crayon = (Graphics2D) im.getGraphics();
 		Plateau p = jeu.getPlateau();
-		for(int i = 0; i <10; i++) {
-			for(int j = 0; j <10; j++) {
-				ECase type = p.getType(i,j);
+		for(int i = 0; i <Plateau.LARGEUR; i++) {
+			for(int j = 0; j <Plateau.HAUTEUR; j++) {
+				ECase type = p.getType(new Point(i,j));
 				switch (type) {
 					case MUR:
 						crayon.setColor(Color.black);
@@ -72,11 +80,11 @@ public class Painter implements GamePainter {
 		}
 
 		crayon.setColor(Color.blue);
-		for(int i = 0; i <10; i++) {
-			crayon.drawLine(i*ECHELLE,0,i*ECHELLE,10*ECHELLE);
+		for(int i = 0; i <Plateau.LARGEUR; i++) {
+			crayon.drawLine(i*ECHELLE,0,i*ECHELLE,Plateau.HAUTEUR*ECHELLE);
 		}
-		for (int j = 0; j < 10; j++) {
-			crayon.drawLine(0,j*ECHELLE,10*ECHELLE,j*ECHELLE);
+		for (int j = 0; j < Plateau.HAUTEUR; j++) {
+			crayon.drawLine(0,j*ECHELLE,Plateau.LARGEUR*ECHELLE,j*ECHELLE);
 		}
 	}
 

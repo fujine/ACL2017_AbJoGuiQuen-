@@ -6,3 +6,4 @@ Liste des Fonctionnalités réalisées :
 ToDo:
     - Ajout de case avec gain de vie
     - Génerer niveau en fonction de celui selectionné
+    - Test à finir

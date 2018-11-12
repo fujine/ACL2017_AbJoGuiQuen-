@@ -15,7 +15,7 @@ public class ObjetTp extends Objet {
 
     @Override
     public void appliquerEffet() {
-        Jeu.getInstance().getHero().deplacer(coord.x,coord.y);
-        Jeu.getInstance().getPlateau().appliquerEffetCase(coord.x, coord.y);
+        Jeu.getInstance().getHero().deplacer(coord);
+        Jeu.getInstance().getPlateau().appliquerEffetCase(coord);
     }
 }
