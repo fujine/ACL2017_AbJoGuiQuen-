@@ -1,15 +1,13 @@
 package model.plateau;
 
 import model.factory.CaseFactory;
-import model.plateau.objet.ObjetPiege;
-import model.plateau.objet.ObjetTresor;
 
 import java.awt.*;
 
 public class Plateau {
     private ICase plateau[][];
-    public static int HAUTEUR = 10;
-    public static int LARGEUR = 10;
+    public int HAUTEUR = 10;
+    public int LARGEUR = 10;
 
     /**
      * Constructeur par défaut avec mur sur les bordures
@@ -26,10 +24,17 @@ public class Plateau {
                     if(j == 0 || j == LARGEUR-1)
                         plateau[i][j] = CaseFactory.creerCase(ECase.MUR);
                     else
-                        plateau[i][j] = CaseFactory.creerCase(ECase.VIDE);
+                        plateau[i][j] = CaseFactory.creerCase(ECase.SOL);
                 }
             }
         }
+    }
+
+    public Plateau(ICase[][] p){
+        this.plateau = p;
+        this.HAUTEUR = this.plateau[0].length;
+        this.LARGEUR = this.plateau[0].length;
+
     }
 
     /**

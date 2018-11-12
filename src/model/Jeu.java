@@ -11,9 +11,10 @@ public class Jeu implements Game {
     private static Jeu instance;
     private boolean fini = false;
     private Hero hero = new Hero();
-    private Plateau plateau = new Plateau();
+    private Plateau plateau;
 
     private Jeu() {
+        plateau = new Plateau(LectureFichier.lireFichier("plateau1.txt"));
     };
 
     public void modifierPlateau() {

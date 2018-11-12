@@ -13,7 +13,7 @@ public class Case implements ICase {
     }
 
     public Case() {
-        type = ECase.VIDE;
+        type = ECase.SOL;
     }
 
     @Override
