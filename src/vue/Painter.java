@@ -18,11 +18,12 @@ import java.awt.image.BufferedImage;
 public class Painter implements GamePainter {
 
 	/**
-	 * la taille des cases
+	 * La taille des cases
 	 */
-	protected static final int WIDTH = 1000;
-	protected static final int HEIGHT = 1000;
-	protected static final int ECHELLE = HEIGHT / Plateau.HAUTEUR;
+	protected static final int WIDTH = 800;
+	protected static final int HEIGHT = 820;
+	protected int echelle;
+	protected static final int HEIGHTMENU = 20;
 	private Jeu jeu;
 
 	/**
@@ -40,24 +41,32 @@ public class Painter implements GamePainter {
 	 */
 	@Override
 	public void draw(BufferedImage im) {
+		echelle = (HEIGHT-20) / jeu.getPlateau().getHauteur();
 		drawPlateau(im);
+
 		Graphics2D crayon = (Graphics2D) im.getGraphics();
+		drawMenu(im,crayon);
 		for (Monstre m : jeu.getMonstres())
 			drawMonstre(im,crayon,m);
 		crayon.setColor(Color.blue);
-		crayon.fillOval(jeu.getHero().getCoord().x*ECHELLE,jeu.getHero().getCoord().y*ECHELLE,ECHELLE,ECHELLE);
+		crayon.fillOval(jeu.getHero().getCoord().x*echelle,jeu.getHero().getCoord().y*echelle + HEIGHTMENU,echelle,echelle);
 	}
 
 	public void drawMonstre(BufferedImage im, Graphics2D crayon, Monstre m) {
 		crayon.setColor(Color.green);
-		crayon.fillOval(m.getCoord().x*ECHELLE,m.getCoord().y*ECHELLE,ECHELLE,ECHELLE);
+		crayon.fillOval(m.getCoord().x*echelle,m.getCoord().y*echelle + HEIGHTMENU,echelle,echelle);
+	}
+
+	public void drawMenu(BufferedImage im, Graphics2D crayon) {
+		crayon.setColor(Color.black);
+		crayon.drawString("Vie : " + Jeu.getInstance().getHero().getVie(),10,10);
 	}
 
 	public void drawPlateau(BufferedImage im) {
 		Graphics2D crayon = (Graphics2D) im.getGraphics();
 		Plateau p = jeu.getPlateau();
-		for(int i = 0; i <Plateau.LARGEUR; i++) {
-			for(int j = 0; j <Plateau.HAUTEUR; j++) {
+		for(int i = 0; i <jeu.getPlateau().getLargeur(); i++) {
+			for(int j = 0; j <jeu.getPlateau().getHauteur(); j++) {
 				ECase type = p.getType(new Point(i,j));
 				switch (type) {
 					case MUR:
@@ -72,20 +81,25 @@ public class Painter implements GamePainter {
 					case TELEPORTEUR:
 						crayon.setColor(Color.pink);
 						break;
+					case VIE:
+						crayon.setColor(Color.CYAN);
+						break;
 					default:
 						crayon.setColor(Color.white);
 				}
-				crayon.fillRect(i*ECHELLE,j*ECHELLE,ECHELLE,ECHELLE);
+				crayon.fillRect(i*echelle,j*echelle + HEIGHTMENU,echelle,echelle);
 			}
 		}
 
+		/*
 		crayon.setColor(Color.blue);
 		for(int i = 0; i <Plateau.LARGEUR; i++) {
-			crayon.drawLine(i*ECHELLE,0,i*ECHELLE,Plateau.HAUTEUR*ECHELLE);
+			crayon.drawLine(i*ECHELLE,0 + HEIGHTMENU,i*ECHELLE,Plateau.HAUTEUR*ECHELLE + HEIGHTMENU);
 		}
 		for (int j = 0; j < Plateau.HAUTEUR; j++) {
-			crayon.drawLine(0,j*ECHELLE,Plateau.LARGEUR*ECHELLE,j*ECHELLE);
+			crayon.drawLine(0,j*ECHELLE + HEIGHTMENU,Plateau.LARGEUR*ECHELLE,j*ECHELLE + HEIGHTMENU);
 		}
+		*/
 	}
 
 	@Override

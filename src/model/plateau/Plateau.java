@@ -8,22 +8,25 @@ import java.awt.*;
 
 public class Plateau {
     private ICase plateau[][];
-    public static int HAUTEUR = 50;
-    public static int LARGEUR = 50;
+    private int hauteur;
+    private int largeur;
+
 
     /**
      * Constructeur par défaut avec mur sur les bordures
      */
     public Plateau() {
-        plateau = new ICase[HAUTEUR][LARGEUR];
+        largeur = 10;
+        hauteur = 10;
+        plateau = new ICase[hauteur][largeur];
 
         //Génère un tableau avec un mur sur les 4 bordures
-        for(int i = 0; i < HAUTEUR; i++) {
-            for(int j = 0; j < LARGEUR; j++) {
-                if(i == 0 || i == HAUTEUR - 1)
+        for(int i = 0; i < hauteur; i++) {
+            for(int j = 0; j < largeur; j++) {
+                if(i == 0 || i == hauteur - 1)
                     plateau[i][j] = CaseFactory.creerCase(ECase.MUR);
                 else {
-                    if(j == 0 || j == LARGEUR-1)
+                    if(j == 0 || j == largeur-1)
                         plateau[i][j] = CaseFactory.creerCase(ECase.MUR);
                     else
                         plateau[i][j] = CaseFactory.creerCase(ECase.VIDE);
@@ -42,10 +45,34 @@ public class Plateau {
         return plateau[posx][posy].estTraversable();
     }
 
+    public int getHauteur() {
+        return hauteur;
+    }
+
+    public void setHauteur(int hauteur) {
+        this.hauteur = hauteur;
+    }
+
+    public void setCase(ICase c, Point coord) {
+        plateau[coord.x][coord.y] = c;
+    }
+
+    public int getLargeur() {
+        return largeur;
+    }
+
+    public void setLargeur(int largeur) {
+        this.largeur = largeur;
+    }
+
+    /**
+     * Ajoute des cases spécifiques au plateau
+     */
     public void modifierCase() {
         plateau[3][1] = CaseFactory.creerCase(ECase.PIEGE);
         plateau[6][5] = CaseFactory.creerCase(ECase.MUR);
         plateau[5][5] = CaseFactory.creerCase(ECase.MUR);
+        plateau[4][8] = CaseFactory.creerCase(ECase.VIE);
         plateau[8][8] = CaseFactory.creerCase(ECase.TELEPORTEUR,new Point(1,1));
         plateau[1][1] = CaseFactory.creerCase(ECase.TELEPORTEUR,new Point(8,1));
     }
@@ -62,8 +89,8 @@ public class Plateau {
      * Affiche dans la console la visualisation graphique du plateau
      */
     public void affichageText() {
-        for(int i = 0; i < HAUTEUR; i++) {
-            for(int j = 0; j < LARGEUR; j++) {
+        for(int i = 0; i < hauteur; i++) {
+            for(int j = 0; j < largeur; j++) {
                 if(plateau[i][j].estTraversable())
                     System.out.print("X");
                 else

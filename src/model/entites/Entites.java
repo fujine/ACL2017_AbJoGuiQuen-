@@ -73,6 +73,10 @@ public abstract class Entites {
         this.vie = vie;
     }
 
+    public void soigner(int soin) {
+        vie+=soin;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -63,7 +63,7 @@ class JeuTest {
     // TEST  collisions
     @Test
     void evolve_droite_colision() {
-        for (int i = j.getHero().getCoord().x; i < j.getPlateau().LARGEUR-1 ; i++){
+        for (int i = j.getHero().getCoord().x; i < j.getPlateau().getLargeur()-1 ; i++){
             j.evolve(Cmd.RIGHT);
         }
         j.evolve(Cmd.RIGHT);
@@ -72,7 +72,7 @@ class JeuTest {
 
     @Test
     void evolve_bas_colision() {
-        for (int i = j.getHero().getCoord().y; i < j.getPlateau().LARGEUR-1 ; i++){
+        for (int i = j.getHero().getCoord().y; i < j.getPlateau().getLargeur()-1 ; i++){
             j.evolve(Cmd.DOWN);
         }
         j.evolve(Cmd.DOWN);

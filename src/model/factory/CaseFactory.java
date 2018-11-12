@@ -21,6 +21,8 @@ public class CaseFactory {
                 return new Case(ObjetFactory.creerObjet(type));
             case TRESOR:
                 return new Case(ObjetFactory.creerObjet(type));
+            case VIE:
+                return new Case(ObjetFactory.creerObjet(type));
             default:
                 return new Case();
         }
