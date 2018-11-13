@@ -2,6 +2,7 @@ package vue;
 
 import engine.GamePainter;
 import model.Jeu;
+import model.entites.Hero;
 import model.entites.Monstre;
 import model.plateau.ECase;
 import model.plateau.Plateau;
@@ -20,10 +21,11 @@ public class Painter implements GamePainter {
 	/**
 	 * La taille des cases
 	 */
-	protected static final int WIDTH = 800;
-	protected static final int HEIGHT = 820;
+	protected static final int WIDTH = 400;
+	protected static final int HEIGHT = 420;
 	protected int echelle;
 	protected static final int HEIGHTMENU = 20;
+	protected static final int PORTEE = WIDTH/5;
 	private Jeu jeu;
 
 	/**
@@ -41,15 +43,29 @@ public class Painter implements GamePainter {
 	 */
 	@Override
 	public void draw(BufferedImage im) {
-		echelle = (HEIGHT-20) / jeu.getPlateau().getHauteur();
+		echelle = (WIDTH) / jeu.getPlateau().getHauteur();
 		drawPlateau(im);
 
 		Graphics2D crayon = (Graphics2D) im.getGraphics();
 		drawMenu(im,crayon);
 		for (Monstre m : jeu.getMonstres())
 			drawMonstre(im,crayon,m);
+		drawHero(im,crayon,jeu.getHero());
+	}
+
+	public void drawHero(BufferedImage im,  Graphics2D crayon, Hero h) {
 		crayon.setColor(Color.blue);
-		crayon.fillOval(jeu.getHero().getCoord().x*echelle,jeu.getHero().getCoord().y*echelle + HEIGHTMENU,echelle,echelle);
+		int posX = WIDTH/2 - echelle/2;
+		int posY = (HEIGHT-HEIGHTMENU)/2 - echelle/2;
+		if(h.getCoord().x - PORTEE < 0)
+			posX -= (PORTEE - h.getCoord().x)*echelle;
+		else if(h.getCoord().x + PORTEE >= jeu.getPlateau().getLargeur())
+			posX += (PORTEE+ h.getCoord().x - jeu.getPlateau().getLargeur()-1)*echelle;
+		if(h.getCoord().y - PORTEE < 0)
+			posY -= (PORTEE - h.getCoord().y)*echelle;
+		else if(h.getCoord().y + PORTEE >= jeu.getPlateau().getHauteur())
+			posY += (PORTEE+ h.getCoord().y - jeu.getPlateau().getHauteur()-1)*echelle;
+		crayon.fillOval(posX,posY,echelle,echelle);
 	}
 
 	public void drawMonstre(BufferedImage im, Graphics2D crayon, Monstre m) {
