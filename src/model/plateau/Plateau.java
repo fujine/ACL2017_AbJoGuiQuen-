@@ -14,8 +14,8 @@ public class Plateau {
      * Constructeur par défaut avec mur sur les bordures
      */
     public Plateau() {
-        largeur = 10;
-        hauteur = 10;
+        largeur = 15;
+        hauteur = 15;
         plateau = new ICase[hauteur][largeur];
 
         //Génère un tableau avec un mur sur les 4 bordures
@@ -31,6 +31,8 @@ public class Plateau {
                 }
             }
         }
+
+        modifierCase();
     }
 
     public Plateau(ICase[][] p){

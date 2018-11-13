@@ -58,7 +58,7 @@ public class Jeu implements Game {
         monstres = new ArrayList<>();
         cimetiere = new ArrayList<>();
         monstres.add(new Chevalier(new Point(4,4),plateau));
-        monstres.add(new Chevalier(new Point(2,4),plateau));
+        monstres.add(new Chevalier(new Point(13,13),plateau));
         compteur = 0;
 
 

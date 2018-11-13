@@ -21,11 +21,12 @@ public class Painter implements GamePainter {
 	/**
 	 * La taille des cases
 	 */
-	protected static final int WIDTH = 400;
-	protected static final int HEIGHT = 420;
+	protected static final int WIDTH = 440;
+	protected static final int HEIGHT = 460;
 	protected int echelle;
 	protected static final int HEIGHTMENU = 20;
-	protected static final int PORTEE = WIDTH/5;
+	protected int portee;
+	protected int largeurEcran;
 	private Jeu jeu;
 
 	/**
@@ -43,34 +44,44 @@ public class Painter implements GamePainter {
 	 */
 	@Override
 	public void draw(BufferedImage im) {
-		echelle = (WIDTH) / jeu.getPlateau().getHauteur();
+		largeurEcran = 11;
+		portee = (largeurEcran-1)/2;
+		echelle = (WIDTH) / largeurEcran;
 		drawPlateau(im);
 
 		Graphics2D crayon = (Graphics2D) im.getGraphics();
 		drawMenu(im,crayon);
-		for (Monstre m : jeu.getMonstres())
-			drawMonstre(im,crayon,m);
 		drawHero(im,crayon,jeu.getHero());
 	}
 
 	public void drawHero(BufferedImage im,  Graphics2D crayon, Hero h) {
 		crayon.setColor(Color.blue);
 		int posX = WIDTH/2 - echelle/2;
-		int posY = (HEIGHT-HEIGHTMENU)/2 - echelle/2;
-		if(h.getCoord().x - PORTEE < 0)
-			posX -= (PORTEE - h.getCoord().x)*echelle;
-		else if(h.getCoord().x + PORTEE >= jeu.getPlateau().getLargeur())
-			posX += (PORTEE+ h.getCoord().x - jeu.getPlateau().getLargeur()-1)*echelle;
-		if(h.getCoord().y - PORTEE < 0)
-			posY -= (PORTEE - h.getCoord().y)*echelle;
-		else if(h.getCoord().y + PORTEE >= jeu.getPlateau().getHauteur())
-			posY += (PORTEE+ h.getCoord().y - jeu.getPlateau().getHauteur()-1)*echelle;
+		int posY = (HEIGHT-HEIGHTMENU)/2;
+		if(h.getCoord().x - portee < 0)
+			posX = posX - (portee - h.getCoord().x)*echelle;
+		else if(h.getCoord().x + portee >= jeu.getPlateau().getLargeur())
+			posX = posX + (h.getCoord().x +2  - largeurEcran)*echelle;
+		if(h.getCoord().y - portee < 0)
+			posY -= (portee - h.getCoord().y)*echelle;
+		else if(h.getCoord().y + portee >= jeu.getPlateau().getHauteur())
+			posY = posY + (h.getCoord().y +2  - largeurEcran)*echelle;
 		crayon.fillOval(posX,posY,echelle,echelle);
 	}
 
 	public void drawMonstre(BufferedImage im, Graphics2D crayon, Monstre m) {
 		crayon.setColor(Color.green);
-		crayon.fillOval(m.getCoord().x*echelle,m.getCoord().y*echelle + HEIGHTMENU,echelle,echelle);
+		int posX = WIDTH/2 - echelle/2;
+		int posY = (HEIGHT-HEIGHTMENU)/2;
+		if(m.getCoord().x - portee < 0)
+			posX = posX - (portee - m.getCoord().x)*echelle;
+		else if(m.getCoord().x + portee >= jeu.getPlateau().getLargeur())
+			posX = posX + (m.getCoord().x +2  - largeurEcran)*echelle;
+		if(m.getCoord().y - portee < 0)
+			posY -= (portee - m.getCoord().y)*echelle;
+		else if(m.getCoord().y + portee >= jeu.getPlateau().getHauteur())
+			posY = posY + (m.getCoord().y +2  - largeurEcran)*echelle;
+		crayon.fillOval(posX,posY,echelle,echelle);
 	}
 
 	public void drawMenu(BufferedImage im, Graphics2D crayon) {
@@ -81,9 +92,22 @@ public class Painter implements GamePainter {
 	public void drawPlateau(BufferedImage im) {
 		Graphics2D crayon = (Graphics2D) im.getGraphics();
 		Plateau p = jeu.getPlateau();
-		for(int i = 0; i <jeu.getPlateau().getLargeur(); i++) {
-			for(int j = 0; j <jeu.getPlateau().getHauteur(); j++) {
-				ECase type = p.getType(new Point(i,j));
+		for(int i = 0; i <largeurEcran; i++) {
+			for(int j = 0; j <largeurEcran; j++) {
+				int x = jeu.getHero().getCoord().x + i - portee;
+				int y = jeu.getHero().getCoord().y + j - portee;
+				if(jeu.getHero().getCoord().x - portee < 0) {
+					x = i;
+				}else if(jeu.getHero().getCoord().x + portee >= jeu.getPlateau().getLargeur()) {
+					x = jeu.getPlateau().getLargeur() - largeurEcran + i;
+				}
+				if(jeu.getHero().getCoord().y - portee < 0) {
+					y = j;
+				}else if(jeu.getHero().getCoord().y + portee >= jeu.getPlateau().getHauteur()) {
+					y = jeu.getPlateau().getHauteur() - largeurEcran + j;
+				}
+
+				ECase type = p.getType(new Point(x,y));
 				switch (type) {
 					case MUR:
 						crayon.setColor(Color.black);
@@ -104,18 +128,24 @@ public class Painter implements GamePainter {
 						crayon.setColor(Color.white);
 				}
 				crayon.fillRect(i*echelle,j*echelle + HEIGHTMENU,echelle,echelle);
+				for( Monstre m : jeu.getMonstres()) {
+					if(m.getCoord().equals(new Point(x,y))){
+						crayon.setColor(Color.green);
+						crayon.fillOval(i*echelle,j*echelle + echelle/2,echelle,echelle);
+					}
+				}
 			}
 		}
 
-		/*
+
 		crayon.setColor(Color.blue);
-		for(int i = 0; i <Plateau.LARGEUR; i++) {
-			crayon.drawLine(i*ECHELLE,0 + HEIGHTMENU,i*ECHELLE,Plateau.HAUTEUR*ECHELLE + HEIGHTMENU);
+		for(int i = 0; i <jeu.getPlateau().getLargeur(); i++) {
+			crayon.drawLine(i*echelle,0 + HEIGHTMENU,i*echelle,jeu.getPlateau().getHauteur()*echelle + HEIGHTMENU);
 		}
-		for (int j = 0; j < Plateau.HAUTEUR; j++) {
-			crayon.drawLine(0,j*ECHELLE + HEIGHTMENU,Plateau.LARGEUR*ECHELLE,j*ECHELLE + HEIGHTMENU);
+		for (int j = 0; j < jeu.getPlateau().getHauteur(); j++) {
+			crayon.drawLine(0, j * echelle + HEIGHTMENU, jeu.getPlateau().getLargeur()* echelle, j * echelle + HEIGHTMENU);
 		}
-		*/
+
 	}
 
 	@Override
