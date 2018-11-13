@@ -3,7 +3,5 @@ Liste des Fonctionnalités réalisées :
     - Ajout des monstres avec deplacement aleatoire
     - Ajout de la téléportation
     - Ajout de Case de Vie
-
-ToDo:
-    - Génerer niveau en fonction de celui selectionné
-    - Test à finir
+    - Génératio de labyrinthe a partir d'un fichier
+    - Nouveau deplacement de la camera

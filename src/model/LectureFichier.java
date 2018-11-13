@@ -74,9 +74,8 @@ public class LectureFichier {
             return plateau;
 
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            return new Plateau();
         }
-        return null;
     }
 
 }
