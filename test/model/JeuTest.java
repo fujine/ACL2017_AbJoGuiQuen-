@@ -1,5 +1,6 @@
 package model;
 
+import model.entites.Hero;
 import model.entites.Monstre;
 import org.junit.jupiter.api.Test;
 
@@ -27,7 +28,7 @@ class JeuTest {
         Jeu mod = Jeu.getInstance();
         mod.getHero().setCoord(new Point(5,5));
         mod.getMonstres().get(0).setCoord(new Point(6,5));
-        assertTrue(mod.collisionEntites(mod.getHero(),new Point(6,5)));
+        assertTrue(mod.collisionEntites(mod.getHero(),new Point(6,5))instanceof Hero);
     }
 
     @Test
@@ -35,7 +36,7 @@ class JeuTest {
         Jeu mod = Jeu.getInstance();
         mod.getHero().setCoord(new Point(5,5));
         mod.getMonstres().get(0).setCoord(new Point(7,5));
-        assertTrue(!mod.collisionEntites(mod.getHero(),new Point(6,5)));
+        assertNull(mod.collisionEntites(mod.getHero(),new Point(6,5)));
     }
 
     @Test
@@ -43,6 +44,6 @@ class JeuTest {
         Jeu mod = Jeu.getInstance();
         mod.getMonstres().get(1).setCoord(new Point(5,5));
         mod.getMonstres().get(0).setCoord(new Point(6,5));
-        assertTrue(mod.collisionEntites(mod.getMonstres().get(1),new Point(6,5)));
+        assertTrue(mod.collisionEntites(mod.getMonstres().get(1),new Point(6,5))instanceof Hero);
     }
 }
