@@ -12,9 +12,12 @@ public abstract class Monstre extends Entites{
      * @param coord Coordonnée du Monstre sur le plateau
      * @param plateau Plateau au qu'elle appartient le Monstre
      */
+	
+	
     public Monstre(Point coord, Plateau plateau) {
         super(coord, plateau);
     }
+    
 
     /**
      * Calcul et vérifie le déplacement du Monstre avant de la deplacer
@@ -28,4 +31,10 @@ public abstract class Monstre extends Entites{
         if (vie <= 0)
             Jeu.getInstance().addCimetiere(this);
     }
+    //Attaquer hero 
+    
+    
+    
+    
+    
 }

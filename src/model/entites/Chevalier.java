@@ -21,7 +21,7 @@ public class Chevalier extends Monstre {
         super(coord, plateau);
         vie = 10;
     }
-    public int distance(Point p1, Point p2) {
+    public int Distance(Point p1, Point p2) {
     	//p1=h.coord;
     	//p2=this.coord;
     	 return (int) Math.sqrt(Math.pow(p1.x-p2.x, 2)+Math.pow((p1.y-p2.y), 2));
@@ -29,7 +29,7 @@ public class Chevalier extends Monstre {
     
     //calculer le minimum des distances
     
-    int minDis(int x, int y, int w, int z) {
+    int MinDis(int x, int y, int w, int z) {
     	if(x<=y && x<=w && x<=z) return x;
     	else if(y<=x && y<=w && y<=z) return y;
     	else if(w<=x && w<=y && w<=z) return w;
@@ -54,25 +54,23 @@ public class Chevalier extends Monstre {
        int posY = this.getCoord().y;
        
        //calculer les 4 distance possible
-       int dis1= distance(h.getCoord(),new Point(posX++,posY));
-       int dis2 = distance(h.getCoord(),new Point(posX,posY++));
-       int dis3=distance(h.getCoord(),new Point(posX--,posY));
-       int dis4 = distance(h.getCoord(),new Point(posX,posY--));
+       int dis1= Distance(h.getCoord(),new Point(posX++,posY));
+       int dis2 = Distance(h.getCoord(),new Point(posX,posY++));
+       int dis3=Distance(h.getCoord(),new Point(posX--,posY));
+       int dis4 = Distance(h.getCoord(),new Point(posX,posY--));
        
     	 Jeu mod = Jeu.getInstance();
     	 
     	 //choisir le minimum des 4 distnces par rapport à la position de l'hero
-    	 int m=minDis(dis1,dis2,dis3,dis4);
+    	 int m=MinDis(dis1,dis2,dis3,dis4);
     	 
     	while(h.estVivant()) {
-    		//aller vers la droite
+    		
     		if(m==dis1) posX++;
-    		//aller vers la gauche
     		else if(m==dis2) posX--;
-    		//aller vers le haut
     		else if(m==dis3) posY++;
-    		//aller vers le bas
-    		else  posY--;
+    		else posY--;
+    		
     	/*	 
     		switch(m) {
     		//aller vers la droite
