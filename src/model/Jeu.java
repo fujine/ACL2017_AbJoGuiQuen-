@@ -82,7 +82,6 @@ public class Jeu implements Game {
      * @param cmd Input de l'utilisateur
      */
     public void evolve(Cmd cmd){
-        System.out.println(cmd);
         int x = hero.getCoord().x;
         int y = hero.getCoord().y;
         switch (cmd){

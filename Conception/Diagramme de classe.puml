@@ -15,7 +15,10 @@
 
 	Abstract Entites {
 	    private Point coord
+	    private int degat
 	    private int vie
+	    public int getDegat()
+	    public void setDegat(int degat)
 	}
 
 	Class Chevalier {
@@ -23,7 +26,7 @@
 	}
 
 	Class Fantome {
-    	    public void deplacer()
+    	public void deplacer()
     }
 
 	Interface Monstre extends Entites{
@@ -32,10 +35,12 @@
 
 	Class Plateau {
         private plateau : boolean[][]
+        private ArrayList<Monstre> monstres
         public static HAUTEUR : int
         public static LARGEUR : int
 
         public Plateau()
+        public ArrayList<Monstre> getMonstre()
         estLibre(int posX, int posY) : boolean
         appliquerEffetCase(int posX, int posY) : void
         affichageText() : void
@@ -72,6 +77,10 @@
 	Class ObjetTp {
 	    public appliquerEffet() : void
 	}
+
+	Class ObjetVie {
+    	    public appliquerEffet() : void
+    }
 
 	Class Case {
 	    public objet : Objet
@@ -159,23 +168,25 @@
         private static Jeu instance
         private boolean fini
         private Hero hero
-        private ArrayList<Monstre> monstres
-        private Plateau plateau = new Plateau()
+        private ArrayList<Plateau> donjon
+        private int plateauCourant
         private Jeu() {}
         public static Jeu getInstance()
         public void evolve(Cmd cmd)
         public boolean isFini()
         public void setFini(boolean fini)
-        public Plateau getPlateau()
+        public Plateau getPlateau(int index)
+        public ArrayList<Plateau> getDonjon()
         public boolean isFinished()
         public Hero getHero()
         public void estMort()
         public void appliquerDegats(int nbDegats)
+        public Entites collisionEntites(Entites e, Point coord)
         public boolean verifLibre(Point coord)
     }
 
     class LectureFichier {
-         public static ICase[][] lireFichier(String txt)
+         public static Plateau lireFichier(String txt)
     }
 
     class MonstreFactory {
@@ -194,11 +205,12 @@
     ICase <.. CaseMur
     Objet <.. ObjetTresor
     Objet <.. ObjetTp
+    Objet <.. ObjetVie
     Case -- "1" Objet
     Plateau -- "*" ICase
-    Plateau "1" -right- Entites
+    Plateau "1" -right- "*" Entites
 	Jeu -down- "1-*" Entites
-	Jeu -down- "1" Plateau
+	Jeu -down- "*" Plateau
 	CaseFactory -[hidden]- ObjetFactory
 	JPanel <|-left- DrawingPanel
 	BufferedImage "2" -right- DrawingPanel
