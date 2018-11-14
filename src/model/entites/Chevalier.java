@@ -1,6 +1,8 @@
-package model.entites;
+package src.model.entites;
 
 import model.Jeu;
+import model.entites.Hero;
+import model.entites.Monstre;
 import model.plateau.Plateau;
 
 import java.awt.*;
@@ -63,10 +65,13 @@ public class Chevalier extends Monstre {
     	 int m=minDis(dis1,dis2,dis3,dis4);
     	 
     	while(h.estVivant()) {
-    		
+    		//aller vers la droite
     		if(m==dis1) posX++;
+    		//aller vers la gauche
     		else if(m==dis2) posX--;
+    		//aller vers le haut
     		else if(m==dis3) posY++;
+    		//aller vers le bas
     		else  posY--;
     	/*	 
     		switch(m) {
