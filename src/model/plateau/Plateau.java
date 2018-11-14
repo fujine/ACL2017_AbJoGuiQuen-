@@ -44,10 +44,19 @@ public class Plateau {
             monstres.add(m);
     }
 
+    public ArrayList<Monstre> getMonstres() {
+        return monstres;
+    }
+
+    public void setMonstres(ArrayList<Monstre> monstres) {
+        this.monstres = monstres;
+    }
+
     public Plateau(ICase[][] p){
         this.plateau = p;
         this.hauteur = this.plateau[0].length;
         this.largeur = this.plateau[0].length;
+        monstres = new ArrayList<>();
 
     }
 
