@@ -9,6 +9,8 @@ import model.entites.Monstre;
 import model.plateau.Plateau;
 
 import java.awt.*;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 
 public class Jeu implements Game {
@@ -52,7 +54,13 @@ public class Jeu implements Game {
      * Constructeur du jeu par défaut qui instancie un plateau un héro et des monstre par défaut.
      */
     private Jeu() {
-        plateau = LectureFichier.lireFichier("src/ACL2018_AbJoGuiQuen/plateau1.txt");
+        URI uri = null;
+        try {
+            uri = getClass().getResource("plateau1.txt").toURI();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        plateau = LectureFichier.lireFichier(uri);
         hero = new Hero(new Point(1,1),plateau);
         monstres = new ArrayList<>();
         cimetiere = new ArrayList<>();
