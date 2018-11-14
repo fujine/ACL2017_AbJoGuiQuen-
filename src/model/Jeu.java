@@ -82,6 +82,7 @@ public class Jeu implements Game {
      * @param cmd Input de l'utilisateur
      */
     public void evolve(Cmd cmd){
+        System.out.println(cmd);
         int x = hero.getCoord().x;
         int y = hero.getCoord().y;
         switch (cmd){
@@ -139,19 +140,20 @@ public class Jeu implements Game {
      * Vérification d'une collision entre 2 entité
      * @param e Entité en mouvement
      * @param coord future coordonnées dans l'entité
-     * @return true si collision, false sinon
+     * @return une entité si collision, null sinon
      */
-    public boolean collisionEntites(Entites e, Point coord) {
+    public Entites collisionEntites(Entites e, Point coord) {
         //Vérifie collision avec le hero
         if(!e.equals(hero) && coord.equals(hero.getCoord()))
-            return true;
+            return hero;
 
         //Vérifie Collision avec les monstres
         for(Monstre m : monstres)
             if(!e.equals(m) && coord.equals(m.getCoord()))
-                return true;
-        return false;
+                return m;
+        return null;
     }
+
 
     public ArrayList<Monstre> getMonstres() {
         return monstres;

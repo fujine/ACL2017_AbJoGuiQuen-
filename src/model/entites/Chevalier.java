@@ -16,6 +16,7 @@ public class Chevalier extends Monstre {
     public Chevalier(Point coord, Plateau plateau) {
         super(coord, plateau);
         vie = 10;
+        degat = 1;
     }
 
     /**
@@ -45,8 +46,13 @@ public class Chevalier extends Monstre {
                 posX++;
                 break;
         }
+
+
+        if (mod.collisionEntites(this,new Point(posX,posY)) != null && mod.collisionEntites(this,new Point(posX,posY)).getType().equals("h")){
+            mod.appliquerDegats(this.getDegat());
+        }
         //Vérification de la case du plateau si elle est libre et vérifie la collision avec d'autres entités
-        if(plateau.estLibre(posX,posY) && !mod.collisionEntites(this,new Point(posX,posY)))
+        if(plateau.estLibre(posX,posY) && mod.collisionEntites(this,new Point(posX,posY)) == null)
             coord.move(posX,posY);
     }
 }

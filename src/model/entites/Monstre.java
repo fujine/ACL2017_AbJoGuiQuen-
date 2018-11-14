@@ -28,4 +28,8 @@ public abstract class Monstre extends Entites{
         if (vie <= 0)
             Jeu.getInstance().addCimetiere(this);
     }
+
+    public String getType(){return "m";}
+
+    public int getDegat(){return this.degat;}
 }

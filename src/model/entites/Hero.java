@@ -16,7 +16,14 @@ public class Hero extends Entites {
         super(coord, plateau);
         coord = new Point(1,1);
         vie = 4;
+        degat = 1;
     }
+
+    /**
+     * TODO
+     * @return degat du hero
+     */
+    public int getDegat() { return degat; }
 
     /**
      * Vérifie les coordonnées avant de deplacer le hero au coordonnées données
@@ -25,7 +32,7 @@ public class Hero extends Entites {
     public void deplacer(Point coord) {
         Jeu mod = Jeu.getInstance();
         //Test de colision et de zone libre pour le deplacement du héro
-        if(mod.verifLibre(coord) && !mod.collisionEntites(this,coord)) {
+        if(mod.verifLibre(coord) && mod.collisionEntites(this,coord) == null) {
             this.coord = coord;
             Jeu.getInstance().getPlateau().appliquerEffetCase(coord);
         }
@@ -51,6 +58,9 @@ public class Hero extends Entites {
     public boolean estVivant() {
         return this.vie <= 0;
     }
+
+    public String getType(){return "h";}
+
 
 }
 
