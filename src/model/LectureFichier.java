@@ -11,18 +11,19 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.net.URI;
 import java.util.Scanner;
 
 public class LectureFichier {
 
 
 
-    public static Plateau lireFichier(String txt) {
+    public static Plateau lireFichier(URI uri) {
 
         Plateau plateau;
         try {
             boolean first = true;
-            File f = new File(System.getProperty("user.dir") + File.separator + txt);
+            File f = new File(uri);
             FileReader fr = new FileReader(f);
             BufferedReader br = new BufferedReader(fr);
             Scanner sc = new Scanner(br);
@@ -42,7 +43,6 @@ public class LectureFichier {
                 }else{
                     first = false;
                 }
-
                 for(int j=0; j<splitVirgule.length ; j++){
                     if (splitVirgule[j].length() == 1){
                         switch (splitVirgule[j]){
@@ -61,7 +61,13 @@ public class LectureFichier {
                         String[] splitRecupInfo = splitVirgule[j].split(";");
                         switch (splitRecupInfo[0]){
                             case "T" :
-                                plat[j][i] = CaseFactory.creerCase(ECase.TELEPORTEUR, new Point(Integer.parseInt(splitRecupInfo[1]),Integer.parseInt(splitRecupInfo[2])));
+                                int x = Integer.parseInt(splitRecupInfo[1]);
+                                int y = Integer.parseInt(splitRecupInfo[2]);
+                                if (x < splitVirgule.length && y < splitVirgule.length) {
+                                    plat[j][i] = CaseFactory.creerCase(ECase.TELEPORTEUR, new Point(x, y));
+                                }else {
+                                    plat[j][i] = CaseFactory.creerCase(ECase.SOL);
+                                }
                                 break;
                         }
                     }
@@ -69,6 +75,7 @@ public class LectureFichier {
                 i++;
             }
             plateau = new Plateau(plat);
+            sc.close();
             return plateau;
 
         } catch (FileNotFoundException e) {

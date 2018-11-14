@@ -1,7 +1,5 @@
 Liste des Fonctionnalités réalisées :
-    - Passage à l'interface graphique
-    - Ajout des monstres avec deplacement aleatoire
-    - Ajout de la téléportation
-    - Ajout de Case de Vie
-    - Génératio de labyrinthe a partir d'un fichier
-    - Nouveau deplacement de la camera
+    -Attaque des monstre
+    -debut amélioration IA
+    -Ajout de l'ant
+    -Début multi plateau

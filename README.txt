@@ -1,4 +1,5 @@
-Lancer le jar correspondant à la version.
+Executer le fichier ant build.xml
+
 
 # ACL2018_AbJoGuiQuen
 

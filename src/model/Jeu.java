@@ -9,6 +9,8 @@ import model.entites.Monstre;
 import model.plateau.Plateau;
 
 import java.awt.*;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 
 public class Jeu implements Game {
@@ -52,7 +54,13 @@ public class Jeu implements Game {
      * Constructeur du jeu par défaut qui instancie un plateau un héro et des monstre par défaut.
      */
     private Jeu() {
-        plateau = LectureFichier.lireFichier("src/ACL2018_AbJoGuiQuen/plateau1.txt");
+        URI uri = null;
+        try {
+            uri = getClass().getResource("plateau1.txt").toURI();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        plateau = LectureFichier.lireFichier(uri);
         hero = new Hero(new Point(1,1),plateau);
         monstres = new ArrayList<>();
         cimetiere = new ArrayList<>();
@@ -139,19 +147,20 @@ public class Jeu implements Game {
      * Vérification d'une collision entre 2 entité
      * @param e Entité en mouvement
      * @param coord future coordonnées dans l'entité
-     * @return true si collision, false sinon
+     * @return une entité si collision, null sinon
      */
-    public boolean collisionEntites(Entites e, Point coord) {
+    public Entites collisionEntites(Entites e, Point coord) {
         //Vérifie collision avec le hero
         if(!e.equals(hero) && coord.equals(hero.getCoord()))
-            return true;
+            return hero;
 
         //Vérifie Collision avec les monstres
         for(Monstre m : monstres)
             if(!e.equals(m) && coord.equals(m.getCoord()))
-                return true;
-        return false;
+                return m;
+        return null;
     }
+
 
     public ArrayList<Monstre> getMonstres() {
         return monstres;

@@ -20,6 +20,7 @@ public class Chevalier extends Monstre {
     public Chevalier(Point coord, Plateau plateau) {
         super(coord, plateau);
         vie = 10;
+        degat = 1;
     }
     public int Distance(Point p1, Point p2) {
     	//p1=h.coord;
@@ -47,6 +48,7 @@ public class Chevalier extends Monstre {
     
     // d�placement intelligent 
     public void deplacer() {
+<<<<<<< HEAD
         //Random r = new Random();
        
     	
@@ -92,6 +94,14 @@ public class Chevalier extends Monstre {
     	
    /* 	
        // Jeu mod = Jeu.getInstance();
+=======
+        Random r = new Random();
+        int dep = r.nextInt(6);
+        int posX = getCoord().x;
+        int posY = getCoord().y;
+        Jeu mod = Jeu.getInstance();
+
+>>>>>>> d801510b815e3298c746441de257b51c88b1a460
         switch (dep) {
             //Haut
             case 0 :
@@ -109,10 +119,19 @@ public class Chevalier extends Monstre {
                 posX++;
                 break;
         }
+<<<<<<< HEAD
         */
         
+=======
+
+
+        if (mod.collisionEntites(this,new Point(posX,posY)) != null && mod.collisionEntites(this,new Point(posX,posY)).getType().equals("h")){
+            mod.appliquerDegats(this.getDegat());
+        }
+>>>>>>> d801510b815e3298c746441de257b51c88b1a460
         //Vérification de la case du plateau si elle est libre et vérifie la collision avec d'autres entités
-        if(plateau.estLibre(posX,posY) && !mod.collisionEntites(this,new Point(posX,posY)))
+        if(plateau.estLibre(posX,posY) && mod.collisionEntites(this,new Point(posX,posY)) == null)
+            if (posX >= 0 && posY>= 0 && posX < mod.getPlateau().getLargeur() && posY < mod.getPlateau().getHauteur())
             coord.move(posX,posY);
     }
    

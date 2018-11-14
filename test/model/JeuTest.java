@@ -19,15 +19,13 @@ class JeuTest {
         mod.addCimetiere(m);
         mod.retirerMonstre();
         assertTrue(!mod.getMonstres().contains(m));
-
     }
 
     @Test
     void collisionEntitesHeroMonstre() {
         Jeu mod = Jeu.getInstance();
         mod.getHero().setCoord(new Point(5,5));
-        mod.getMonstres().get(0).setCoord(new Point(6,5));
-        assertTrue(mod.collisionEntites(mod.getHero(),new Point(6,5)));
+        assertTrue(mod.collisionEntites(mod.getHero(),new Point(6,5)) instanceof Monstre);
     }
 
     @Test
@@ -35,7 +33,8 @@ class JeuTest {
         Jeu mod = Jeu.getInstance();
         mod.getHero().setCoord(new Point(5,5));
         mod.getMonstres().get(0).setCoord(new Point(7,5));
-        assertTrue(!mod.collisionEntites(mod.getHero(),new Point(6,5)));
+        assertTrue(mod.collisionEntites(mod.getHero(),new Point(6,5)) == null);
+
     }
 
     @Test
@@ -43,6 +42,6 @@ class JeuTest {
         Jeu mod = Jeu.getInstance();
         mod.getMonstres().get(1).setCoord(new Point(5,5));
         mod.getMonstres().get(0).setCoord(new Point(6,5));
-        assertTrue(mod.collisionEntites(mod.getMonstres().get(1),new Point(6,5)));
+        assertTrue(mod.collisionEntites(mod.getMonstres().get(1),new Point(6,5)) instanceof Monstre);
     }
 }

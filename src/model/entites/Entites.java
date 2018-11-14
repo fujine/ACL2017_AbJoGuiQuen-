@@ -29,6 +29,11 @@ public abstract class Entites {
     private static int ID = 1;
 
     /**
+     * Dégat de l'entité
+     */
+    protected int degat;
+
+    /**
      *
      * Constructeur à partir d'une position et d'un plateau
      * @param coord Coordonnée de l'entité sur le plateau
@@ -76,6 +81,10 @@ public abstract class Entites {
     public void soigner(int soin) {
         vie+=soin;
     }
+
+    public abstract int getDegat();
+
+    public abstract String getType();
 
     @Override
     public boolean equals(Object o) {
