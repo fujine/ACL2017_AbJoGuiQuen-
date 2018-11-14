@@ -28,6 +28,10 @@ public class Jeu implements Game {
      */
     private Hero hero;
 
+    private ArrayList<Plateau> donjon;
+
+    private int plateauCourant;
+
     /**
      * Liste des monstre present dans le jeu sur les différents plateau
      */
@@ -53,6 +57,9 @@ public class Jeu implements Game {
      */
     private Jeu() {
         plateau = LectureFichier.lireFichier("src/ACL2018_AbJoGuiQuen/plateau1.txt");
+        donjon = new ArrayList<>();
+        donjon.add(plateau);
+        plateauCourant = 0;
         hero = new Hero(new Point(1,1),plateau);
         monstres = new ArrayList<>();
         cimetiere = new ArrayList<>();

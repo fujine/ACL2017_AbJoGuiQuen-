@@ -15,7 +15,10 @@
 
 	Abstract Entites {
 	    private Point coord
+	    private int degat
 	    private int vie
+	    public int getDegat()
+	    public void setDegat(int degat)
 	}
 
 	Class Chevalier {
@@ -23,7 +26,7 @@
 	}
 
 	Class Fantome {
-    	    public void deplacer()
+    	public void deplacer()
     }
 
 	Interface Monstre extends Entites{
@@ -159,8 +162,8 @@
         private static Jeu instance
         private boolean fini
         private Hero hero
-        private ArrayList<Monstre> monstres
-        private Plateau plateau = new Plateau()
+        private ArrayList<Plateau> donjon
+        private int plateauCourant
         private Jeu() {}
         public static Jeu getInstance()
         public void evolve(Cmd cmd)
@@ -171,6 +174,7 @@
         public Hero getHero()
         public void estMort()
         public void appliquerDegats(int nbDegats)
+        public Entites collisionEntites(Entites e, Point coord)
         public boolean verifLibre(Point coord)
     }
 

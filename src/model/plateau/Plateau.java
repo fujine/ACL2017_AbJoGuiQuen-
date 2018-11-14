@@ -1,11 +1,14 @@
 package model.plateau;
 
+import model.entites.Monstre;
 import model.factory.CaseFactory;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 public class Plateau {
     private ICase plateau[][];
+    private ArrayList<Monstre> monstres;
     private int hauteur;
     private int largeur;
 
@@ -16,6 +19,7 @@ public class Plateau {
     public Plateau() {
         largeur = 15;
         hauteur = 15;
+        monstres = new ArrayList<>();
         plateau = new ICase[hauteur][largeur];
 
         //Génère un tableau avec un mur sur les 4 bordures
@@ -33,6 +37,11 @@ public class Plateau {
         }
 
         modifierCase();
+    }
+
+    public void addMonstre(Monstre m) {
+        if(!horsPlateau(m.getCoord()))
+            monstres.add(m);
     }
 
     public Plateau(ICase[][] p){
@@ -82,6 +91,12 @@ public class Plateau {
         plateau[4][8] = CaseFactory.creerCase(ECase.VIE);
         plateau[8][8] = CaseFactory.creerCase(ECase.TELEPORTEUR,new Point(1,1));
         plateau[1][1] = CaseFactory.creerCase(ECase.TELEPORTEUR,new Point(8,1));
+    }
+
+    public boolean horsPlateau(Point p) {
+        if(p.x < 0 || p.x >= plateau.length || p.y < 0 || p.y >= plateau[0].length)
+            return true;
+        return false;
     }
 
     public void appliquerEffetCase(Point coord) {
