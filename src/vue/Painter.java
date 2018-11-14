@@ -124,6 +124,8 @@ public class Painter implements GamePainter {
 					case VIE:
 						crayon.setColor(Color.CYAN);
 						break;
+					case ESCALIER:
+						crayon.setColor(Color.MAGENTA);
 					default:
 						crayon.setColor(Color.white);
 				}

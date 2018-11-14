@@ -30,10 +30,9 @@ public class Jeu implements Game {
      */
     private Hero hero;
 
-    /**
-     * Liste des monstre present dans le jeu sur les différents plateau
-     */
-    private ArrayList<Monstre> monstres;
+    private ArrayList<Plateau> donjon;
+
+    private int plateauCourant;
 
     /**
      * Liste des monstres morts
@@ -61,19 +60,28 @@ public class Jeu implements Game {
             e.printStackTrace();
         }
         plateau = LectureFichier.lireFichier(uri);
+        donjon = new ArrayList<>();
+        donjon.add(plateau);
+        donjon.add(new Plateau());
+        plateauCourant = 0;
+
         hero = new Hero(new Point(1,1),plateau);
-        monstres = new ArrayList<>();
         cimetiere = new ArrayList<>();
-        monstres.add(new Chevalier(new Point(4,4),plateau));
-        monstres.add(new Chevalier(new Point(13,13),plateau));
+        donjon.get(plateauCourant).addMonstre(new Chevalier(new Point(4,4),plateau));
+        donjon.get(plateauCourant).addMonstre(new Chevalier(new Point(13,13),plateau));
         compteur = 0;
     };
 
     /**
      * Méthode pour ajouter par défaut des cases spécifique. principalement pour test
      */
-    public void modifierPlateau() {
+    public void modifierCasePlateau() {
         plateau.modifierCase();
+    }
+
+    public void changerPlateaur(int index) {
+        plateauCourant = index;
+        hero.setPlateau(donjon.get(plateauCourant));
     }
 
     /**
@@ -139,7 +147,7 @@ public class Jeu implements Game {
      */
     public void retirerMonstre() {
         for(Monstre m : cimetiere){
-            monstres.remove(m);
+            donjon.get(plateauCourant).getMonstres().remove(m);
         }
     }
 
@@ -155,7 +163,7 @@ public class Jeu implements Game {
             return hero;
 
         //Vérifie Collision avec les monstres
-        for(Monstre m : monstres)
+        for(Monstre m : donjon.get(plateauCourant).getMonstres())
             if(!e.equals(m) && coord.equals(m.getCoord()))
                 return m;
         return null;
@@ -163,18 +171,15 @@ public class Jeu implements Game {
 
 
     public ArrayList<Monstre> getMonstres() {
-        return monstres;
+        return donjon.get(plateauCourant).getMonstres();
     }
 
-    public void setMonstres(ArrayList<Monstre> monstres) {
-        this.monstres = monstres;
-    }
 
     /**
      * Effectue le deplacement de tout les monstre présent dans le jeu
      */
     public void deplacerMonstre() {
-        for( Monstre m : monstres) {
+        for( Monstre m : donjon.get(plateauCourant).getMonstres()) {
             m.deplacer();
         }
     }

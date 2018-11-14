@@ -12,6 +12,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class LectureFichier {
@@ -59,15 +60,25 @@ public class LectureFichier {
                         }
                     }else{
                         String[] splitRecupInfo = splitVirgule[j].split(";");
+                        int x,y,p;
                         switch (splitRecupInfo[0]){
                             case "T" :
-                                int x = Integer.parseInt(splitRecupInfo[1]);
-                                int y = Integer.parseInt(splitRecupInfo[2]);
+                                x = Integer.parseInt(splitRecupInfo[1]);
+                                y = Integer.parseInt(splitRecupInfo[2]);
                                 if (x < splitVirgule.length && y < splitVirgule.length) {
                                     plat[j][i] = CaseFactory.creerCase(ECase.TELEPORTEUR, new Point(x, y));
                                 }else {
                                     plat[j][i] = CaseFactory.creerCase(ECase.SOL);
                                 }
+                                break;
+                            case "E":
+                                x = Integer.parseInt(splitRecupInfo[1]);
+                                y = Integer.parseInt(splitRecupInfo[2]);
+                                p = Integer.parseInt(splitRecupInfo[3]);
+                                if (x < splitVirgule.length && y < splitVirgule.length) {
+                                    plat[j][i] = CaseFactory.creerCase(ECase.ESCALIER,new Point(x,y),p);
+                                } else
+                                    plat[j][i] = CaseFactory.creerCase(ECase.SOL);
                                 break;
                         }
                     }

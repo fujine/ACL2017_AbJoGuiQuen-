@@ -6,6 +6,7 @@ import model.plateau.ICase;
 import model.plateau.objet.*;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 public class ObjetFactory {
     /**
@@ -32,11 +33,14 @@ public class ObjetFactory {
      * @param arguments parametre pour la création d'objet
      * @return l'objet correspondant
      */
-    public static Objet creerObjet(ECase type, Object arguments) {
+    public static Objet creerObjet(ECase type, Object ... arguments) {
         switch (type){
             case TELEPORTEUR:
-                if (arguments instanceof Point)
-                    return new ObjetTp((Point)arguments);
+                if (arguments[0] instanceof Point)
+                    return new ObjetTp((Point)arguments[0]);
+            case ESCALIER:
+                if (arguments[0] instanceof Point && arguments[1] instanceof Integer)
+                    return new ObjetEscalier((Point) arguments[0],(Integer) arguments[1]);
             default:
                 return null;
         }

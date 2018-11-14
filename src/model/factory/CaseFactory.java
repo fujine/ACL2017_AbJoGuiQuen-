@@ -4,6 +4,9 @@ package model.factory;
         import model.plateau.CaseMur;
         import model.plateau.ICase;
         import model.plateau.ECase;
+        import model.plateau.objet.Objet;
+
+        import java.util.ArrayList;
 
 public class CaseFactory {
     /**
@@ -34,10 +37,12 @@ public class CaseFactory {
      * @param arguments parametre pour la création d'objet
      * @return la case avec l'objet correspondant
      */
-    public static ICase creerCase(ECase type, Object arguments) {
+    public static ICase creerCase(ECase type, Object ... arguments) {
         switch (type) {
             case TELEPORTEUR:
                 return new Case(ObjetFactory.creerObjet(type,arguments));
+            case ESCALIER:
+                return new Case(ObjetFactory.creerObjet(type, arguments));
             default:
                 return new Case();
         }
