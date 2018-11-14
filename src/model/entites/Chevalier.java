@@ -1,6 +1,8 @@
 package model.entites;
 
 import model.Jeu;
+import model.entites.Hero;
+import model.entites.Monstre;
 import model.plateau.Plateau;
 
 import java.awt.*;
