@@ -4,9 +4,8 @@ import model.Jeu;
 import model.factory.CaseFactory;
 import model.plateau.ECase;
 import model.plateau.Plateau;
-import org.easymock.EasyMock;
 import org.junit.jupiter.api.Test;
-import org.powermock.api.easymock.PowerMock;
+
 
 
 import java.awt.*;

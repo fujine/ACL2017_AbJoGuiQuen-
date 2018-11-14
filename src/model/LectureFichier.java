@@ -58,12 +58,10 @@ public class LectureFichier {
                                 break;
                         }
                     }else{
-
-                        switch (""+splitVirgule[j].charAt(0)){
+                        String[] splitRecupInfo = splitVirgule[j].split(";");
+                        switch (splitRecupInfo[0]){
                             case "T" :
-                                String x = ""+splitVirgule[j].charAt(2);
-                                String y = ""+splitVirgule[j].charAt(4);
-                                plat[j][i] = CaseFactory.creerCase(ECase.TELEPORTEUR, new Point(Integer.parseInt(x),Integer.parseInt(y)));
+                                plat[j][i] = CaseFactory.creerCase(ECase.TELEPORTEUR, new Point(Integer.parseInt(splitRecupInfo[1]),Integer.parseInt(splitRecupInfo[2])));
                                 break;
                         }
                     }
