@@ -1,4 +1,4 @@
-package src.model.entites;
+package model.entites;
 
 import model.Jeu;
 import model.entites.Hero;
