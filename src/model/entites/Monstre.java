@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 package model.entites;
 
 import model.Jeu;
@@ -6,52 +5,12 @@ import model.plateau.Plateau;
 
 import java.awt.*;
 
-public abstract class Monstre extends Entites{
+public abstract class Monstre extends Entites {
 
     /**
      * Constructeur à partir d'une position et d'un plateau
-     * @param coord Coordonnée du Monstre sur le plateau
-     * @param plateau Plateau au qu'elle appartient le Monstre
-     */
-	
-	
-    public Monstre(Point coord, Plateau plateau) {
-        super(coord, plateau);
-    }
-    
-
-    /**
-     * Calcul et vérifie le déplacement du Monstre avant de la deplacer
-     */
-    public abstract void deplacer();
-
-    /**
-     * Vérifie si le Monstre est vivant et applique un effet sinon
-     */
-    public void estMort() {
-        if (vie <= 0)
-            Jeu.getInstance().addCimetiere(this);
-    }
-    //Attaquer hero 
-    
-    
-    
-    
-    
-}
-=======
-package model.entites;
-
-import model.Jeu;
-import model.plateau.Plateau;
-
-import java.awt.*;
-
-public abstract class Monstre extends Entites{
-
-    /**
-     * Constructeur à partir d'une position et d'un plateau
-     * @param coord Coordonnée du Monstre sur le plateau
+     *
+     * @param coord   Coordonnée du Monstre sur le plateau
      * @param plateau Plateau au qu'elle appartient le Monstre
      */
     public Monstre(Point coord, Plateau plateau) {
@@ -71,8 +30,11 @@ public abstract class Monstre extends Entites{
             Jeu.getInstance().addCimetiere(this);
     }
 
-    public String getType(){return "m";}
+    public String getType() {
+        return "m";
+    }
 
-    public int getDegat(){return this.degat;}
+    public int getDegat() {
+        return this.degat;
+    }
 }
->>>>>>> d801510b815e3298c746441de257b51c88b1a460

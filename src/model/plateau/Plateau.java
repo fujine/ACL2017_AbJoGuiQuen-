@@ -98,8 +98,9 @@ public class Plateau {
         plateau[6][5] = CaseFactory.creerCase(ECase.MUR);
         plateau[5][5] = CaseFactory.creerCase(ECase.MUR);
         plateau[4][8] = CaseFactory.creerCase(ECase.VIE);
-        plateau[8][8] = CaseFactory.creerCase(ECase.TELEPORTEUR,new Point(1,1));
-        plateau[1][1] = CaseFactory.creerCase(ECase.TELEPORTEUR,new Point(8,1));
+        plateau[8][8] = CaseFactory.creerCase(ECase.TELEPORTEUR,new Point(2,1));
+        plateau[2][1] = CaseFactory.creerCase(ECase.TELEPORTEUR,new Point(8,1));
+        plateau[9][9] = CaseFactory.creerCase(ECase.ESCALIER, new Point(1,1),0);
     }
 
     public boolean horsPlateau(Point p) {

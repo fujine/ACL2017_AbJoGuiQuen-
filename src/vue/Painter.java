@@ -126,6 +126,7 @@ public class Painter implements GamePainter {
 						break;
 					case ESCALIER:
 						crayon.setColor(Color.MAGENTA);
+						break;
 					default:
 						crayon.setColor(Color.white);
 				}

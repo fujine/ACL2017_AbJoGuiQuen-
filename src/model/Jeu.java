@@ -193,7 +193,7 @@ public class Jeu implements Game {
     }
 
     public Plateau getPlateau() {
-        return plateau;
+        return donjon.get(plateauCourant);
     }
 
 
