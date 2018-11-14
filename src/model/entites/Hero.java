@@ -31,11 +31,14 @@ public class Hero extends Entites {
      */
     public void deplacer(Point coord) {
         Jeu mod = Jeu.getInstance();
-        //Test de colision et de zone libre pour le deplacement du héro
-        if(mod.verifLibre(coord) && mod.collisionEntites(this,coord) == null) {
-            this.coord = coord;
-            Jeu.getInstance().getPlateau().appliquerEffetCase(coord);
+        if (coord.x >= 0 && coord.y>= 0 && coord.x < mod.getPlateau().getLargeur() && coord.y < mod.getPlateau().getHauteur() ){
+            //Test de colision et de zone libre pour le deplacement du héro
+            if(mod.verifLibre(coord) && mod.collisionEntites(this,coord) == null) {
+                this.coord = coord;
+                Jeu.getInstance().getPlateau().appliquerEffetCase(coord);
+            }
         }
+
     }
 
     /**
