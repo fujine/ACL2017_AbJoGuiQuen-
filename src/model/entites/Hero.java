@@ -14,6 +14,7 @@ public class Hero extends Entites {
      */
     public Hero(Point coord, Plateau plateau) {
         super(coord, plateau);
+        dir = Direction.BAS;
         coord = new Point(1,1);
         vie = 4;
         degat = 1;
@@ -29,7 +30,8 @@ public class Hero extends Entites {
      * Vérifie les coordonnées avant de deplacer le hero au coordonnées données
      * @param coord futur position du héro
      */
-    public void deplacer(Point coord) {
+    public void deplacer(Point coord,Direction direction) {
+        dir = direction;
         Jeu mod = Jeu.getInstance();
         if (coord.x >= 0 && coord.y>= 0 && coord.x < plateau.getLargeur() && coord.y < plateau.getHauteur() ){
             //Test de colision et de zone libre pour le deplacement du héro

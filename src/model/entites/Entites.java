@@ -34,6 +34,11 @@ public abstract class Entites {
     protected int degat;
 
     /**
+     * Direction de l'entité
+     */
+    protected Direction dir;
+
+    /**
      *
      * Constructeur à partir d'une position et d'un plateau
      * @param coord Coordonnée de l'entité sur le plateau
@@ -85,6 +90,14 @@ public abstract class Entites {
     public abstract int getDegat();
 
     public abstract String getType();
+
+    public Direction getDir() {
+        return dir;
+    }
+
+    public void setDir(Direction dir) {
+        this.dir = dir;
+    }
 
     @Override
     public boolean equals(Object o) {

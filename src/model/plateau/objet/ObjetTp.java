@@ -1,6 +1,7 @@
 package model.plateau.objet;
 
 import model.Jeu;
+import model.entites.Direction;
 import model.plateau.ECase;
 
 import java.awt.*;
@@ -25,6 +26,6 @@ public class ObjetTp extends Objet {
     @Override
     public void appliquerEffet() {
         if(Jeu.getInstance().getPlateau().estLibre(coord.x,coord.y))
-            Jeu.getInstance().getHero().deplacer(coord);
+            Jeu.getInstance().getHero().deplacer(coord, Direction.BAS);
     }
 }

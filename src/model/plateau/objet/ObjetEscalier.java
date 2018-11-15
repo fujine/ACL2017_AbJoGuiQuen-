@@ -1,6 +1,7 @@
 package model.plateau.objet;
 
 import model.Jeu;
+import model.entites.Direction;
 import model.plateau.ECase;
 
 import java.awt.*;
@@ -28,6 +29,6 @@ public class ObjetEscalier extends Objet {
     @Override
     public void appliquerEffet() {
         Jeu.getInstance().changerPlateaur(plateau);
-        Jeu.getInstance().getHero().deplacer(coord);
+        Jeu.getInstance().getHero().deplacer(coord, Direction.BAS);
     }
 }

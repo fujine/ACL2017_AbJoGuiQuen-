@@ -2,10 +2,7 @@ package model;
 
 import engine.Cmd;
 import engine.Game;
-import model.entites.Chevalier;
-import model.entites.Entites;
-import model.entites.Hero;
-import model.entites.Monstre;
+import model.entites.*;
 import model.plateau.Plateau;
 
 import java.awt.*;
@@ -100,17 +97,22 @@ public class Jeu implements Game {
     public void evolve(Cmd cmd){
         int x = hero.getCoord().x;
         int y = hero.getCoord().y;
+        Direction dir = null;
         switch (cmd){
             case UP :
                 y--;
+                dir = Direction.HAUT;
                 break;
             case DOWN :
                 y++;
+                dir = Direction.BAS;
                 break;
             case LEFT:
+                dir = Direction.GAUCHE;
                 x--;
                 break;
             case RIGHT:
+                dir = Direction.DROITE;
                 x++;
                 break;
             case END:
@@ -118,8 +120,8 @@ public class Jeu implements Game {
                 break;
         }
         // si une touche de direction enfoncé on déplace le Hero
-        if(cmd != Cmd.IDLE) {
-            hero.deplacer(new Point(x,y));
+        if(dir != null) {
+            hero.deplacer(new Point(x,y),dir);
         }
 
         //Retire les monstre mort de la liste des monstre

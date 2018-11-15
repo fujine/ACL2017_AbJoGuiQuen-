@@ -7,8 +7,12 @@ import model.entites.Monstre;
 import model.plateau.ECase;
 import model.plateau.Plateau;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
 
 /**
  * @author Horatiu Cirstea, Vincent Thomas
@@ -22,6 +26,10 @@ public class Painter implements GamePainter {
 	 * La taille des cases
 	 */
 	protected static final int WIDTH = 440;
+	private Image mur;
+	private Image sol;
+	private Image tp;
+	private Image esc;
 	protected static final int HEIGHT = 460;
 	protected int echelle;
 	protected static final int HEIGHTMENU = 20;
@@ -37,16 +45,24 @@ public class Painter implements GamePainter {
 	 */
 	public Painter(Jeu jeu) {
 		this.jeu = jeu;
-	}
+        largeurEcran = 11;
+        portee = (largeurEcran-1)/2;
+        echelle = (WIDTH) / largeurEcran;
+        try {
+            mur = ImageIO.read(new File(getClass().getResource("/Ressources/mur.png").toURI())).getScaledInstance(echelle,echelle,Image.SCALE_DEFAULT);
+            sol = ImageIO.read(new File(getClass().getResource("/Ressources/sol.png").toURI())).getScaledInstance(echelle,echelle,Image.SCALE_DEFAULT);
+            tp = ImageIO.read(new File(getClass().getResource("/Ressources/tp.png").toURI())).getScaledInstance(echelle,echelle,Image.SCALE_DEFAULT);
+            esc = ImageIO.read(new File(getClass().getResource("/Ressources/esc.png").toURI())).getScaledInstance(echelle,echelle,Image.SCALE_DEFAULT);
+        } catch (IOException | URISyntaxException e) {
+            e.printStackTrace();
+        }
+    }
 
 	/**
 	 * methode  redefinie de Afficheur retourne une image du jeu
 	 */
 	@Override
 	public void draw(BufferedImage im) {
-		largeurEcran = 11;
-		portee = (largeurEcran-1)/2;
-		echelle = (WIDTH) / largeurEcran;
 		drawPlateau(im);
 
 		Graphics2D crayon = (Graphics2D) im.getGraphics();
@@ -110,27 +126,31 @@ public class Painter implements GamePainter {
 				ECase type = p.getType(new Point(x,y));
 				switch (type) {
 					case MUR:
-						crayon.setColor(Color.black);
+						crayon.drawImage(mur,i*echelle,j*echelle+HEIGHTMENU,null);
 						break;
 					case PIEGE:
+                        crayon.drawImage(sol,i*echelle,j*echelle+HEIGHTMENU,null);
 						crayon.setColor(Color.red);
 						break;
 					case TRESOR:
 						crayon.setColor(Color.yellow);
 						break;
 					case TELEPORTEUR:
-						crayon.setColor(Color.pink);
+                        crayon.drawImage(sol,i*echelle,j*echelle+HEIGHTMENU,null);
+                        crayon.drawImage(tp,i*echelle,j*echelle+HEIGHTMENU,null);
 						break;
 					case VIE:
 						crayon.setColor(Color.CYAN);
 						break;
 					case ESCALIER:
-						crayon.setColor(Color.MAGENTA);
+                        crayon.drawImage(sol,i*echelle,j*echelle+HEIGHTMENU,null);
+                        crayon.drawImage(esc,i*echelle,j*echelle+HEIGHTMENU,null);
 						break;
 					default:
-						crayon.setColor(Color.white);
+                        crayon.drawImage(sol,i*echelle,j*echelle+HEIGHTMENU,null);
 				}
-				crayon.fillRect(i*echelle,j*echelle + HEIGHTMENU,echelle,echelle);
+
+				//crayon.fillRect(i*echelle,j*echelle + HEIGHTMENU,echelle,echelle);
 				for( Monstre m : jeu.getMonstres()) {
 					if(m.getCoord().equals(new Point(x,y))){
 						crayon.setColor(Color.green);
@@ -141,13 +161,13 @@ public class Painter implements GamePainter {
 		}
 
 
-		crayon.setColor(Color.blue);
+		/*crayon.setColor(Color.blue);
 		for(int i = 0; i <jeu.getPlateau().getLargeur(); i++) {
 			crayon.drawLine(i*echelle,0 + HEIGHTMENU,i*echelle,jeu.getPlateau().getHauteur()*echelle + HEIGHTMENU);
 		}
 		for (int j = 0; j < jeu.getPlateau().getHauteur(); j++) {
 			crayon.drawLine(0, j * echelle + HEIGHTMENU, jeu.getPlateau().getLargeur()* echelle, j * echelle + HEIGHTMENU);
-		}
+		}*/
 
 	}
 
