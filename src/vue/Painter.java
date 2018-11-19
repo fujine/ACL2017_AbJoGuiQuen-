@@ -41,6 +41,7 @@ public class Painter implements GamePainter {
 	private Image[] hero = new Image[4];
 	private Image[] sque = new Image[4];
 	private Image[] coeur = new Image[10];
+	private Image mort;
 	protected static final int HEIGHT = 900;
 	protected int echelle;
 	protected static final int HEIGHTMENU = 33;
@@ -77,6 +78,7 @@ public class Painter implements GamePainter {
             attaque = ImageIO.read(new File(getClass().getResource("/Ressources/explosion.png").toURI())).getScaledInstance(echelle,echelle,Image.SCALE_DEFAULT);
             vie = ImageIO.read(new File(getClass().getResource("/Ressources/vie.png").toURI())).getScaledInstance(echelle,echelle,Image.SCALE_DEFAULT);
             tresor = ImageIO.read(new File(getClass().getResource("/Ressources/tresor.png").toURI())).getScaledInstance(echelle,echelle,Image.SCALE_DEFAULT);
+            mort = ImageIO.read(new File(getClass().getResource("/Ressources/GameOver.png").toURI())).getScaledInstance(HEIGHT,HEIGHT+HEIGHTMENU,Image.SCALE_DEFAULT);
             for (int i = 0; i< 10; i++){
                 int num = i+1;
                 coeur[i] = ImageIO.read(new File(getClass().getResource("/Ressources/coeur"+ num +".png").toURI()));
@@ -91,9 +93,12 @@ public class Painter implements GamePainter {
 	 */
 	@Override
 	public void draw(BufferedImage im) {
+        Graphics2D crayon = (Graphics2D) im.getGraphics();
+	    if(Jeu.getInstance().estMort()) {
+	        crayon.drawImage(mort,0,0,null);
+	        return;
+        }
 		drawPlateau(im);
-
-		Graphics2D crayon = (Graphics2D) im.getGraphics();
 		drawMenu(im,crayon);
 		drawHero(im,crayon,jeu.getHero());
 	}

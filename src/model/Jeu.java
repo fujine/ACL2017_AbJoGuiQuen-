@@ -226,8 +226,10 @@ public class Jeu implements Game {
     /**
      * Quand le hero meurt le Jeu est terminé
      */
-    public void estMort() {
-        fini = true;
+    public boolean estMort() {
+        if (hero.getVie() <=0)
+            return true;
+        return false;
     }
 
     /**
