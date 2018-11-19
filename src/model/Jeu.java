@@ -52,7 +52,7 @@ public class Jeu implements Game {
     private Jeu() {
         URI uri = null;
         try {
-            uri = getClass().getResource("plateau1.txt").toURI();
+            uri = getClass().getResource("/Ressources/plateau1.txt").toURI();
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
@@ -118,11 +118,16 @@ public class Jeu implements Game {
             case END:
                 this.fini = true;
                 break;
+            case ATTAQUE:
+                hero.attaquer();
         }
         // si une touche de direction enfoncé on déplace le Hero
         if(dir != null) {
             hero.deplacer(new Point(x,y),dir);
         }
+
+        if(cmd != Cmd.ATTAQUE)
+            hero.setAttaque(null);
 
         //Retire les monstre mort de la liste des monstre
         retirerMonstre();
@@ -192,6 +197,10 @@ public class Jeu implements Game {
 
     public void setFini(boolean fini) {
         this.fini = fini;
+    }
+
+    public int getIndex() {
+        return plateauCourant;
     }
 
     public Plateau getPlateau() {

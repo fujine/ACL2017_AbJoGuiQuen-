@@ -44,6 +44,11 @@ public class Case implements ICase {
         return type;
     }
 
+    @Override
+    public Objet getObjet() {
+        return objet;
+    }
+
     /**
      * Vérifie que la case peut etre trraversé
      * @return vrai si case traversable faux sinon

@@ -4,15 +4,17 @@ import model.Jeu;
 import model.plateau.ECase;
 
 public class ObjetVie extends Objet {
-    private int soin = 2;
 
     public ObjetVie() {
         type = ECase.VIE;
+        info = 2;
     }
 
     @Override
     public void appliquerEffet() {
-        Jeu.getInstance().getHero().soigner(soin);
-        soin-=2;
+        int soin = Jeu.getInstance().getHero().soigner(info);
+        if(soin > 0) {
+            info -= soin;
+        }
     }
 }

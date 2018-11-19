@@ -64,6 +64,8 @@ public class Controller implements GameController {
 			case 'F':
 				this.commandeEnCours = Cmd.LEFT;
 				break;
+			case ' ':
+				this.commandeEnCours = Cmd.ATTAQUE;
 		}
 
 	}

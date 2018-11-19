@@ -38,6 +38,8 @@ public abstract class Entites {
      */
     protected Direction dir;
 
+    protected int vieMax = 1;
+
     /**
      *
      * Constructeur à partir d'une position et d'un plateau
@@ -83,13 +85,27 @@ public abstract class Entites {
         this.vie = vie;
     }
 
-    public void soigner(int soin) {
-        vie+=soin;
+    public int soigner(int soin) {
+            int effet = vie + soin - vieMax;
+            if(effet <= 0) {
+                vie += soin;
+                return soin;
+            } else {
+                if(soin - effet > 0 ) {
+                    vie += soin - effet;
+                    return soin-effet;
+                }
+            }
+        return 0;
     }
 
     public abstract int getDegat();
 
     public abstract String getType();
+
+    public void subirDegat(int degat) {
+        vie -= degat;
+    }
 
     public Direction getDir() {
         return dir;

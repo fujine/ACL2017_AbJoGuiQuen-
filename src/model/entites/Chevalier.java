@@ -18,8 +18,9 @@ public class Chevalier<dep> extends Monstre {
      */
     public Chevalier(Point coord, Plateau plateau) {
         super(coord, plateau);
-        vie = 10;
+        vie = 1;
         degat = 1;
+        dir = Direction.BAS;
     }
     public int Distance(Point p1, Point p2) {
         //p1=h.coord;
@@ -98,17 +99,21 @@ public class Chevalier<dep> extends Monstre {
             //Haut
             case 0 :
                 posY--;
+                dir = Direction.HAUT;
                 break;
                 //Bas
             case 1: case 4:
+                dir = Direction.BAS;
                 posY++;
                 break;
                 //Gauche
             case 2:
                 posX--;
+                dir = Direction.GAUCHE;
                 break;
             case 3 : case 5:
                 posX++;
+                dir = Direction.DROITE;
                 break;
         }
 

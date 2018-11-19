@@ -22,6 +22,12 @@ public abstract class Monstre extends Entites {
      */
     public abstract void deplacer();
 
+    @Override
+    public void subirDegat(int degat) {
+        super.subirDegat(degat);
+        estMort();
+    }
+
     /**
      * Vérifie si le Monstre est vivant et applique un effet sinon
      */

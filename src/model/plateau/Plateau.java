@@ -1,5 +1,6 @@
 package model.plateau;
 
+import model.entites.Chevalier;
 import model.entites.Monstre;
 import model.factory.CaseFactory;
 
@@ -101,6 +102,12 @@ public class Plateau {
         plateau[8][8] = CaseFactory.creerCase(ECase.TELEPORTEUR,new Point(2,1));
         plateau[2][1] = CaseFactory.creerCase(ECase.TELEPORTEUR,new Point(8,1));
         plateau[9][9] = CaseFactory.creerCase(ECase.ESCALIER, new Point(1,1),0);
+        addMonstre(new Chevalier(new Point(5,6),this));
+        addMonstre(new Chevalier(new Point(8,7),this));
+    }
+
+    public ICase getCase(Point coord) {
+        return plateau[coord.x][coord.y];
     }
 
     public boolean horsPlateau(Point p) {

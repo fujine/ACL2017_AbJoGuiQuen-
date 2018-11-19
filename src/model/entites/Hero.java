@@ -7,6 +7,8 @@ import java.awt.*;
 
 public class Hero extends Entites {
 
+    private Point attaque;
+
     /**
      * Constructeur à partir d'une position et d'un plateau avec définition de la vie du héro
      * @param coord Coordonnée du héro sur le plateau
@@ -16,8 +18,43 @@ public class Hero extends Entites {
         super(coord, plateau);
         dir = Direction.BAS;
         coord = new Point(1,1);
-        vie = 4;
+        vie = 9;
+        vieMax = 10;
         degat = 1;
+    }
+
+    public Point getAttaque() {
+        return attaque;
+    }
+
+    public void setAttaque(Point attaque) {
+        this.attaque = attaque;
+    }
+
+    public void attaquer() {
+        int x = coord.x;
+        int y = coord.y;
+        switch (dir) {
+            case BAS:
+                y++;
+                break;
+            case HAUT:
+                y--;
+                break;
+            case GAUCHE:
+                x--;
+                break;
+            case DROITE:
+                x++;
+                break;
+        }
+        if (plateau.estLibre(x,y)){
+            attaque = new Point(x,y);
+            Entites e = Jeu.getInstance().collisionEntites(this,new Point(x,y));
+            if(e != null)
+                e.subirDegat(degat);
+        } else
+            attaque = null;
     }
 
     /**
@@ -25,6 +62,7 @@ public class Hero extends Entites {
      * @return degat du hero
      */
     public int getDegat() { return degat; }
+
 
     /**
      * Vérifie les coordonnées avant de deplacer le hero au coordonnées données

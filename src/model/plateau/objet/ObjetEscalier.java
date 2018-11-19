@@ -24,6 +24,8 @@ public class ObjetEscalier extends Objet {
         type = ECase.ESCALIER;
         this.coord = coord;
         plateau = index;
+        info = index;
+
     }
 
     @Override
