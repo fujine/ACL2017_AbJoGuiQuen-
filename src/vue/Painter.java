@@ -44,6 +44,7 @@ public class Painter implements GamePainter {
 	private Image mort;
 	protected static final int HEIGHT = 900;
 	protected int echelle;
+	protected int taille;
 	protected static final int HEIGHTMENU = 33;
 	protected int portee;
 	protected int largeurEcran;
@@ -60,6 +61,7 @@ public class Painter implements GamePainter {
         largeurEcran = 11;
         portee = (largeurEcran-1)/2;
         echelle = (WIDTH) / largeurEcran;
+        taille = Jeu.TAILLE;
         try {
             mur = ImageIO.read(new File(getClass().getResource("/Ressources/mur.png").toURI())).getScaledInstance(echelle,echelle,Image.SCALE_DEFAULT);
 			murBas = ImageIO.read(new File(getClass().getResource("/Ressources/murbas.png").toURI())).getScaledInstance(echelle,echelle,Image.SCALE_DEFAULT);
@@ -67,10 +69,10 @@ public class Painter implements GamePainter {
             tp = ImageIO.read(new File(getClass().getResource("/Ressources/tp.png").toURI())).getScaledInstance(echelle,echelle,Image.SCALE_DEFAULT);
             esc = ImageIO.read(new File(getClass().getResource("/Ressources/esc.png").toURI())).getScaledInstance(echelle,echelle,Image.SCALE_DEFAULT);
             escBas = ImageIO.read(new File(getClass().getResource("/Ressources/escBas.png").toURI())).getScaledInstance(echelle,echelle,Image.SCALE_DEFAULT);
-			hero[0] = ImageIO.read(new File(getClass().getResource("/Ressources/herobas.png").toURI())).getScaledInstance(echelle,echelle,Image.SCALE_DEFAULT);
-			hero[1] = ImageIO.read(new File(getClass().getResource("/Ressources/herohaut.png").toURI())).getScaledInstance(echelle,echelle,Image.SCALE_DEFAULT);
-			hero[2] = ImageIO.read(new File(getClass().getResource("/Ressources/herogauche.png").toURI())).getScaledInstance(echelle,echelle,Image.SCALE_DEFAULT);
-			hero[3] = ImageIO.read(new File(getClass().getResource("/Ressources/herodroite.png").toURI())).getScaledInstance(echelle,echelle,Image.SCALE_DEFAULT);
+			hero[0] = ImageIO.read(new File(getClass().getResource("/Ressources/herobas.png").toURI())).getScaledInstance(taille,taille,Image.SCALE_DEFAULT);;
+			hero[1] = ImageIO.read(new File(getClass().getResource("/Ressources/herohaut.png").toURI())).getScaledInstance(taille,taille,Image.SCALE_DEFAULT);
+			hero[2] = ImageIO.read(new File(getClass().getResource("/Ressources/herogauche.png").toURI())).getScaledInstance(taille,taille,Image.SCALE_DEFAULT);
+			hero[3] = ImageIO.read(new File(getClass().getResource("/Ressources/herodroite.png").toURI())).getScaledInstance(taille,taille,Image.SCALE_DEFAULT);
             sque[0] = ImageIO.read(new File(getClass().getResource("/Ressources/squelettebas.png").toURI())).getScaledInstance(echelle,echelle,Image.SCALE_DEFAULT);
             sque[1] = ImageIO.read(new File(getClass().getResource("/Ressources/squelettehaut.png").toURI())).getScaledInstance(echelle,echelle,Image.SCALE_DEFAULT);
             sque[2] = ImageIO.read(new File(getClass().getResource("/Ressources/squelettegauche.png").toURI())).getScaledInstance(echelle,echelle,Image.SCALE_DEFAULT);
@@ -106,15 +108,15 @@ public class Painter implements GamePainter {
 	public void drawHero(BufferedImage im,  Graphics2D crayon, Hero h) {
 		crayon.setColor(Color.blue);
 		int posX = WIDTH/2 - echelle/2;
-		int posY = (HEIGHT - HEIGHTMENU)/2 - echelle/2 + HEIGHTMENU ;
-		if(h.getCoord().x - portee < 0)
-			posX = posX - (portee - h.getCoord().x)*echelle;
-		else if(h.getCoord().x + portee >= jeu.getPlateau().getLargeur())
-			posX = posX + (h.getCoord().x +portee - jeu.getPlateau().getLargeur()+1)*echelle;
-		if(h.getCoord().y - portee < 0)
-			posY -= (portee - h.getCoord().y)*echelle;
-		else if(h.getCoord().y + portee >= jeu.getPlateau().getHauteur())
-			posY = posY + (h.getCoord().y +portee - jeu.getPlateau().getHauteur()+1)*echelle;
+		int posY = (HEIGHT - HEIGHTMENU)/2 - echelle/2 + HEIGHTMENU + 7 ;
+		if(h.getCoord().x - portee * Jeu.ECHELLE < 0) {
+            posX = h.getCoord().x ;
+        }else if(jeu.getHero().getCoord().x + (portee+1) *echelle > jeu.getPlateau().getLargeur())
+			posX = largeurEcran*echelle - jeu.getPlateau().getLargeur() + h.getCoord().x ;
+		if(h.getCoord().y - portee * Jeu.ECHELLE < 0)
+			posY = h.getCoord().y + HEIGHTMENU;
+		else if(jeu.getHero().getCoord().y + (portee+1) * echelle > jeu.getPlateau().getHauteur())
+			posY = largeurEcran*echelle - jeu.getPlateau().getLargeur() + h.getCoord().y +HEIGHTMENU;
 		switch (h.getDir()) {
 			case BAS:
                 crayon.drawImage(hero[0],posX,posY,null);
@@ -129,7 +131,8 @@ public class Painter implements GamePainter {
                 crayon.drawImage(hero[3],posX,posY,null);
                 break;
 		}
-		//crayon.drawRect(posX,posY,echelle,echelle);
+		crayon.drawRect(posX,posY,taille,taille);
+
 	}
 
 	public void drawMenu(BufferedImage im, Graphics2D crayon) {
@@ -138,60 +141,67 @@ public class Painter implements GamePainter {
 
 	public void drawPlateau(BufferedImage im) {
 		Graphics2D crayon = (Graphics2D) im.getGraphics();
+		int decalageX = 0;
+		int decalageY = 0;
 		Plateau p = jeu.getPlateau();
-		for(int i = 0; i <largeurEcran; i++) {
-			for(int j = 0; j <largeurEcran; j++) {
-				int x = jeu.getHero().getCoord().x + i - portee;
-				int y = jeu.getHero().getCoord().y + j - portee;
-				if(jeu.getHero().getCoord().x - portee < 0) {
-					x = i;
-				}else if(jeu.getHero().getCoord().x + portee >= jeu.getPlateau().getLargeur()) {
-					x = jeu.getPlateau().getLargeur() - largeurEcran + i;
+		for(int i = 0; i <=largeurEcran; i++) {
+			for(int j = 0; j <=largeurEcran; j++) {
+				int x = jeu.getHero().getCoord().x + (i - portee) * Jeu.ECHELLE;
+				int y = jeu.getHero().getCoord().y + (j - portee) * Jeu.ECHELLE;
+				if(jeu.getHero().getCoord().x - portee* Jeu.ECHELLE < 0) {
+					x = i * Jeu.ECHELLE;
+				}else if(jeu.getHero().getCoord().x + (portee+1) *echelle > jeu.getPlateau().getLargeur()) {
+					x = jeu.getPlateau().getLargeur() - echelle- (largeurEcran -1- i)*Jeu.ECHELLE;
 				}
-				if(jeu.getHero().getCoord().y - portee < 0) {
-					y = j;
-				}else if(jeu.getHero().getCoord().y + portee >= jeu.getPlateau().getHauteur()) {
-					y = jeu.getPlateau().getHauteur() - largeurEcran + j;
-				}
-
+				else
+                    decalageX = jeu.getHero().getCoord().x % Jeu.ECHELLE;
+				if(jeu.getHero().getCoord().y - portee*Jeu.ECHELLE < 0) {
+					y = j * Jeu.ECHELLE;
+				}else if(jeu.getHero().getCoord().y + (portee+1) * echelle > jeu.getPlateau().getHauteur()) {
+					y = jeu.getPlateau().getHauteur()-echelle  - (largeurEcran - j -1)*Jeu.ECHELLE;
+				} else
+                    decalageY = jeu.getHero().getCoord().y % Jeu.ECHELLE;
+				
 				ECase type = p.getType(new Point(x,y));
+				int posX = i*echelle -decalageX;
+				int posY = j*echelle+HEIGHTMENU-decalageY;
 				switch (type) {
 					case MUR:
-						if(!p.horsPlateau(new Point(x,y+1)) && p.getType(new Point(x,y+1)) != ECase.MUR)
-							crayon.drawImage(murBas,i*echelle,j*echelle+HEIGHTMENU,null);
+						if(!p.horsPlateau(new Point(x,y+Jeu.ECHELLE)) && p.getType(new Point(x,y+Jeu.ECHELLE)) != ECase.MUR)
+							crayon.drawImage(murBas,posX,posY,null);
 						else
-							crayon.drawImage(mur,i*echelle,j*echelle+HEIGHTMENU,null);
+							crayon.drawImage(mur,posX,posY,null);
 						break;
 					case PIEGE:
-                        crayon.drawImage(sol,i*echelle,j*echelle+HEIGHTMENU,null);
+                        crayon.drawImage(sol,posX,posY,null);
 						crayon.setColor(Color.red);
 						break;
 					case TRESOR:
-                        crayon.drawImage(sol,i*echelle,j*echelle+HEIGHTMENU,null);
-                        crayon.drawImage(tresor,i*echelle,j*echelle+HEIGHTMENU,null);
+                        crayon.drawImage(sol,posX,posY,null);
+                        crayon.drawImage(tresor,posX,posY,null);
 						break;
 					case TELEPORTEUR:
-                        crayon.drawImage(sol,i*echelle,j*echelle+HEIGHTMENU,null);
-                        crayon.drawImage(tp,i*echelle,j*echelle+HEIGHTMENU,null);
+                        crayon.drawImage(sol,posX,posY,null);
+                        crayon.drawImage(tp,posX,posY,null);
 						break;
 					case VIE:
-                        crayon.drawImage(sol,i*echelle,j*echelle+HEIGHTMENU,null);
+                        crayon.drawImage(sol,posX,posY,null);
                         if(p.getCase(new Point(x,y)).getObjet().getInfo()>0)
-                            crayon.drawImage(vie,i*echelle,j*echelle+HEIGHTMENU,null);
+                            crayon.drawImage(vie,posX,posY,null);
 						break;
 					case ESCALIER:
-                        crayon.drawImage(sol,i*echelle,j*echelle+HEIGHTMENU,null);
+                        crayon.drawImage(sol,posX,posY,null);
                         if(Jeu.getInstance().getIndex() > Jeu.getInstance().getPlateau().getCase(new Point(x,y)).getObjet().getInfo())
-                            crayon.drawImage(escBas,i*echelle,j*echelle+HEIGHTMENU,null);
+                            crayon.drawImage(escBas,posX,posY,null);
                         else
-                            crayon.drawImage(esc,i*echelle,j*echelle+HEIGHTMENU,null);
+                            crayon.drawImage(esc,posX,posY,null);
 						break;
 					default:
-                        crayon.drawImage(sol,i*echelle,j*echelle+HEIGHTMENU,null);
+                        crayon.drawImage(sol,posX,posY,null);
 				}
 
 				if(jeu.getHero().getAttaque() != null && jeu.getHero().getAttaque().equals(new Point(x,y)))
-				    crayon.drawImage(attaque, i*echelle, j*echelle + HEIGHTMENU,null);
+				    crayon.drawImage(attaque, posX, posY,null);
 
 				//crayon.fillRect(i*echelle,j*echelle + HEIGHTMENU,echelle,echelle);
 				for( Monstre m : jeu.getMonstres()) {

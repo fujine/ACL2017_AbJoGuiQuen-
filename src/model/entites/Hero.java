@@ -48,7 +48,9 @@ public class Hero extends Entites {
                 x++;
                 break;
         }
-        if (plateau.estLibre(x,y)){
+        Point coordBG = new Point(x,y+Jeu.TAILLE);
+        Point coordBD = new Point(x + Jeu.TAILLE,y+Jeu.TAILLE);
+        if (plateau.estLibre(coordBG) && plateau.estLibre(coordBD)){
             attaque = new Point(x,y);
             Entites e = Jeu.getInstance().collisionEntites(this,new Point(x,y));
             if(e != null)
@@ -69,13 +71,16 @@ public class Hero extends Entites {
      * @param coord futur position du héro
      */
     public void deplacer(Point coord,Direction direction) {
+        Point coordBG = new Point(coord.x,coord.y+Jeu.TAILLE-1);
+        Point coordBD = new Point(coord.x + Jeu.TAILLE-1,coord.y+Jeu.TAILLE-1);
         dir = direction;
         Jeu mod = Jeu.getInstance();
-        if (coord.x >= 0 && coord.y>= 0 && coord.x < plateau.getLargeur() && coord.y < plateau.getHauteur() ){
+        if (coordBG.x >= 0 && coordBG.y>= 0 && coordBD.x < plateau.getLargeur() && coordBD.y < plateau.getHauteur() ){
             //Test de colision et de zone libre pour le deplacement du héro
-            if(plateau.estLibre(coord.x,coord.y) && mod.collisionEntites(this,coord) == null) {
+            if(plateau.estLibre(coordBG) && plateau.estLibre(coordBD) && mod.collisionEntites(this,coord) == null) {
                 this.coord = coord;
-                Jeu.getInstance().getPlateau().appliquerEffetCase(coord);
+                getPlateau().appliquerEffetCase(coordBD);
+                getPlateau().appliquerEffetCase(coordBG);
             }
         }
 

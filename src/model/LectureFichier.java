@@ -65,7 +65,7 @@ public class LectureFichier {
                             case "T" :
                                 x = Integer.parseInt(splitRecupInfo[1]);
                                 y = Integer.parseInt(splitRecupInfo[2]);
-                                if (x < splitVirgule.length && y < splitVirgule.length) {
+                                if (x < splitVirgule.length* Jeu.ECHELLE && y < splitVirgule.length* Jeu.ECHELLE) {
                                     plat[j][i] = CaseFactory.creerCase(ECase.TELEPORTEUR, new Point(x, y));
                                 }else {
                                     plat[j][i] = CaseFactory.creerCase(ECase.SOL);
@@ -75,7 +75,7 @@ public class LectureFichier {
                                 x = Integer.parseInt(splitRecupInfo[1]);
                                 y = Integer.parseInt(splitRecupInfo[2]);
                                 p = Integer.parseInt(splitRecupInfo[3]);
-                                if (x < splitVirgule.length && y < splitVirgule.length) {
+                                if (x < splitVirgule.length * Jeu.ECHELLE && y < splitVirgule.length * Jeu.ECHELLE) {
                                     plat[j][i] = CaseFactory.creerCase(ECase.ESCALIER,new Point(x,y),p);
                                 } else
                                     plat[j][i] = CaseFactory.creerCase(ECase.SOL);

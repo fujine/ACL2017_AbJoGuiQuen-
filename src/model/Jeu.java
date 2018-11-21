@@ -46,6 +46,9 @@ public class Jeu implements Game {
      */
     private int compteur;
 
+    public static int ECHELLE = 80;
+    public static int TAILLE = 60;
+
     /**
      * Constructeur du jeu par défaut qui instancie un plateau un héro et des monstre par défaut.
      */
@@ -62,10 +65,10 @@ public class Jeu implements Game {
         donjon.add(new Plateau());
         plateauCourant = 0;
 
-        hero = new Hero(new Point(1,1),plateau);
+        hero = new Hero(new Point(80,80),plateau);
         cimetiere = new ArrayList<>();
-        donjon.get(plateauCourant).addMonstre(new Chevalier(new Point(4,4),plateau));
-        donjon.get(plateauCourant).addMonstre(new Chevalier(new Point(13,13),plateau));
+        //donjon.get(plateauCourant).addMonstre(new Chevalier(new Point(4,4),plateau));
+        //donjon.get(plateauCourant).addMonstre(new Chevalier(new Point(13,13),plateau));
         compteur = 0;
     };
 
@@ -97,23 +100,24 @@ public class Jeu implements Game {
     public void evolve(Cmd cmd){
         int x = hero.getCoord().x;
         int y = hero.getCoord().y;
+        int vitesse = 5;
         Direction dir = null;
         switch (cmd){
             case UP :
-                y--;
+                y-=vitesse;
                 dir = Direction.HAUT;
                 break;
             case DOWN :
-                y++;
+                y+=vitesse;
                 dir = Direction.BAS;
                 break;
             case LEFT:
                 dir = Direction.GAUCHE;
-                x--;
+                x-=vitesse;
                 break;
             case RIGHT:
                 dir = Direction.DROITE;
-                x++;
+                x+=vitesse;
                 break;
             case END:
                 this.fini = true;
@@ -246,6 +250,6 @@ public class Jeu implements Game {
      * @return true si traversable false sinon
      */
     public boolean verifLibre(Point coord) {
-        return plateau.estLibre(coord.x,coord.y);
+        return plateau.estLibre(coord);
     }
 }

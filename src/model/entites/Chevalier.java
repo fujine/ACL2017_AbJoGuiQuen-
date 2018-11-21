@@ -124,7 +124,7 @@ public class Chevalier<dep> extends Monstre {
         }
 
         //Vérification de la case du plateau si elle est libre et vérifie la collision avec d'autres entités
-        if(plateau.estLibre(posX,posY) && mod.collisionEntites(this,new Point(posX,posY)) == null)
+        if(plateau.estLibre(new Point(posX,posY)) && mod.collisionEntites(this,new Point(posX,posY)) == null)
             if (posX >= 0 && posY>= 0 && posX < mod.getPlateau().getLargeur() && posY < mod.getPlateau().getHauteur())
                 coord.move(posX,posY);
     }

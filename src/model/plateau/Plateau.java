@@ -1,5 +1,6 @@
 package model.plateau;
 
+import model.Jeu;
 import model.entites.Chevalier;
 import model.entites.Monstre;
 import model.factory.CaseFactory;
@@ -18,8 +19,8 @@ public class Plateau {
      * Constructeur par défaut avec mur sur les bordures
      */
     public Plateau() {
-        largeur = 15;
-        hauteur = 15;
+        largeur = 15*Jeu.ECHELLE;
+        hauteur = 15*Jeu.ECHELLE;
         monstres = new ArrayList<>();
         plateau = new ICase[hauteur][largeur];
 
@@ -55,20 +56,20 @@ public class Plateau {
 
     public Plateau(ICase[][] p){
         this.plateau = p;
-        this.hauteur = this.plateau[0].length;
-        this.largeur = this.plateau[0].length;
+        this.hauteur = this.plateau.length*Jeu.ECHELLE;
+        this.largeur = this.plateau[0].length*Jeu.ECHELLE;
         monstres = new ArrayList<>();
 
     }
 
     /**
      * Vérifie que la case est vide
-     * @param posx abscisse de la case
-     * @param posy ordonnée de la case
      * @return true si case vide, false sinon
      */
-    public boolean estLibre(int posx, int posy) {
-        return plateau[posx][posy].estTraversable();
+    public boolean estLibre(Point coord) {
+        int coordX = coord.x/Jeu.ECHELLE;
+        int coordY = coord.y/Jeu.ECHELLE;
+        return plateau[coordX][coordY].estTraversable();
     }
 
     public int getHauteur() {
@@ -99,29 +100,35 @@ public class Plateau {
         plateau[6][5] = CaseFactory.creerCase(ECase.MUR);
         plateau[5][5] = CaseFactory.creerCase(ECase.MUR);
         plateau[4][8] = CaseFactory.creerCase(ECase.VIE);
-        plateau[8][8] = CaseFactory.creerCase(ECase.TELEPORTEUR,new Point(2,1));
-        plateau[2][1] = CaseFactory.creerCase(ECase.TELEPORTEUR,new Point(8,1));
-        plateau[9][9] = CaseFactory.creerCase(ECase.ESCALIER, new Point(1,1),0);
-        addMonstre(new Chevalier(new Point(5,6),this));
-        addMonstre(new Chevalier(new Point(8,7),this));
+        plateau[8][8] = CaseFactory.creerCase(ECase.TELEPORTEUR,new Point(160,80));
+        plateau[2][1] = CaseFactory.creerCase(ECase.TELEPORTEUR,new Point(640,80));
+        plateau[9][9] = CaseFactory.creerCase(ECase.ESCALIER, new Point(80,80),0);
+        //addMonstre(new Chevalier(new Point(5,6),this));
+        //addMonstre(new Chevalier(new Point(8,7),this));
     }
 
     public ICase getCase(Point coord) {
-        return plateau[coord.x][coord.y];
+        Point coordPlateau = new Point(coord.x/Jeu.ECHELLE, coord.y/Jeu.ECHELLE);
+        return plateau[coordPlateau.x][coordPlateau.y];
     }
 
-    public boolean horsPlateau(Point p) {
-        if(p.x < 0 || p.x >= plateau.length || p.y < 0 || p.y >= plateau[0].length)
+    public boolean horsPlateau(Point coord) {
+        Point coordPlateau = new Point(coord.x/Jeu.ECHELLE, coord.y/Jeu.ECHELLE);
+        if(coordPlateau.x < 0 || coordPlateau.x >= plateau.length || coordPlateau.y < 0 || coordPlateau.y >= plateau[0].length)
             return true;
         return false;
     }
 
     public void appliquerEffetCase(Point coord) {
-        plateau[coord.x][coord.y].appliquerEffet();
+        Point coordPlateau = new Point(coord.x/Jeu.ECHELLE, coord.y/Jeu.ECHELLE);
+        plateau[coordPlateau.x][coordPlateau.y].appliquerEffet();
     }
 
     public ECase getType(Point coord){
-        return plateau[coord.x][coord.y].getType();
+        Point coordPlateau = new Point(coord.x/Jeu.ECHELLE, coord.y/Jeu.ECHELLE);
+        if(coordPlateau.x >= plateau.length || coordPlateau.y >= plateau[0].length)
+            return ECase.MUR;
+        return plateau[coordPlateau.x][coordPlateau.y].getType();
     }
 
     /**

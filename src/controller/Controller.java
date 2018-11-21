@@ -67,7 +67,6 @@ public class Controller implements GameController {
 			case ' ':
 				this.commandeEnCours = Cmd.ATTAQUE;
 		}
-
 	}
 
 	@Override
