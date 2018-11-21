@@ -200,8 +200,10 @@ public class Painter implements GamePainter {
                         crayon.drawImage(sol,posX,posY,null);
 				}
 
-				if(jeu.getHero().getAttaque() != null && jeu.getHero().getAttaque().equals(new Point(x,y)))
-				    crayon.drawImage(attaque, posX, posY,null);
+				if(jeu.getHero().getAttaque() != null && jeu.getHero().getAttaque().equals(new Point(x,y))) {
+					crayon.drawImage(attaque, posX, posY, null);
+					jeu.getHero().setAttaque(null);
+				}
 
 				//crayon.fillRect(i*echelle,j*echelle + HEIGHTMENU,echelle,echelle);
 				for( Monstre m : jeu.getMonstres()) {

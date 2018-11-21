@@ -2,8 +2,10 @@ package controller;
 
 import engine.Cmd;
 import engine.GameController;
+import model.Jeu;
 
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 
 /**
@@ -17,23 +19,19 @@ public class Controller implements GameController {
 	/**
 	 * commande en cours
 	 */
-	private Cmd commandeEnCours;
+	private ArrayList<Cmd> listAction;
+	private boolean attaque = false;
 
 	/**
 	 * construction du controleur par defaut le controleur n'a pas de commande
 	 */
 	public Controller() {
-		this.commandeEnCours = Cmd.IDLE;
+		this.listAction = new ArrayList<Cmd>();
+		this.listAction.add(Cmd.IDLE);
 	}
 
-	/**
-	 * quand on demande les commandes, le controleur retourne la commande en
-	 * cours
-	 *
-	 * @return commande faite par le joueur
-	 */
-	public Cmd getCommand() {
-		return this.commandeEnCours;
+	public ArrayList<Cmd> getListAction() {
+		return listAction;
 	}
 
 	@Override
@@ -46,26 +44,52 @@ public class Controller implements GameController {
 			// si on appuie sur 'q',commande joueur est gauche
 			case 'q':
 			case 'Q':
-				this.commandeEnCours = Cmd.LEFT;
+				if (!this.listAction.contains(Cmd.LEFT)){
+					this.listAction.add(Cmd.LEFT);
+				}
+				if (this.listAction.contains(Cmd.IDLE)){
+					this.listAction.remove(Cmd.IDLE);
+				}
 				break;
 			case 'z':
 			case 'Z':
-				this.commandeEnCours = Cmd.UP;
+				if (!this.listAction.contains(Cmd.UP)){
+					this.listAction.add(Cmd.UP);
+				}
+				if (this.listAction.contains(Cmd.IDLE)){
+					this.listAction.remove(Cmd.IDLE);
+				}
 				break;
 			case 's':
 			case 'S':
-				this.commandeEnCours = Cmd.DOWN;
+				if (!this.listAction.contains(Cmd.DOWN)){
+					this.listAction.add(Cmd.DOWN);
+				}
+				if (this.listAction.contains(Cmd.IDLE)){
+					this.listAction.remove(Cmd.IDLE);
+				}
 				break;
 			case 'd':
 			case 'D':
-				this.commandeEnCours = Cmd.RIGHT;
+				if (!this.listAction.contains(Cmd.RIGHT)){
+					this.listAction.add(Cmd.RIGHT);
+				}
+				if (this.listAction.contains(Cmd.IDLE)){
+					this.listAction.remove(Cmd.IDLE);
+				}
 				break;
 			case 'f':
 			case 'F':
-				this.commandeEnCours = Cmd.LEFT;
+				if (!this.listAction.contains(Cmd.END)){
+					this.listAction.add(Cmd.END);
+				}
+				if (this.listAction.contains(Cmd.IDLE)){
+					this.listAction.remove(Cmd.IDLE);
+				}
 				break;
 			case ' ':
-				this.commandeEnCours = Cmd.ATTAQUE;
+				this.attaque = true;
+				Jeu.getInstance().getHero().attaquer();
 		}
 	}
 
@@ -74,7 +98,46 @@ public class Controller implements GameController {
 	 * met a jour les commandes quand le joueur relache une touche
 	 */
 	public void keyReleased(KeyEvent e) {
-		this.commandeEnCours = Cmd.IDLE;
+		switch (e.getKeyChar()) {
+			// si on appuie sur 'q',commande joueur est gauche
+			case 'q':
+			case 'Q':
+				this.listAction.remove(Cmd.LEFT);
+				if (this.listAction.size() == 0){
+					this.listAction.add(Cmd.IDLE);
+				}
+				break;
+			case 'z':
+			case 'Z':
+				this.listAction.remove(Cmd.UP);
+				if (this.listAction.size() == 0){
+					this.listAction.add(Cmd.IDLE);
+				}
+				break;
+			case 's':
+			case 'S':
+				this.listAction.remove(Cmd.DOWN);
+				if (this.listAction.size() == 0){
+					this.listAction.add(Cmd.IDLE);
+				}
+				break;
+			case 'd':
+			case 'D':
+				this.listAction.remove(Cmd.RIGHT);
+				if (this.listAction.size() == 0){
+					this.listAction.add(Cmd.IDLE);
+				}
+				break;
+			case 'f':
+			case 'F':
+				this.listAction.remove(Cmd.END);
+				if (this.listAction.size() == 0){
+					this.listAction.add(Cmd.IDLE);
+				}
+				break;
+			case ' ':
+				this.attaque = false;
+		}
 	}
 
 	@Override
@@ -85,4 +148,12 @@ public class Controller implements GameController {
 
 	}
 
+	@Override
+	public Cmd getCommand() {
+		if (!this.attaque)
+			return listAction.get(0);
+		else
+			return Cmd.ATTAQUE;
+
+	}
 }
