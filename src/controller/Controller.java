@@ -2,6 +2,7 @@ package controller;
 
 import engine.Cmd;
 import engine.GameController;
+import model.Jeu;
 
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -88,6 +89,7 @@ public class Controller implements GameController {
 				break;
 			case ' ':
 				this.attaque = true;
+				Jeu.getInstance().getHero().attaquer();
 		}
 
 	}
@@ -149,7 +151,6 @@ public class Controller implements GameController {
 
 	@Override
 	public Cmd getCommand() {
-		System.out.println(listAction.size());
 		return listAction.get(0);
 
 	}

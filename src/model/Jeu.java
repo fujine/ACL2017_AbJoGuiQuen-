@@ -126,8 +126,7 @@ public class Jeu implements Game {
             hero.deplacer(new Point(x,y),dir);
         }
 
-        if(cmd != Cmd.ATTAQUE)
-            hero.setAttaque(null);
+
 
         //Retire les monstre mort de la liste des monstre
         retirerMonstre();
