@@ -151,7 +151,10 @@ public class Controller implements GameController {
 
 	@Override
 	public Cmd getCommand() {
-		return listAction.get(0);
+		if (!this.attaque)
+			return listAction.get(0);
+		else
+			return Cmd.ATTAQUE;
 
 	}
 }
