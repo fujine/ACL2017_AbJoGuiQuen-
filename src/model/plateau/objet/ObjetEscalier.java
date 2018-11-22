@@ -12,7 +12,23 @@ public class ObjetEscalier extends Objet {
      */
     private Point coord;
 
-    /**
+    public Point getCoord() {
+		return coord;
+	}
+
+	public void setCoord(Point coord) {
+		this.coord = coord;
+	}
+
+	public int getPlateau() {
+		return plateau;
+	}
+
+	public void setPlateau(int plateau) {
+		this.plateau = plateau;
+	}
+
+	/**
      * Index du plateau à atteindre
      */
     private int plateau;

@@ -21,7 +21,7 @@ class ImitationObjet extends Objet{
 	
 	
 	public ECase getType () {
-		return ECase.MUR;
+		return ECase.SOL;
 	}
 
 
