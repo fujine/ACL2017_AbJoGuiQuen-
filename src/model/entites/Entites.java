@@ -40,6 +40,8 @@ public abstract class Entites {
 
     protected int vieMax = 1;
 
+    protected int vitesse;
+
     /**
      *
      * Constructeur à partir d'une position et d'un plateau
@@ -59,6 +61,18 @@ public abstract class Entites {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public void setDegat(int degat) {
+        this.degat = degat;
+    }
+
+    public int getVitesse() {
+        return vitesse;
+    }
+
+    public void setVitesse(int vitesse) {
+        this.vitesse = vitesse;
     }
 
     public Point getCoord() {

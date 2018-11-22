@@ -7,7 +7,7 @@ import java.awt.*;
 
 public class Hero extends Entites {
 
-    private Point attaque;
+    private boolean attaque;
 
     /**
      * Constructeur à partir d'une position et d'un plateau avec définition de la vie du héro
@@ -21,13 +21,14 @@ public class Hero extends Entites {
         vie = 9;
         vieMax = 10;
         degat = 1;
+        vitesse = 13;
     }
 
-    public Point getAttaque() {
+    public boolean getAttaque() {
         return attaque;
     }
 
-    public void setAttaque(Point attaque) {
+    public void setAttaque(boolean attaque) {
         this.attaque = attaque;
     }
 
@@ -48,15 +49,15 @@ public class Hero extends Entites {
                 x++;
                 break;
         }
-        Point coordBG = new Point(x,y+Jeu.TAILLE);
-        Point coordBD = new Point(x + Jeu.TAILLE,y+Jeu.TAILLE);
+        Point coordBG = new Point(x,y+Jeu.TAILLE -1);
+        Point coordBD = new Point(x + Jeu.TAILLE -1,y+Jeu.TAILLE -1);
         if (plateau.estLibre(coordBG) && plateau.estLibre(coordBD)){
-            attaque = new Point(x,y);
+            attaque = true;
             Entites e = Jeu.getInstance().collisionEntites(this,new Point(x,y));
             if(e != null)
                 e.subirDegat(degat);
         } else
-            attaque = null;
+            attaque = false;
     }
 
     /**
@@ -73,14 +74,39 @@ public class Hero extends Entites {
     public void deplacer(Point coord,Direction direction) {
         Point coordBG = new Point(coord.x,coord.y+Jeu.TAILLE-1);
         Point coordBD = new Point(coord.x + Jeu.TAILLE-1,coord.y+Jeu.TAILLE-1);
+        Point coordHG = new Point(coord.x,coord.y+Jeu.TAILLE-1- Jeu.ECHELLE/4);
+        Point coordHD = new Point(coord.x + Jeu.TAILLE-1,coord.y+Jeu.TAILLE-1- Jeu.ECHELLE/4);
         dir = direction;
         Jeu mod = Jeu.getInstance();
         if (coordBG.x >= 0 && coordBG.y>= 0 && coordBD.x < plateau.getLargeur() && coordBD.y < plateau.getHauteur() ){
             //Test de colision et de zone libre pour le deplacement du héro
-            if(plateau.estLibre(coordBG) && plateau.estLibre(coordBD) && mod.collisionEntites(this,coord) == null) {
+            if(plateau.estLibre(coordBG) && plateau.estLibre(coordBD) && plateau.estLibre(coordHD) && plateau.estLibre(coordHG) && mod.collisionEntites(this,coord) == null) {
                 this.coord = coord;
                 getPlateau().appliquerEffetCase(coordBD);
                 getPlateau().appliquerEffetCase(coordBG);
+            } else {
+                switch (direction) {
+                    case DROITE:
+                        if((coordBD.x +1 ) % Jeu.ECHELLE != 0 ) {
+                            this.coord.x = coord.x - (coordBD.x +1 ) % Jeu.ECHELLE;
+                        }
+                        break;
+                    case GAUCHE:
+                        if(coordBG.x % Jeu.ECHELLE != 0 ) {
+                            this.coord.x = this.coord.x / Jeu.ECHELLE * Jeu.ECHELLE;
+                        }
+                        break;
+                    case BAS:
+                        if((coordBD.y +1 ) % Jeu.ECHELLE != 0 ) {
+                            this.coord.y = (this.coord.y + Jeu.ECHELLE)/Jeu.ECHELLE*Jeu.ECHELLE - Jeu.TAILLE ;
+                        }
+                        break;
+                    case HAUT:
+                        if((coordBD.y ) % Jeu.ECHELLE != 0 ) {
+                            this.coord.y = this.coord.y / Jeu.ECHELLE * Jeu.ECHELLE + (Jeu.ECHELLE - Jeu.TAILLE + Jeu.ECHELLE/4 +1) ;
+                        }
+                        break;
+                }
             }
         }
 

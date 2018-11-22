@@ -19,10 +19,10 @@ public class Plateau {
      * Constructeur par défaut avec mur sur les bordures
      */
     public Plateau() {
-        largeur = 15*Jeu.ECHELLE;
-        hauteur = 15*Jeu.ECHELLE;
+        largeur = 15;
+        hauteur = 15;
         monstres = new ArrayList<>();
-        plateau = new ICase[hauteur][largeur];
+        plateau = new ICase[15][15];
 
         //Génère un tableau avec un mur sur les 4 bordures
         for(int i = 0; i < hauteur; i++) {
@@ -37,6 +37,8 @@ public class Plateau {
                 }
             }
         }
+        largeur = 15*Jeu.ECHELLE;
+        hauteur = 15*Jeu.ECHELLE;
 
         modifierCase();
     }

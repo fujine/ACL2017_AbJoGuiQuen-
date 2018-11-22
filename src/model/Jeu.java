@@ -47,7 +47,7 @@ public class Jeu implements Game {
     private int compteur;
 
     public static int ECHELLE = 80;
-    public static int TAILLE = 60;
+    public static int TAILLE = 50;
 
     /**
      * Constructeur du jeu par défaut qui instancie un plateau un héro et des monstre par défaut.
@@ -67,8 +67,7 @@ public class Jeu implements Game {
 
         hero = new Hero(new Point(80,80),plateau);
         cimetiere = new ArrayList<>();
-        //donjon.get(plateauCourant).addMonstre(new Chevalier(new Point(4,4),plateau));
-        //donjon.get(plateauCourant).addMonstre(new Chevalier(new Point(13,13),plateau));
+        donjon.get(plateauCourant).addMonstre(new Chevalier(new Point(80,160),plateau));
         compteur = 0;
     };
 
@@ -100,7 +99,7 @@ public class Jeu implements Game {
     public void evolve(Cmd cmd){
         int x = hero.getCoord().x;
         int y = hero.getCoord().y;
-        int vitesse = 5;
+        int vitesse = hero.getVitesse();
         Direction dir = null;
         switch (cmd){
             case UP :

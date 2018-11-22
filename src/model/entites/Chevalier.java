@@ -10,7 +10,6 @@ import java.util.Random;
 
 public class Chevalier<dep> extends Monstre {
     Hero h = new Hero(coord, plateau);
-    int vitesse = 1;
     
     /**
      * Constructeur à partir d'une position et d'un plateau avec définition de la vie du chevalier
@@ -22,6 +21,7 @@ public class Chevalier<dep> extends Monstre {
         vie = 1;
         degat = 1;
         dir = Direction.BAS;
+        vitesse = 3;
     }
 
     /**
@@ -40,7 +40,7 @@ public class Chevalier<dep> extends Monstre {
         int posX = getCoord().x;
         int posY = getCoord().y;
 
-        if (dist > 3) {
+        if (dist > 3*Jeu.ECHELLE) {
 
             switch (dep) {
                 //Haut
@@ -68,43 +68,79 @@ public class Chevalier<dep> extends Monstre {
 
         }else{
 
-            double distHaut = posH.distance(new Point(posX, posY-vitesse));
-            double distBas = posH.distance(new Point(posX, posY+vitesse));
-            double distDroite = posH.distance(new Point(posX+vitesse, posY));
-            double distGauche = posH.distance(new Point(posX-vitesse, posY));
+            Direction[] tab = {Direction.HAUT, Direction.BAS,Direction.GAUCHE,Direction.DROITE};
 
-            if(distHaut < dist && plateau.estLibre(new Point(posX,posY-vitesse))){
-                System.out.println("haut");
-                posY-=vitesse;
-                dir = Direction.HAUT;
-            }else if(distBas < dist && plateau.estLibre(new Point(posX,posY+vitesse)) ){
-                System.out.println("bas");
-                posY+=vitesse;
-                dir = Direction.BAS;
+            for (int i = 0; i < 4 ; i++){
+                Direction choix = tab[i];
+                int x = coord.x;
+                int y = coord.y;
 
-            }else if(distDroite < dist && plateau.estLibre(new Point(posX+vitesse,posY))){
-                System.out.println("droite");
-                posX+=vitesse;
-                dir = Direction.DROITE;
+                switch (choix) {
+                    case HAUT:
+                        y-=vitesse;
+                        break;
+                    case BAS:
+                        y+=vitesse;
+                        break;
+                    case GAUCHE:
+                        x-=vitesse;
+                        break;
+                    case DROITE:
+                        x+=vitesse;
+                        break;
+                }
 
-            }else if(distGauche < dist && plateau.estLibre(new Point(posX-vitesse,posY))){
-                System.out.println("gauche");
-                posX-=vitesse;
-                dir = Direction.GAUCHE;
+                //Test d'éloignement
+                if(dist> posH.distance(new Point(x, y))) {
+                    //Test Collision mur
+                    Point coordBG = new Point(x,y+Jeu.TAILLE);
+                    Point coordBD = new Point(x + Jeu.TAILLE, y + Jeu.TAILLE);
+                    if(plateau.estLibre(coordBG) && plateau.estLibre(coordBD) && mod.collisionEntites(this,new Point(posX,posY)) == null) {
+                        if (posX >= 0 && posY >= 0 && posX < mod.getPlateau().getLargeur() && posY < mod.getPlateau().getHauteur()) {
+                            coord.move(x, y);
+                            dir = choix;
+                            i = 4;
+                        }
+                    } else {
+                        switch (choix) {
+                            case DROITE:
+                                if((coordBD.x +1 ) % Jeu.ECHELLE != 0 ) {
+                                    this.coord.x = coord.x - (coordBD.x +1 ) % Jeu.ECHELLE;
+                                    i = 4;
+                                    dir = choix;
+                                }
+                                break;
+                            case GAUCHE:
+                                if(coordBG.x % Jeu.ECHELLE != 0 ) {
+                                    this.coord.x = this.coord.x / Jeu.ECHELLE * Jeu.ECHELLE;
+                                    i = 4;
+                                    dir = choix;
+                                }
+                                break;
+                            case BAS:
+                                if((coordBD.y +1 ) % Jeu.ECHELLE != 0 ) {
+                                    this.coord.y = (this.coord.y + Jeu.ECHELLE)/Jeu.ECHELLE*Jeu.ECHELLE - Jeu.TAILLE ;
+                                    i = 4;
+                                    dir = choix;
+                                }
+                                break;
+                            case HAUT:
+                                if((coordBD.y ) % Jeu.ECHELLE != 0 ) {
+                                    this.coord.y = this.coord.y / Jeu.ECHELLE * Jeu.ECHELLE + (Jeu.ECHELLE - Jeu.TAILLE + Jeu.ECHELLE/4 +1) ;
+                                    i = 4;
+                                    dir = choix;
+                                }
+                                break;
+                        }
+                    }
+                }
+
             }
-
-
         }
 
-        if (mod.collisionEntites(this,new Point(posX,posY)) != null && mod.collisionEntites(this,new Point(posX,posY)).getType().equals("h")){
+        /*if (mod.collisionEntites(this,new Point(posX,posY)) != null && mod.collisionEntites(this,new Point(posX,posY)).getType().equals("h")){
             mod.appliquerDegats(this.getDegat());
-        }
-
-
-        //Vérification de la case du plateau si elle est libre et vérifie la collision avec d'autres entités
-        if(plateau.estLibre(new Point(posX,posY)) && mod.collisionEntites(this,new Point(posX,posY)) == null)
-            if (posX >= 0 && posY>= 0 && posX < mod.getPlateau().getLargeur() && posY < mod.getPlateau().getHauteur())
-                coord.move(posX,posY);
+        }*/
     }
 
 }
