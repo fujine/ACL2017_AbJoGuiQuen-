@@ -67,7 +67,7 @@ public class Plateau {
      * @param posy ordonnée de la case
      * @return true si case vide, false sinon
      */
-    public boolean estLibre(int posx, int posy) {
+    public synchronized boolean  estLibre(int posx, int posy) {
         return plateau[posx][posy].estTraversable();
     }
 
