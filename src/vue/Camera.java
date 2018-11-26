@@ -21,8 +21,8 @@ public class Camera {
             limX[0] = 0;
             limX[1] = largeurEcran*Jeu.ECHELLE;
         } else if (hero.getCoord().x + (portee+1) *Jeu.ECHELLE > hero.getPlateau().getLargeur()){
-            limX[0] = hero.getPlateau().getLargeur()-1;
-            limX[1] = hero.getPlateau().getLargeur()-1 - largeurEcran*Jeu.ECHELLE;
+            limX[1] = hero.getPlateau().getLargeur()-1;
+            limX[0] = hero.getPlateau().getLargeur()-1 - largeurEcran*Jeu.ECHELLE;
         } else {
             limX[0] = hero.getCoord().x - largeurEcran/2 * Jeu.ECHELLE;
             limX[1] = limX[0] + largeurEcran*Jeu.ECHELLE;
@@ -31,8 +31,8 @@ public class Camera {
             limY[0] = 0;
             limY[1] = largeurEcran*Jeu.ECHELLE;
         } else if (hero.getCoord().y + (portee+1) * Jeu.ECHELLE > hero.getPlateau().getLargeur()){
-            limY[0] = hero.getPlateau().getLargeur()-1;
-            limY[1] = hero.getPlateau().getLargeur()-1 - largeurEcran*Jeu.ECHELLE;
+            limY[1] = hero.getPlateau().getLargeur()-1;
+            limY[0] = hero.getPlateau().getLargeur()-1 - largeurEcran*Jeu.ECHELLE;
         } else {
             limY[0] = hero.getCoord().y - largeurEcran/2 * Jeu.ECHELLE;
             limY[1] = limY[0] + largeurEcran*Jeu.ECHELLE;
@@ -56,7 +56,7 @@ public class Camera {
     }
 
     public boolean dansCadre(Point coord) {
-        if (coord.x + Jeu.ECHELLE >= getLimXInf() && coord.x+ Jeu.ECHELLE <= getLimXSup() && coord.y + Jeu.ECHELLE>= getLimYInf() && coord.y+ Jeu.ECHELLE <= getLimYSup())
+        if (coord.x + Jeu.ECHELLE>= getLimXInf() && coord.x  <= getLimXSup() && coord.y + Jeu.ECHELLE>= getLimYInf() && coord.y <= getLimYSup())
             return true;
         return false;
     }

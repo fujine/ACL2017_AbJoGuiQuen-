@@ -49,18 +49,12 @@ public class Hero extends Entites {
                 x+= Jeu.TAILLE;
                 break;
         }
-        Point coordBG = new Point(x,y+Jeu.TAILLE -1);
-        Point coordBD = new Point(x + Jeu.TAILLE -1,y+Jeu.TAILLE -1);
-        Point coordHG = new Point(x,y+Jeu.TAILLE-1- Jeu.ECHELLE/4);
-        Point coordHD = new Point(x + Jeu.TAILLE-1,y+Jeu.TAILLE-1- Jeu.ECHELLE/4);
-        Rectangle colli = new Rectangle(coordHG,new Dimension(Jeu.TAILLE,Jeu.ECHELLE/4));
-        if (plateau.estLibre(coordBG) && plateau.estLibre(coordBD) && plateau.estLibre(coordHD) && plateau.estLibre(coordHG)){
+
+        Rectangle colli = new Rectangle(new Point(),new Dimension(Jeu.TAILLE,Jeu.ECHELLE/4));
             attaque = true;
             Entites e = Jeu.getInstance().collisionEntites(this,colli);
             if(e != null)
                 e.subirDegat(degat);
-        } else
-            attaque = false;
     }
 
     /**

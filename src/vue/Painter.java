@@ -180,6 +180,7 @@ public class Painter implements GamePainter {
             if (cam.dansCadre(m.getCoord())) {
                 posX = m.getCoord().x - cam.getLimXInf();
                 posY = m.getCoord().y - cam.getLimYInf();
+
                 switch (m.getDir()) {
                     case BAS:
                         crayon.drawImage(sque[0],posX,posY + HEIGHTMENU,null);

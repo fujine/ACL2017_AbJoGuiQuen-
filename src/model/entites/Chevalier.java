@@ -11,6 +11,8 @@ import java.util.Random;
 public class Chevalier<dep> extends Monstre {
     Hero h = new Hero(coord, plateau);
 
+    private long timer = 0;
+
     /**
      * Constructeur à partir d'une position et d'un plateau avec définition de la vie du chevalier
      * @param coord Coordonnée du Chevalier sur le plateau
@@ -111,13 +113,14 @@ public class Chevalier<dep> extends Monstre {
                     Point coordHG = new Point(x,y+Jeu.TAILLE + 1 - Jeu.ECHELLE/4);
                     Point coordHD = new Point(x + Jeu.TAILLE-1,y+Jeu.TAILLE-1- Jeu.ECHELLE/4);
                     Rectangle colli = new Rectangle(coordHG,new Dimension(Jeu.TAILLE,Jeu.ECHELLE/4));
-                    if(plateau.estLibre(coordBG) && plateau.estLibre(coordBD) && plateau.estLibre(coordHD) && plateau.estLibre(coordHG)  && mod.collisionEntites(this,colli) == null) {
+                    Entites e = mod.collisionEntites(this,colli);
+                    if(plateau.estLibre(coordBG) && plateau.estLibre(coordBD) && plateau.estLibre(coordHD) && plateau.estLibre(coordHG)  && e == null) {
                         if (x >= 0 && y >= 0 && x < mod.getPlateau().getLargeur() && y < mod.getPlateau().getHauteur()) {
                             coord.move(x, y);
                             dir = choix;
                             i = 4;
                         }
-                    } else if (mod.collisionEntites(this, colli)==null){
+                    } else if (e ==null){
                         Point p = new Point(coord);
                         switch (choix) {
                             case DROITE:
@@ -152,6 +155,15 @@ public class Chevalier<dep> extends Monstre {
                                     dir = choix;
                                 }
                                 break;
+                        }
+                    } else if (e instanceof Hero) {
+                        if (timer == 0) {
+                            e.subirDegat(this.degat);
+                            timer = System.currentTimeMillis();
+                        } else {
+                            if(System.currentTimeMillis() - timer > 1000) {
+                                timer = 0;
+                            }
                         }
                     }
                 }
