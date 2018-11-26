@@ -104,7 +104,7 @@ public class Plateau {
         plateau[4][8] = CaseFactory.creerCase(ECase.VIE);
         plateau[8][8] = CaseFactory.creerCase(ECase.TELEPORTEUR,new Point(160,80));
         plateau[2][1] = CaseFactory.creerCase(ECase.TELEPORTEUR,new Point(640,80));
-        plateau[9][9] = CaseFactory.creerCase(ECase.ESCALIER, new Point(80,80),0);
+        plateau[9][9] = CaseFactory.creerCase(ECase.ESCALIER, new Point(80,80),1);
         //addMonstre(new Chevalier(new Point(5,6),this));
         //addMonstre(new Chevalier(new Point(8,7),this));
     }

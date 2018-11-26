@@ -10,7 +10,7 @@ import java.util.Random;
 
 public class Chevalier<dep> extends Monstre {
     Hero h = new Hero(coord, plateau);
-    
+
     /**
      * Constructeur à partir d'une position et d'un plateau avec définition de la vie du chevalier
      * @param coord Coordonnée du Chevalier sur le plateau
@@ -66,6 +66,19 @@ public class Chevalier<dep> extends Monstre {
                     break;
             }
 
+            Point coordBG = new Point(posX,posY+Jeu.TAILLE-1);
+            Point coordBD = new Point(posX + Jeu.TAILLE-1, posY + Jeu.TAILLE-1);
+            Point coordHG = new Point(posX,posY+Jeu.TAILLE + 1 - Jeu.ECHELLE/4);
+            Point coordHD = new Point(posX + Jeu.TAILLE-1,posY+Jeu.TAILLE-1- Jeu.ECHELLE/4);
+            Rectangle colli = new Rectangle(coordHG,new Dimension(Jeu.TAILLE,Jeu.ECHELLE/4));
+            if(plateau.estLibre(coordBG) && plateau.estLibre(coordBD) && plateau.estLibre(coordHD) && plateau.estLibre(coordHG)  && mod.collisionEntites(this,colli) == null) {
+                if (posX >= 0 && posY >= 0 && posX < mod.getPlateau().getLargeur() && posY < mod.getPlateau().getHauteur()) {
+                    coord.move(posX, posY);
+                }
+            }
+
+
+
         }else{
 
             Direction[] tab = {Direction.HAUT, Direction.BAS,Direction.GAUCHE,Direction.DROITE};
@@ -93,41 +106,49 @@ public class Chevalier<dep> extends Monstre {
                 //Test d'éloignement
                 if(dist> posH.distance(new Point(x, y))) {
                     //Test Collision mur
-                    Point coordBG = new Point(x,y+Jeu.TAILLE);
-                    Point coordBD = new Point(x + Jeu.TAILLE, y + Jeu.TAILLE);
-                    if(plateau.estLibre(coordBG) && plateau.estLibre(coordBD) && mod.collisionEntites(this,new Point(posX,posY)) == null) {
-                        if (posX >= 0 && posY >= 0 && posX < mod.getPlateau().getLargeur() && posY < mod.getPlateau().getHauteur()) {
+                    Point coordBG = new Point(x,y+Jeu.TAILLE-1);
+                    Point coordBD = new Point(x + Jeu.TAILLE-1, y + Jeu.TAILLE-1);
+                    Point coordHG = new Point(x,y+Jeu.TAILLE + 1 - Jeu.ECHELLE/4);
+                    Point coordHD = new Point(x + Jeu.TAILLE-1,y+Jeu.TAILLE-1- Jeu.ECHELLE/4);
+                    Rectangle colli = new Rectangle(coordHG,new Dimension(Jeu.TAILLE,Jeu.ECHELLE/4));
+                    if(plateau.estLibre(coordBG) && plateau.estLibre(coordBD) && plateau.estLibre(coordHD) && plateau.estLibre(coordHG)  && mod.collisionEntites(this,colli) == null) {
+                        if (x >= 0 && y >= 0 && x < mod.getPlateau().getLargeur() && y < mod.getPlateau().getHauteur()) {
                             coord.move(x, y);
                             dir = choix;
                             i = 4;
                         }
-                    } else {
+                    } else if (mod.collisionEntites(this, colli)==null){
+                        Point p = new Point(coord);
                         switch (choix) {
                             case DROITE:
                                 if((coordBD.x +1 ) % Jeu.ECHELLE != 0 ) {
-                                    this.coord.x = coord.x - (coordBD.x +1 ) % Jeu.ECHELLE;
-                                    i = 4;
+                                    this.coord.x = coord.x - (coordBD.x ) % Jeu.ECHELLE;
+                                    if(!p.equals(coord))
+                                        i = 4;
                                     dir = choix;
                                 }
                                 break;
                             case GAUCHE:
                                 if(coordBG.x % Jeu.ECHELLE != 0 ) {
                                     this.coord.x = this.coord.x / Jeu.ECHELLE * Jeu.ECHELLE;
-                                    i = 4;
+                                    if(!p.equals(coord))
+                                        i = 4;
                                     dir = choix;
                                 }
                                 break;
                             case BAS:
                                 if((coordBD.y +1 ) % Jeu.ECHELLE != 0 ) {
                                     this.coord.y = (this.coord.y + Jeu.ECHELLE)/Jeu.ECHELLE*Jeu.ECHELLE - Jeu.TAILLE ;
-                                    i = 4;
+                                    if(!p.equals(coord))
+                                        i = 4;
                                     dir = choix;
                                 }
                                 break;
                             case HAUT:
                                 if((coordBD.y ) % Jeu.ECHELLE != 0 ) {
                                     this.coord.y = this.coord.y / Jeu.ECHELLE * Jeu.ECHELLE + (Jeu.ECHELLE - Jeu.TAILLE + Jeu.ECHELLE/4 +1) ;
-                                    i = 4;
+                                    if(!p.equals(coord))
+                                        i = 4;
                                     dir = choix;
                                 }
                                 break;

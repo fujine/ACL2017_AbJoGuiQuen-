@@ -37,23 +37,26 @@ public class Hero extends Entites {
         int y = coord.y;
         switch (dir) {
             case BAS:
-                y++;
+                y+=Jeu.TAILLE;
                 break;
             case HAUT:
-                y--;
+                y-=Jeu.TAILLE;
                 break;
             case GAUCHE:
-                x--;
+                x-=Jeu.TAILLE;
                 break;
             case DROITE:
-                x++;
+                x+= Jeu.TAILLE;
                 break;
         }
         Point coordBG = new Point(x,y+Jeu.TAILLE -1);
         Point coordBD = new Point(x + Jeu.TAILLE -1,y+Jeu.TAILLE -1);
-        if (plateau.estLibre(coordBG) && plateau.estLibre(coordBD)){
+        Point coordHG = new Point(x,y+Jeu.TAILLE-1- Jeu.ECHELLE/4);
+        Point coordHD = new Point(x + Jeu.TAILLE-1,y+Jeu.TAILLE-1- Jeu.ECHELLE/4);
+        Rectangle colli = new Rectangle(coordHG,new Dimension(Jeu.TAILLE,Jeu.ECHELLE/4));
+        if (plateau.estLibre(coordBG) && plateau.estLibre(coordBD) && plateau.estLibre(coordHD) && plateau.estLibre(coordHG)){
             attaque = true;
-            Entites e = Jeu.getInstance().collisionEntites(this,new Point(x,y));
+            Entites e = Jeu.getInstance().collisionEntites(this,colli);
             if(e != null)
                 e.subirDegat(degat);
         } else
@@ -76,15 +79,16 @@ public class Hero extends Entites {
         Point coordBD = new Point(coord.x + Jeu.TAILLE-1,coord.y+Jeu.TAILLE-1);
         Point coordHG = new Point(coord.x,coord.y+Jeu.TAILLE-1- Jeu.ECHELLE/4);
         Point coordHD = new Point(coord.x + Jeu.TAILLE-1,coord.y+Jeu.TAILLE-1- Jeu.ECHELLE/4);
+        Rectangle colli = new Rectangle(coordHG,new Dimension(Jeu.TAILLE,Jeu.ECHELLE/4));
         dir = direction;
         Jeu mod = Jeu.getInstance();
         if (coordBG.x >= 0 && coordBG.y>= 0 && coordBD.x < plateau.getLargeur() && coordBD.y < plateau.getHauteur() ){
             //Test de colision et de zone libre pour le deplacement du héro
-            if(plateau.estLibre(coordBG) && plateau.estLibre(coordBD) && plateau.estLibre(coordHD) && plateau.estLibre(coordHG) && mod.collisionEntites(this,coord) == null) {
+            if(plateau.estLibre(coordBG) && plateau.estLibre(coordBD) && plateau.estLibre(coordHD) && plateau.estLibre(coordHG) && mod.collisionEntites(this,colli) == null) {
                 this.coord = coord;
                 getPlateau().appliquerEffetCase(coordBD);
                 getPlateau().appliquerEffetCase(coordBG);
-            } else {
+            } else if (mod.collisionEntites(this,colli) == null){
                 switch (direction) {
                     case DROITE:
                         if((coordBD.x +1 ) % Jeu.ECHELLE != 0 ) {

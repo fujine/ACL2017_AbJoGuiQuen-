@@ -1,8 +1,5 @@
 @startuml
 	Class Hero extends Entites {
-		private posX : int
-		private posY : int
-		private jeu : Jeu
 
 		public Hero()
 		public deplacer(int x, int y) : void
@@ -17,9 +14,13 @@
 	    private Point coord
 	    private int degat
 	    private int vie
+	    private int vitesse
+	    public Rectangle getSurfaceCollision()
 	    public int getDegat()
 	    public void setDegat(int degat)
+	    public abstract void attaquer()
 	}
+
 
 	Class Chevalier {
 	    public void deplacer()
@@ -31,6 +32,8 @@
 
 	Interface Monstre extends Entites{
 	    public void deplacer()
+	    public void deplRandom()
+	    public void deplAgress()
 	}
 
 	Class Plateau {
@@ -44,6 +47,7 @@
         estLibre(int posX, int posY) : boolean
         appliquerEffetCase(int posX, int posY) : void
         affichageText() : void
+        public boolean horsPlateau(Point coord)
 
 	}
 
@@ -154,7 +158,7 @@
     class Painter implements GamePainter {
     	protected static final int WIDTH = 1000
     	protected static final int HEIGHT = 1000
-    	protected static final int ECHELLE = 100
+    	protected static final int ECHELLE
     	private Jeu jeu
     	public Painter(Jeu jeu)
     	public void draw(BufferedImage im)
@@ -218,5 +222,7 @@
     Monstre <.. Chevalier
     Monstre <.. Fantome
     MonstreFactory -[hidden]- CaseFactory
+    AlgoStrategie "1" -left- Monstre
+    Hero -[hidden]right- Monstre
 
 @enduml

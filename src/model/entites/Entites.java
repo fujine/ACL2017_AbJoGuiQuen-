@@ -1,5 +1,6 @@
 package model.entites;
 
+import model.Jeu;
 import model.plateau.Plateau;
 
 import java.awt.*;
@@ -57,6 +58,10 @@ public abstract class Entites {
 
     public int getId() {
         return id;
+    }
+
+    public Rectangle getSurfaceCollision(){
+        return new Rectangle(coord.x,coord.y + Jeu.TAILLE - Jeu.ECHELLE/4,Jeu.TAILLE,Jeu.ECHELLE/4);
     }
 
     public void setId(int id) {

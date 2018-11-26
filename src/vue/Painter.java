@@ -141,7 +141,8 @@ public class Painter implements GamePainter {
                 crayon.drawImage(hero[3],posX,posY,null);
                 break;
 		}
-		crayon.drawRect(posX,posY,taille,taille);
+		crayon.drawRect(h.getCoord().x,h.getCoord().y+HEIGHTMENU,taille,taille);
+		crayon.drawRect(h.getSurfaceCollision().x,h.getSurfaceCollision().y + HEIGHTMENU, h.getSurfaceCollision().width,h.getSurfaceCollision().height);
 
         if(jeu.getHero().getAttaque()) {
             switch (h.getDir()) {

@@ -33,19 +33,19 @@ public class LectureFichier {
             String[] splitTmp; // permet de faire les splits temporaires pour les teleporteurs etc
             int i=0;
             line = sc.nextLine();
-            splitVirgule = line.split(",");
+            splitVirgule = line.split(";");
 
             ICase plat[][] = new ICase[splitVirgule.length][splitVirgule.length];
 
             while (sc.hasNextLine()){
                 if (!first) {
                     line = sc.nextLine();
-                    splitVirgule = line.split(",");
+                    splitVirgule = line.split(";");
                 }else{
                     first = false;
                 }
                 for(int j=0; j<splitVirgule.length ; j++){
-                    if (splitVirgule[j].length() == 1){
+                    if (splitVirgule[j].length() <= 1){
                         switch (splitVirgule[j]){
                             case "M": plat[j][i] = CaseFactory.creerCase(ECase.MUR);
                                 break;
@@ -57,9 +57,12 @@ public class LectureFichier {
                                 break;
                             case "V":  plat[j][i] = CaseFactory.creerCase(ECase.VIDE);
                                 break;
+                            default:
+                                plat[j][i] = CaseFactory.creerCase(ECase.SOL);
+                                break;
                         }
                     }else{
-                        String[] splitRecupInfo = splitVirgule[j].split(";");
+                        String[] splitRecupInfo = splitVirgule[j].split(",");
                         int x,y,p;
                         switch (splitRecupInfo[0]){
                             case "T" :

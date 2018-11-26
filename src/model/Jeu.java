@@ -53,21 +53,26 @@ public class Jeu implements Game {
      * Constructeur du jeu par défaut qui instancie un plateau un héro et des monstre par défaut.
      */
     private Jeu() {
+        donjon = new ArrayList<>();
+
         URI uri = null;
         try {
-            uri = getClass().getResource("/Ressources/plateau1.txt").toURI();
+            uri = getClass().getResource("/Ressources/plateau/TEST.csv").toURI();
+            plateau = LectureFichier.lireFichier(uri);
+            donjon.add(plateau);
+            uri = getClass().getResource("/Ressources/plateau/plateau1.csv").toURI();
+            plateau = LectureFichier.lireFichier(uri);
+            donjon.add(plateau);
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
         plateau = LectureFichier.lireFichier(uri);
-        donjon = new ArrayList<>();
-        donjon.add(plateau);
         donjon.add(new Plateau());
         plateauCourant = 0;
 
-        hero = new Hero(new Point(80,80),plateau);
+        hero = new Hero(new Point(320,80),getPlateau());
         cimetiere = new ArrayList<>();
-        donjon.get(plateauCourant).addMonstre(new Chevalier(new Point(80,160),plateau));
+        donjon.get(plateauCourant).addMonstre(new Chevalier(new Point(80,160),getPlateau()));
         compteur = 0;
     };
 
@@ -166,14 +171,14 @@ public class Jeu implements Game {
      * @param coord future coordonnées dans l'entité
      * @return une entité si collision, null sinon
      */
-    public Entites collisionEntites(Entites e, Point coord) {
+    public Entites collisionEntites(Entites e, Rectangle coord) {
         //Vérifie collision avec le hero
-        if(!e.equals(hero) && coord.equals(hero.getCoord()))
+        if(!e.equals(hero) && coord.intersects(hero.getSurfaceCollision()))
             return hero;
 
         //Vérifie Collision avec les monstres
         for(Monstre m : donjon.get(plateauCourant).getMonstres())
-            if(!e.equals(m) && coord.equals(m.getCoord()))
+            if(!e.equals(m) && coord.intersects(m.getSurfaceCollision()))
                 return m;
         return null;
     }
