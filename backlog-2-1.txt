@@ -1,5 +1,0 @@
-Liste des Fonctionnalités réalisées :
-    -Attaque des monstre
-    -debut amélioration IA
-    -Ajout de l'ant
-    -Début multi plateau

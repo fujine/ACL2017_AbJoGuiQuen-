@@ -8,6 +8,7 @@ import java.awt.*;
 public class Hero extends Entites {
 
     private boolean attaque;
+    private long timer = 0;
 
     /**
      * Constructeur à partir d'une position et d'un plateau avec définition de la vie du héro
@@ -21,7 +22,7 @@ public class Hero extends Entites {
         vie = 9;
         vieMax = 10;
         degat = 1;
-        vitesse = 13;
+        vitesse = 8;
     }
 
     public boolean getAttaque() {
@@ -33,6 +34,11 @@ public class Hero extends Entites {
     }
 
     public void attaquer() {
+        if (timer != 0) {
+            if(System.currentTimeMillis() - timer > 1000)
+                timer = 0;
+            return;
+        }
         int x = coord.x;
         int y = coord.y;
         switch (dir) {
@@ -50,11 +56,25 @@ public class Hero extends Entites {
                 break;
         }
 
-        Rectangle colli = new Rectangle(new Point(),new Dimension(Jeu.TAILLE,Jeu.ECHELLE/4));
-            attaque = true;
-            Entites e = Jeu.getInstance().collisionEntites(this,colli);
-            if(e != null)
-                e.subirDegat(degat);
+        Rectangle colli = new Rectangle(new Point(x,y),new Dimension(Jeu.TAILLE,Jeu.TAILLE));
+        attaque = true;
+        Entites e = Jeu.getInstance().collisionEntites(this,colli);
+        if(e != null)
+            e.subirDegat(degat);
+        timer = System.currentTimeMillis();
+
+    }
+
+    public boolean okAttaque() {
+        if(timer == 0) {
+            return true;
+        } else {
+            if(System.currentTimeMillis()  - timer > 1000) {
+                timer = 0;
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -116,10 +136,8 @@ public class Hero extends Entites {
      */
     public void subirDegat(int nbDegats) {
         this.vie = vie - nbDegats;
-        System.out.println("aie");
         if (vie <= 0 ){
             Jeu.getInstance().estMort();
-            System.out.println("je suis mort");
         }
     }
 

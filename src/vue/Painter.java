@@ -2,9 +2,7 @@ package vue;
 
 import engine.GamePainter;
 import model.Jeu;
-import model.entites.Direction;
-import model.entites.Hero;
-import model.entites.Monstre;
+import model.entites.*;
 import model.plateau.ECase;
 import model.plateau.Plateau;
 
@@ -40,8 +38,12 @@ public class Painter implements GamePainter {
 	private Image tresor;
 	private Image[] hero = new Image[4];
 	private Image[] sque = new Image[4];
+	private Image[] fantome = new Image[4];
 	private Image[] coeur = new Image[10];
 	private Image mort;
+	private int compteur = 0;
+	private int posXatt;
+	private int posYatt;
     public static final int WIDTH = 880;
 	public static final int HEIGHT = 913;
 	protected int echelle;
@@ -82,6 +84,10 @@ public class Painter implements GamePainter {
             sque[1] = ImageIO.read(new File(getClass().getResource("/Ressources/squelettehaut.png").toURI())).getScaledInstance(taille,taille,Image.SCALE_DEFAULT);
             sque[2] = ImageIO.read(new File(getClass().getResource("/Ressources/squelettegauche.png").toURI())).getScaledInstance(taille,taille,Image.SCALE_DEFAULT);
             sque[3] = ImageIO.read(new File(getClass().getResource("/Ressources/squelettedroite.png").toURI())).getScaledInstance(taille,taille,Image.SCALE_DEFAULT);
+			fantome[0] = ImageIO.read(new File(getClass().getResource("/Ressources/fantomebas.png").toURI())).getScaledInstance(taille,taille,Image.SCALE_DEFAULT);
+			fantome[1] = ImageIO.read(new File(getClass().getResource("/Ressources/fantomehaut.png").toURI())).getScaledInstance(taille,taille,Image.SCALE_DEFAULT);
+			fantome[2] = ImageIO.read(new File(getClass().getResource("/Ressources/fantomegauche.png").toURI())).getScaledInstance(taille,taille,Image.SCALE_DEFAULT);
+			fantome[3] = ImageIO.read(new File(getClass().getResource("/Ressources/fantomedroit.png").toURI())).getScaledInstance(taille,taille,Image.SCALE_DEFAULT);
             attaque = ImageIO.read(new File(getClass().getResource("/Ressources/explosion.png").toURI())).getScaledInstance(taille,taille,Image.SCALE_DEFAULT);
             vie = ImageIO.read(new File(getClass().getResource("/Ressources/vie.png").toURI())).getScaledInstance(echelle,echelle,Image.SCALE_DEFAULT);
             tresor = ImageIO.read(new File(getClass().getResource("/Ressources/tresor.png").toURI())).getScaledInstance(echelle,echelle,Image.SCALE_DEFAULT);
@@ -141,8 +147,8 @@ public class Painter implements GamePainter {
                 crayon.drawImage(hero[3],posX,posY,null);
                 break;
 		}
-		crayon.drawRect(h.getCoord().x,h.getCoord().y+HEIGHTMENU,taille,taille);
-		crayon.drawRect(h.getSurfaceCollision().x,h.getSurfaceCollision().y + HEIGHTMENU, h.getSurfaceCollision().width,h.getSurfaceCollision().height);
+		//crayon.drawRect(h.getCoord().x,h.getCoord().y+HEIGHTMENU,taille,taille);
+		//crayon.drawRect(h.getSurfaceCollision().x,h.getSurfaceCollision().y + HEIGHTMENU, h.getSurfaceCollision().width,h.getSurfaceCollision().height);
 
         if(jeu.getHero().getAttaque()) {
             switch (h.getDir()) {
@@ -160,8 +166,18 @@ public class Painter implements GamePainter {
                     break;
             }
             crayon.drawImage(attaque, posX, posY, null);
+            posXatt = posX;
+            posYatt = posY;
             jeu.getHero().setAttaque(false);
-        }
+            compteur++;
+        } else if (compteur != 0){
+        	if (compteur > 5)
+        		compteur = 0;
+        	else {
+        		crayon.drawImage(attaque, posXatt,posYatt,null);
+        		compteur++;
+			}
+		}
 
 	}
 
@@ -177,25 +193,30 @@ public class Painter implements GamePainter {
 	    int posX;
 	    int posY;
         for (Monstre m : mod.getMonstres()) {
+        	Image[] tab = null;
+        	if(m instanceof Chevalier)
+        		tab = sque;
+        	else if (m instanceof Fantome)
+        		tab = fantome;
             if (cam.dansCadre(m.getCoord())) {
                 posX = m.getCoord().x - cam.getLimXInf();
                 posY = m.getCoord().y - cam.getLimYInf();
 
                 switch (m.getDir()) {
                     case BAS:
-                        crayon.drawImage(sque[0],posX,posY + HEIGHTMENU,null);
+                        crayon.drawImage(tab[0],posX,posY + HEIGHTMENU,null);
                         break;
                     case HAUT:
-                        crayon.drawImage(sque[1],posX,posY + HEIGHTMENU,null);
+                        crayon.drawImage(tab[1],posX,posY + HEIGHTMENU,null);
                         break;
                     case GAUCHE:
-                        crayon.drawImage(sque[2],posX,posY + HEIGHTMENU,null);
+                        crayon.drawImage(tab[2],posX,posY + HEIGHTMENU,null);
                         break;
                     case DROITE:
-                        crayon.drawImage(sque[3],posX,posY + HEIGHTMENU,null);
+                        crayon.drawImage(tab[3],posX,posY + HEIGHTMENU,null);
                         break;
                 }
-                crayon.drawRect(posX,posY+HEIGHTMENU,taille,taille);
+                //crayon.drawRect(posX,posY+HEIGHTMENU,taille,taille);
             }
         }
     }

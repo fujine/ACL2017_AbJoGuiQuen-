@@ -1,0 +1,9 @@
+﻿Liste des Fonctionnalités réalisées :
+    	-Changement des deplacements
+	-Modification des collisions
+	-Ajout du multi étages
+	-Ajout du fantome
+	-Ajout de l'IA des machines
+	-Ajout de plusieurs MAP
+	-Modification du lecteur de fichier
+	-Temps de lancement des attaques (hero et ennemis)

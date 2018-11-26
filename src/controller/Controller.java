@@ -87,8 +87,11 @@ public class Controller implements GameController {
 				}
 				break;
 			case ' ':
-				this.attaque = true;
-				Jeu.getInstance().getHero().attaquer();
+				if (Jeu.getInstance().getHero().okAttaque()) {
+					this.attaque = true;
+					Jeu.getInstance().getHero().attaquer();
+				}
+				break;
 		}
 	}
 
@@ -136,6 +139,7 @@ public class Controller implements GameController {
 				break;
 			case ' ':
 				this.attaque = false;
+				break;
 		}
 	}
 

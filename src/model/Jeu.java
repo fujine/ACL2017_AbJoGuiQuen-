@@ -6,6 +6,7 @@ import model.entites.*;
 import model.plateau.Plateau;
 
 import java.awt.*;
+import java.io.File;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -56,13 +57,15 @@ public class Jeu implements Game {
         donjon = new ArrayList<>();
 
         URI uri = null;
+
         try {
-            uri = getClass().getResource("/Ressources/plateau/TEST.csv").toURI();
-            plateau = LectureFichier.lireFichier(uri);
-            donjon.add(plateau);
-            uri = getClass().getResource("/Ressources/plateau/plateau1.csv").toURI();
-            plateau = LectureFichier.lireFichier(uri);
-            donjon.add(plateau);
+            File file = new File(getClass().getResource("/Ressources/plateau").toURI());
+            System.out.println(file.list()[0]);
+            for (String path : file.list()) {
+                uri = getClass().getResource("/Ressources/plateau/"+path).toURI();
+                plateau = LectureFichier.lireFichier(uri);
+                donjon.add(plateau);
+            }
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
@@ -83,7 +86,7 @@ public class Jeu implements Game {
         plateau.modifierCase();
     }
 
-    public void changerPlateaur(int index) {
+    public void changerPlateau(int index) {
         plateauCourant = index;
         hero.setPlateau(donjon.get(plateauCourant));
     }

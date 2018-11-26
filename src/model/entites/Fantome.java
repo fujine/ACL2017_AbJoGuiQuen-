@@ -8,6 +8,7 @@ import java.util.Random;
 
 public class Fantome extends Monstre{
 
+    private long timer = 0;
 
     /**
      * Constructeur à partir d'une position et d'un plateau avec définition de la vie du chevalier
@@ -36,7 +37,7 @@ public class Fantome extends Monstre{
         int posX = getCoord().x;
         int posY = getCoord().y;
 
-        if (dist > 3*Jeu.ECHELLE) {
+        if (dist > 8*Jeu.ECHELLE) {
 
             switch (dep) {
                 //Haut
@@ -106,47 +107,21 @@ public class Fantome extends Monstre{
                     Point coordHG = new Point(x,y+Jeu.TAILLE + 1 - Jeu.ECHELLE/4);
                     Point coordHD = new Point(x + Jeu.TAILLE-1,y+Jeu.TAILLE-1- Jeu.ECHELLE/4);
                     Rectangle colli = new Rectangle(coordHG,new Dimension(Jeu.TAILLE,Jeu.ECHELLE/4));
-                    if(mod.collisionEntites(this,colli) == null) {
+                    Entites e = mod.collisionEntites(this,colli);
+                    if(e == null) {
                         if (x >= 0 && y >= 0 && x < mod.getPlateau().getLargeur() && y < mod.getPlateau().getHauteur()) {
                             coord.move(x, y);
                             dir = choix;
                             i = 4;
                         }
-                    } else if (mod.collisionEntites(this, colli)==null){
-                        Point p = new Point(coord);
-                        switch (choix) {
-                            case DROITE:
-                                if((coordBD.x +1 ) % Jeu.ECHELLE != 0 ) {
-                                    this.coord.x = coord.x - (coordBD.x ) % Jeu.ECHELLE;
-                                    if(!p.equals(coord))
-                                        i = 4;
-                                    dir = choix;
-                                }
-                                break;
-                            case GAUCHE:
-                                if(coordBG.x % Jeu.ECHELLE != 0 ) {
-                                    this.coord.x = this.coord.x / Jeu.ECHELLE * Jeu.ECHELLE;
-                                    if(!p.equals(coord))
-                                        i = 4;
-                                    dir = choix;
-                                }
-                                break;
-                            case BAS:
-                                if((coordBD.y +1 ) % Jeu.ECHELLE != 0 ) {
-                                    this.coord.y = (this.coord.y + Jeu.ECHELLE)/Jeu.ECHELLE*Jeu.ECHELLE - Jeu.TAILLE ;
-                                    if(!p.equals(coord))
-                                        i = 4;
-                                    dir = choix;
-                                }
-                                break;
-                            case HAUT:
-                                if((coordBD.y ) % Jeu.ECHELLE != 0 ) {
-                                    this.coord.y = this.coord.y / Jeu.ECHELLE * Jeu.ECHELLE + (Jeu.ECHELLE - Jeu.TAILLE + Jeu.ECHELLE/4 +1) ;
-                                    if(!p.equals(coord))
-                                        i = 4;
-                                    dir = choix;
-                                }
-                                break;
+                    }  else if (e instanceof Hero) {
+                        if (timer == 0) {
+                            e.subirDegat(this.degat);
+                            timer = System.currentTimeMillis();
+                        } else {
+                            if(System.currentTimeMillis() - timer > 1000) {
+                                timer = 0;
+                            }
                         }
                     }
                 }

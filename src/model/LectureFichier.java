@@ -1,5 +1,8 @@
 package model;
 
+import model.entites.Chevalier;
+import model.entites.Fantome;
+import model.entites.Monstre;
 import model.factory.CaseFactory;
 import model.factory.ObjetFactory;
 import model.plateau.*;
@@ -13,6 +16,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class LectureFichier {
@@ -21,7 +25,7 @@ public class LectureFichier {
 
     public static Plateau lireFichier(URI uri) {
 
-        Plateau plateau;
+
         try {
             boolean first = true;
             File f = new File(uri);
@@ -34,6 +38,7 @@ public class LectureFichier {
             int i=0;
             line = sc.nextLine();
             splitVirgule = line.split(";");
+            HashMap<Point,String> monstres = new HashMap<>();
 
             ICase plat[][] = new ICase[splitVirgule.length][splitVirgule.length];
 
@@ -56,6 +61,14 @@ public class LectureFichier {
                             case "T": plat[j][i] = CaseFactory.creerCase(ECase.TRESOR);
                                 break;
                             case "V":  plat[j][i] = CaseFactory.creerCase(ECase.VIDE);
+                                break;
+                            case "C":
+                                monstres.put(new Point(j*Jeu.ECHELLE, i*Jeu.ECHELLE),"C");
+                                plat[j][i] = CaseFactory.creerCase(ECase.SOL);
+                                break;
+                            case "F":
+                                monstres.put(new Point(j*Jeu.ECHELLE,i*Jeu.ECHELLE),"F");
+                                plat[j][i] = CaseFactory.creerCase(ECase.SOL);
                                 break;
                             default:
                                 plat[j][i] = CaseFactory.creerCase(ECase.SOL);
@@ -88,7 +101,16 @@ public class LectureFichier {
                 }
                 i++;
             }
-            plateau = new Plateau(plat);
+            Plateau plateau = new Plateau(plat);
+            for (Point p : monstres.keySet()) {
+                switch (monstres.get(p)) {
+                    case "C" :
+                        plateau.addMonstre(new Chevalier(p,plateau));
+                        break;
+                    case "F" :
+                        plateau.addMonstre(new Fantome(p,plateau));
+                }
+            }
             sc.close();
             return plateau;
 

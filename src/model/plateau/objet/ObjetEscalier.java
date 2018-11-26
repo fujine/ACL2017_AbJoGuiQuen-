@@ -30,7 +30,7 @@ public class ObjetEscalier extends Objet {
 
     @Override
     public void appliquerEffet() {
-        Jeu.getInstance().changerPlateaur(plateau);
+        Jeu.getInstance().changerPlateau(plateau);
         Jeu.getInstance().getHero().deplacer(coord, Direction.BAS);
     }
 }

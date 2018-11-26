@@ -30,6 +30,24 @@
     	public void deplacer()
     }
 
+    interface Effet {
+        public void appliquer(Entites e)
+        public boolean finEffet()
+    }
+
+    class PoisonEffet {
+        private int duree
+        private int degat
+        public void appliquer(Entites e)
+        public boolean finEffet()
+    }
+
+    class RalentiEffet {
+        private int duree
+        public void appliquer(Entites e)
+        public boolean finEffet()
+    }
+
 	Interface Monstre extends Entites{
 	    public void deplacer()
 	    public void deplRandom()
@@ -197,6 +215,32 @@
         public static Monstre creerMonstre(String type, Point coord)
     }
 
+    class BouleDeFeu {
+        public void deplacer()
+        public void deplRandom()
+        public void deplAgress()
+    }
+
+    class Poule {
+        public void deplacer()
+        public void deplRandom()
+        public void deplAgress()
+    }
+
+    class Camera {
+        private int largeurEcran
+        private int portee
+        private int[] limX
+        private int[] limY
+        public Camera()
+        public void setLimites(Hero hero)
+        public int getLimXInf()
+        public int getLimXSup()
+        public int getLimYInf()
+        public int getLimYSup()
+        public boolean dansCadre(Point coord)
+    }
+
     GamePainter -- "1" DrawingPanel
     GraphicalInterface -- "1" DrawingPanel
     JFrame "1" -- GraphicalInterface
@@ -221,8 +265,14 @@
 	Plateau -[hidden]left- MonstreFactory
     Monstre <.. Chevalier
     Monstre <.. Fantome
+    Monstre <.. BouleDeFeu
+    Monstre <.. Poule
     MonstreFactory -[hidden]- CaseFactory
-    AlgoStrategie "1" -left- Monstre
+
     Hero -[hidden]right- Monstre
+    Effet <.. PoisonEffet
+    Effet <.. RalentiEffet
+    Entites -right- "*" Effet
+    Painter -- "1" Camera
 
 @enduml
