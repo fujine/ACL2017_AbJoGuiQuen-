@@ -7,10 +7,10 @@ import java.awt.*;
 
 public abstract class Monstre extends Entites {
 
-    /**
-     * Constructeur Ã  partir d'une position et d'un plateau
+	/**
+     * Constructeur à partir d'une position et d'un plateau
      *
-     * @param coord   CoordonnÃ©e du Monstre sur le plateau
+     * @param coord   Coordonnée du Monstre sur le plateau
      * @param plateau Plateau au qu'elle appartient le Monstre
      */
     public Monstre(Point coord, Plateau plateau) {
@@ -18,7 +18,7 @@ public abstract class Monstre extends Entites {
     }
 
     /**
-     * Calcul et vÃ©rifie le dÃ©placement du Monstre avant de la deplacer
+     * Calcul et vérifie le déplacement du Monstre avant de la deplacer
      */
     public abstract void deplacer();
 
@@ -29,7 +29,7 @@ public abstract class Monstre extends Entites {
     }
 
     /**
-     * VÃ©rifie si le Monstre est vivant et applique un effet sinon
+     * Vérifie si le Monstre est vivant et applique un effet sinon
      */
     public void estMort() {
         if (vie <= 0)

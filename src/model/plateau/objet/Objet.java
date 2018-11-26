@@ -19,7 +19,11 @@ public abstract class Objet {
         return info;
     }
 
-    public ECase getType() {
+    public void setInfo(int info) {
+		this.info = info;
+	}
+
+	public ECase getType() {
         return type;
     }
 }

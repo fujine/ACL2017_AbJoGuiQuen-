@@ -6,19 +6,20 @@ import model.entites.*;
 import model.plateau.Plateau;
 
 import java.awt.*;
+import java.io.File;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 
 public class Jeu implements Game {
 
-    /**
+	/**
      * Instance de Jeu pour Singleton
      */
     private static Jeu instance;
 
     /**
-     * boolean pour la jeu si terminÃ©
+     * boolean pour la jeu si terminé
      */
     private boolean fini = false;
 
@@ -42,47 +43,56 @@ public class Jeu implements Game {
     private Plateau plateau;
 
     /**
-     * Timer pour rÃ©duire le temps des autres actions
+     * Timer pour réduire le temps des autres actions
      */
     private int compteur;
 
+    public static int ECHELLE = 80;
+    public static int TAILLE = 50;
+
     /**
-     * Constructeur du jeu par dÃ©faut qui instancie un plateau un hÃ©ro et des monstre par dÃ©faut.
+     * Constructeur du jeu par défaut qui instancie un plateau un héro et des monstre par défaut.
      */
     private Jeu() {
+        donjon = new ArrayList<>();
+
         URI uri = null;
+
         try {
-            uri = getClass().getResource("/Ressources/plateau1.txt").toURI();
+            File file = new File(getClass().getResource("/Ressources/plateau").toURI());
+            System.out.println(file.list()[0]);
+            for (String path : file.list()) {
+                uri = getClass().getResource("/Ressources/plateau/"+path).toURI();
+                plateau = LectureFichier.lireFichier(uri);
+                donjon.add(plateau);
+            }
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
         plateau = LectureFichier.lireFichier(uri);
-        donjon = new ArrayList<>();
-        donjon.add(plateau);
         donjon.add(new Plateau());
         plateauCourant = 0;
 
-        hero = new Hero(new Point(1,1),plateau);
+        hero = new Hero(new Point(320,80),getPlateau());
         cimetiere = new ArrayList<>();
-        donjon.get(plateauCourant).addMonstre(new Chevalier(new Point(4,4),plateau));
-        donjon.get(plateauCourant).addMonstre(new Chevalier(new Point(13,13),plateau));
+        donjon.get(plateauCourant).addMonstre(new Chevalier(new Point(80,160),getPlateau()));
         compteur = 0;
     };
 
     /**
-     * MÃ©thode pour ajouter par dÃ©faut des cases spÃ©cifique. principalement pour test
+     * Méthode pour ajouter par défaut des cases spécifique. principalement pour test
      */
     public void modifierCasePlateau() {
         plateau.modifierCase();
     }
 
-    public void changerPlateaur(int index) {
+    public void changerPlateau(int index) {
         plateauCourant = index;
         hero.setPlateau(donjon.get(plateauCourant));
     }
 
     /**
-     * RÃ©cupÃ©ration d'une instance unique de jeu : Singleton
+     * Récupération d'une instance unique de jeu : Singleton
      * @return instance de Jeu
      */
     public static Jeu getInstance() {
@@ -97,23 +107,24 @@ public class Jeu implements Game {
     public void evolve(Cmd cmd){
         int x = hero.getCoord().x;
         int y = hero.getCoord().y;
+        int vitesse = hero.getVitesse();
         Direction dir = null;
         switch (cmd){
             case UP :
-                y--;
+                y-=vitesse;
                 dir = Direction.HAUT;
                 break;
             case DOWN :
-                y++;
+                y+=vitesse;
                 dir = Direction.BAS;
                 break;
             case LEFT:
                 dir = Direction.GAUCHE;
-                x--;
+                x-=vitesse;
                 break;
             case RIGHT:
                 dir = Direction.DROITE;
-                x++;
+                x+=vitesse;
                 break;
             case END:
                 this.fini = true;
@@ -121,13 +132,12 @@ public class Jeu implements Game {
             case ATTAQUE:
                 hero.attaquer();
         }
-        // si une touche de direction enfoncÃ© on dÃ©place le Hero
+        // si une touche de direction enfoncé on déplace le Hero
         if(dir != null) {
             hero.deplacer(new Point(x,y),dir);
         }
 
-        if(cmd != Cmd.ATTAQUE)
-            hero.setAttaque(null);
+
 
         //Retire les monstre mort de la liste des monstre
         retirerMonstre();
@@ -143,14 +153,14 @@ public class Jeu implements Game {
 
     /**
      * Ajout d'un monstre dans le cimetiere au moment de sa mort
-     * @param m Monstre tuÃ©
+     * @param m Monstre tué
      */
     public void addCimetiere(Monstre m) {
         cimetiere.add(m);
     }
 
     /**
-     * Retire les monstre prÃ©sent dans le cimetiere de la liste des monstres prÃ©sent dans le jeu
+     * Retire les monstre présent dans le cimetiere de la liste des monstres présent dans le jeu
      */
     public void retirerMonstre() {
         for(Monstre m : cimetiere){
@@ -159,19 +169,19 @@ public class Jeu implements Game {
     }
 
     /**
-     * VÃ©rification d'une collision entre 2 entitÃ©
-     * @param e EntitÃ© en mouvement
-     * @param coord future coordonnÃ©es dans l'entitÃ©
-     * @return une entitÃ© si collision, null sinon
+     * Vérification d'une collision entre 2 entité
+     * @param e Entité en mouvement
+     * @param coord future coordonnées dans l'entité
+     * @return une entité si collision, null sinon
      */
-    public Entites collisionEntites(Entites e, Point coord) {
-        //VÃ©rifie collision avec le hero
-        if(!e.equals(hero) && coord.equals(hero.getCoord()))
+    public Entites collisionEntites(Entites e, Rectangle coord) {
+        //Vérifie collision avec le hero
+        if(!e.equals(hero) && coord.intersects(hero.getSurfaceCollision()))
             return hero;
 
-        //VÃ©rifie Collision avec les monstres
+        //Vérifie Collision avec les monstres
         for(Monstre m : donjon.get(plateauCourant).getMonstres())
-            if(!e.equals(m) && coord.equals(m.getCoord()))
+            if(!e.equals(m) && coord.intersects(m.getSurfaceCollision()))
                 return m;
         return null;
     }
@@ -183,7 +193,7 @@ public class Jeu implements Game {
 
 
     /**
-     * Effectue le deplacement de tout les monstre prÃ©sent dans le jeu
+     * Effectue le deplacement de tout les monstre présent dans le jeu
      */
     public void deplacerMonstre() {
         for( Monstre m : donjon.get(plateauCourant).getMonstres()) {
@@ -209,7 +219,7 @@ public class Jeu implements Game {
 
 
     /**
-     * @return true si partie terminÃ©e, false sinon
+     * @return true si partie terminée, false sinon
      */
     @Override
     public boolean isFinished(){
@@ -217,14 +227,14 @@ public class Jeu implements Game {
     }
 
     /**
-     * @return Le hero liÃ© au jeu
+     * @return Le hero lié au jeu
      */
     public Hero getHero(){
         return this.hero;
     }
 
     /**
-     * Quand le hero meurt le Jeu est terminÃ©
+     * Quand le hero meurt le Jeu est terminé
      */
     public boolean estMort() {
         if (hero.getVie() <=0)
@@ -233,7 +243,7 @@ public class Jeu implements Game {
     }
 
     /**
-     * Fait subir des dÃ©gats aux hÃ©ro
+     * Fait subir des dégats aux héro
      * @param nbDegats
      */
     public void appliquerDegats(int nbDegats) {
@@ -241,11 +251,11 @@ public class Jeu implements Game {
     }
 
     /**
-     * VÃ©rifie que la case au coordonnÃ©e est libre
-     * @param coord CoordonnÃ©es de la case
+     * Vérifie que la case au coordonnée est libre
+     * @param coord Coordonnées de la case
      * @return true si traversable false sinon
      */
     public boolean verifLibre(Point coord) {
-        return plateau.estLibre(coord.x,coord.y);
+        return plateau.estLibre(coord);
     }
 }

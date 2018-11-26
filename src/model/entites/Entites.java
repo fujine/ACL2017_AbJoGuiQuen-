@@ -1,5 +1,6 @@
 package model.entites;
 
+import model.Jeu;
 import model.plateau.Plateau;
 
 import java.awt.*;
@@ -8,19 +9,19 @@ import java.util.Objects;
 public abstract class Entites {
 
     /**
-     * Position de l'entitÃ©
+     * Position de l'entité
      */
     protected Point coord;
     /**
-     * Plateau auquel appartient l'entitÃ©
+     * Plateau auquel appartient l'entité
      */
     protected Plateau plateau;
     /**
-     * Vie de l'entitÃ©
+     * Vie de l'entité
      */
     protected int vie;
     /**
-     * NumÃ©ro identifiant d'une entitÃ©
+     * Numéro identifiant d'une entité
      */
     protected int id;
     /**
@@ -29,22 +30,24 @@ public abstract class Entites {
     private static int ID = 1;
 
     /**
-     * DÃ©gat de l'entitÃ©
+     * Dégat de l'entité
      */
     protected int degat;
 
     /**
-     * Direction de l'entitÃ©
+     * Direction de l'entité
      */
     protected Direction dir;
 
     protected int vieMax = 1;
 
+    protected int vitesse;
+
     /**
      *
-     * Constructeur Ã  partir d'une position et d'un plateau
-     * @param coord CoordonnÃ©e de l'entitÃ© sur le plateau
-     * @param plateau Plateau au qu'elle appartient l'entitÃ©
+     * Constructeur à partir d'une position et d'un plateau
+     * @param coord Coordonnée de l'entité sur le plateau
+     * @param plateau Plateau au qu'elle appartient l'entité
      */
     public Entites(Point coord, Plateau plateau) {
         this.coord = coord;
@@ -57,8 +60,24 @@ public abstract class Entites {
         return id;
     }
 
+    public Rectangle getSurfaceCollision(){
+        return new Rectangle(coord.x,coord.y + Jeu.TAILLE - Jeu.ECHELLE/4,Jeu.TAILLE,Jeu.ECHELLE/4);
+    }
+
     public void setId(int id) {
         this.id = id;
+    }
+
+    public void setDegat(int degat) {
+        this.degat = degat;
+    }
+
+    public int getVitesse() {
+        return vitesse;
+    }
+
+    public void setVitesse(int vitesse) {
+        this.vitesse = vitesse;
     }
 
     public Point getCoord() {
