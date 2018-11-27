@@ -16,7 +16,7 @@ public class Chevalier<dep> extends Monstre {
 
     private long timer = 0;
 
-    private long timer = 0;
+ 
 
     /**
      * Constructeur à partir d'une position et d'un plateau avec définition de la vie du chevalier
@@ -110,11 +110,11 @@ public class Chevalier<dep> extends Monstre {
                         break;
                 }
 
-<<<<<<< HEAD
+
                 //Test d'éloignement
-=======
+
                 //Test d'Ã©loignement
->>>>>>> 0ee883f95008ceae465acb20dcc75c0a4a7c9ee0
+
                 if(dist> posH.distance(new Point(x, y))) {
                     //Test Collision mur
                     Point coordBG = new Point(x,y+Jeu.TAILLE-1);

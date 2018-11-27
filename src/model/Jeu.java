@@ -175,11 +175,11 @@ public class Jeu implements Game {
      * @return une entité si collision, null sinon
      */
     public Entites collisionEntites(Entites e, Rectangle coord) {
-<<<<<<< HEAD
+
         //Vérifie collision avec le hero
-=======
+
         //VÃ©rifie collision avec le hero
->>>>>>> 0ee883f95008ceae465acb20dcc75c0a4a7c9ee0
+
         if(!e.equals(hero) && coord.intersects(hero.getSurfaceCollision()))
             return hero;
 
