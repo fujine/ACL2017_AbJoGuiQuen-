@@ -20,9 +20,6 @@ public class Main {
         GameEngineGraphical engine = new GameEngineGraphical(j,painter,controller);
         engine.run();
 
-        System.out.println("Partie finie!");
-
-
         //Libération du Scanner
         sc.close();
     }

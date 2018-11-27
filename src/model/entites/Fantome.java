@@ -1,29 +1,21 @@
 package model.entites;
 
 import model.Jeu;
-import model.entites.Hero;
-import model.entites.Monstre;
 import model.plateau.Plateau;
-//import monJeu.Entite;
-//import moteurJeu.Commande;
 
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.Random;
 
-public class Chevalier<dep> extends Monstre {
-	Hero h = new Hero(coord, plateau);
-
-    private long timer = 0;
+public class Fantome extends Monstre{
 
     private long timer = 0;
 
     /**
-     * Constructeur à partir d'une position et d'un plateau avec définition de la vie du chevalier
-     * @param coord Coordonnée du Chevalier sur le plateau
+     * Constructeur Ã  partir d'une position et d'un plateau avec dÃ©finition de la vie du chevalier
+     * @param coord CoordonnÃ©e du Chevalier sur le plateau
      * @param plateau Plateau au qu'elle appartient le Chevalier
      */
-    public Chevalier(Point coord, Plateau plateau) {
+    public Fantome(Point coord, Plateau plateau) {
         super(coord, plateau);
         vie = 1;
         degat = 1;
@@ -31,9 +23,7 @@ public class Chevalier<dep> extends Monstre {
         vitesse = 3;
     }
 
-    /**
-     * Calcul et vérifie le déplacement du chevalier avant de la deplacer
-     */
+
     @Override
     public void deplacer() {
         Jeu mod = Jeu.getInstance();
@@ -47,7 +37,7 @@ public class Chevalier<dep> extends Monstre {
         int posX = getCoord().x;
         int posY = getCoord().y;
 
-        if (dist > 3*Jeu.ECHELLE) {
+        if (dist > 8*Jeu.ECHELLE) {
 
             switch (dep) {
                 //Haut
@@ -78,12 +68,11 @@ public class Chevalier<dep> extends Monstre {
             Point coordHG = new Point(posX,posY+Jeu.TAILLE + 1 - Jeu.ECHELLE/4);
             Point coordHD = new Point(posX + Jeu.TAILLE-1,posY+Jeu.TAILLE-1- Jeu.ECHELLE/4);
             Rectangle colli = new Rectangle(coordHG,new Dimension(Jeu.TAILLE,Jeu.ECHELLE/4));
-            if(plateau.estLibre(coordBG) && plateau.estLibre(coordBD) && plateau.estLibre(coordHD) && plateau.estLibre(coordHG)  && mod.collisionEntites(this,colli) == null) {
+            if(mod.collisionEntites(this,colli) == null) {
                 if (posX >= 0 && posY >= 0 && posX < mod.getPlateau().getLargeur() && posY < mod.getPlateau().getHauteur()) {
                     coord.move(posX, posY);
                 }
             }
-
 
 
         }else{
@@ -110,11 +99,7 @@ public class Chevalier<dep> extends Monstre {
                         break;
                 }
 
-<<<<<<< HEAD
-                //Test d'éloignement
-=======
                 //Test d'Ã©loignement
->>>>>>> 0ee883f95008ceae465acb20dcc75c0a4a7c9ee0
                 if(dist> posH.distance(new Point(x, y))) {
                     //Test Collision mur
                     Point coordBG = new Point(x,y+Jeu.TAILLE-1);
@@ -123,49 +108,13 @@ public class Chevalier<dep> extends Monstre {
                     Point coordHD = new Point(x + Jeu.TAILLE-1,y+Jeu.TAILLE-1- Jeu.ECHELLE/4);
                     Rectangle colli = new Rectangle(coordHG,new Dimension(Jeu.TAILLE,Jeu.ECHELLE/4));
                     Entites e = mod.collisionEntites(this,colli);
-                    if(plateau.estLibre(coordBG) && plateau.estLibre(coordBD) && plateau.estLibre(coordHD) && plateau.estLibre(coordHG)  && e == null) {
+                    if(e == null) {
                         if (x >= 0 && y >= 0 && x < mod.getPlateau().getLargeur() && y < mod.getPlateau().getHauteur()) {
                             coord.move(x, y);
                             dir = choix;
                             i = 4;
                         }
-                    } else if (e ==null){
-                        Point p = new Point(coord);
-                        switch (choix) {
-                            case DROITE:
-                                if((coordBD.x +1 ) % Jeu.ECHELLE != 0 ) {
-                                    this.coord.x = coord.x - (coordBD.x ) % Jeu.ECHELLE;
-                                    if(!p.equals(coord))
-                                        i = 4;
-                                    dir = choix;
-                                }
-                                break;
-                            case GAUCHE:
-                                if(coordBG.x % Jeu.ECHELLE != 0 ) {
-                                    this.coord.x = this.coord.x / Jeu.ECHELLE * Jeu.ECHELLE;
-                                    if(!p.equals(coord))
-                                        i = 4;
-                                    dir = choix;
-                                }
-                                break;
-                            case BAS:
-                                if((coordBD.y +1 ) % Jeu.ECHELLE != 0 ) {
-                                    this.coord.y = (this.coord.y + Jeu.ECHELLE)/Jeu.ECHELLE*Jeu.ECHELLE - Jeu.TAILLE ;
-                                    if(!p.equals(coord))
-                                        i = 4;
-                                    dir = choix;
-                                }
-                                break;
-                            case HAUT:
-                                if((coordBD.y ) % Jeu.ECHELLE != 0 ) {
-                                    this.coord.y = this.coord.y / Jeu.ECHELLE * Jeu.ECHELLE + (Jeu.ECHELLE - Jeu.TAILLE + Jeu.ECHELLE/4 +1) ;
-                                    if(!p.equals(coord))
-                                        i = 4;
-                                    dir = choix;
-                                }
-                                break;
-                        }
-                    } else if (e instanceof Hero) {
+                    }  else if (e instanceof Hero) {
                         if (timer == 0) {
                             e.subirDegat(this.degat);
                             timer = System.currentTimeMillis();
@@ -180,11 +129,7 @@ public class Chevalier<dep> extends Monstre {
             }
         }
 
-        /*if (mod.collisionEntites(this,new Point(posX,posY)) != null && mod.collisionEntites(this,new Point(posX,posY)).getType().equals("h")){
-            mod.appliquerDegats(this.getDegat());
-        }*/
     }
+
+
 }
-
-
-

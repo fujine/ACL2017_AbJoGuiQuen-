@@ -25,7 +25,7 @@ public class ObjetTp extends Objet {
      */
     @Override
     public void appliquerEffet() {
-        if(Jeu.getInstance().getPlateau().estLibre(coord.x,coord.y))
+        if(Jeu.getInstance().getPlateau().estLibre(coord))
             Jeu.getInstance().getHero().deplacer(coord, Direction.BAS);
     }
 }

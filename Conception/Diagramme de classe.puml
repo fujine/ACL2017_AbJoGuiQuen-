@@ -1,8 +1,5 @@
 @startuml
 	Class Hero extends Entites {
-		private posX : int
-		private posY : int
-		private jeu : Jeu
 
 		public Hero()
 		public deplacer(int x, int y) : void
@@ -17,9 +14,13 @@
 	    private Point coord
 	    private int degat
 	    private int vie
+	    private int vitesse
+	    public Rectangle getSurfaceCollision()
 	    public int getDegat()
 	    public void setDegat(int degat)
+	    public abstract void attaquer()
 	}
+
 
 	Class Chevalier {
 	    public void deplacer()
@@ -29,8 +30,28 @@
     	public void deplacer()
     }
 
+    interface Effet {
+        public void appliquer(Entites e)
+        public boolean finEffet()
+    }
+
+    class PoisonEffet {
+        private int duree
+        private int degat
+        public void appliquer(Entites e)
+        public boolean finEffet()
+    }
+
+    class RalentiEffet {
+        private int duree
+        public void appliquer(Entites e)
+        public boolean finEffet()
+    }
+
 	Interface Monstre extends Entites{
 	    public void deplacer()
+	    public void deplRandom()
+	    public void deplAgress()
 	}
 
 	Class Plateau {
@@ -44,6 +65,7 @@
         estLibre(int posX, int posY) : boolean
         appliquerEffetCase(int posX, int posY) : void
         affichageText() : void
+        public boolean horsPlateau(Point coord)
 
 	}
 
@@ -154,7 +176,7 @@
     class Painter implements GamePainter {
     	protected static final int WIDTH = 1000
     	protected static final int HEIGHT = 1000
-    	protected static final int ECHELLE = 100
+    	protected static final int ECHELLE
     	private Jeu jeu
     	public Painter(Jeu jeu)
     	public void draw(BufferedImage im)
@@ -193,6 +215,32 @@
         public static Monstre creerMonstre(String type, Point coord)
     }
 
+    class BouleDeFeu {
+        public void deplacer()
+        public void deplRandom()
+        public void deplAgress()
+    }
+
+    class Poule {
+        public void deplacer()
+        public void deplRandom()
+        public void deplAgress()
+    }
+
+    class Camera {
+        private int largeurEcran
+        private int portee
+        private int[] limX
+        private int[] limY
+        public Camera()
+        public void setLimites(Hero hero)
+        public int getLimXInf()
+        public int getLimXSup()
+        public int getLimYInf()
+        public int getLimYSup()
+        public boolean dansCadre(Point coord)
+    }
+
     GamePainter -- "1" DrawingPanel
     GraphicalInterface -- "1" DrawingPanel
     JFrame "1" -- GraphicalInterface
@@ -217,6 +265,14 @@
 	Plateau -[hidden]left- MonstreFactory
     Monstre <.. Chevalier
     Monstre <.. Fantome
+    Monstre <.. BouleDeFeu
+    Monstre <.. Poule
     MonstreFactory -[hidden]- CaseFactory
+
+    Hero -[hidden]right- Monstre
+    Effet <.. PoisonEffet
+    Effet <.. RalentiEffet
+    Entites -right- "*" Effet
+    Painter -- "1" Camera
 
 @enduml
