@@ -37,7 +37,7 @@ class ObjetVieTest {
 		
 		@Test
 		void testContructeurInfo() {
-			ImitationObjet io = new ImitationObjet();
+			
 			
 			ObjetVie ov = new ObjetVie();
 			
