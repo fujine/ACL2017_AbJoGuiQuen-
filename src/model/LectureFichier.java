@@ -23,7 +23,7 @@ public class LectureFichier {
 
 
 
-    public static Plateau lireFichier(URI uri) {
+    public static Plateau lireFichier(String uri) {
 
 
         try {

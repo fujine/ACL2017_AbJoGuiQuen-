@@ -7,6 +7,7 @@ import model.plateau.Plateau;
 
 import java.awt.*;
 import java.io.File;
+import java.io.FileDescriptor;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ public class Jeu implements Game {
     private static Jeu instance;
 
     /**
-     * boolean pour la jeu si terminé
+     * boolean pour la jeu si terminï¿½
      */
     private boolean fini = false;
 
@@ -43,7 +44,7 @@ public class Jeu implements Game {
     private Plateau plateau;
 
     /**
-     * Timer pour réduire le temps des autres actions
+     * Timer pour rï¿½duire le temps des autres actions
      */
     private int compteur;
 
@@ -51,22 +52,22 @@ public class Jeu implements Game {
     public static int TAILLE = 50;
 
     /**
-     * Constructeur du jeu par défaut qui instancie un plateau un héro et des monstre par défaut.
+     * Constructeur du jeu par dï¿½faut qui instancie un plateau un hï¿½ro et des monstre par dï¿½faut.
      */
     private Jeu() {
         donjon = new ArrayList<>();
 
-        URI uri = null;
+        String uri = null;
 
         try {
-            File file = new File(getClass().getResource("/Ressources/plateau").toURI());
+            File file = new File("src/Ressources/plateau");
             System.out.println(file.list()[0]);
             for (String path : file.list()) {
-                uri = getClass().getResource("/Ressources/plateau/"+path).toURI();
+                uri = "src/Ressources/plateau/"+path;
                 plateau = LectureFichier.lireFichier(uri);
                 donjon.add(plateau);
             }
-        } catch (URISyntaxException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         plateau = LectureFichier.lireFichier(uri);
@@ -80,7 +81,7 @@ public class Jeu implements Game {
     };
 
     /**
-     * Méthode pour ajouter par défaut des cases spécifique. principalement pour test
+     * Mï¿½thode pour ajouter par dï¿½faut des cases spï¿½cifique. principalement pour test
      */
     public void modifierCasePlateau() {
         plateau.modifierCase();
@@ -92,7 +93,7 @@ public class Jeu implements Game {
     }
 
     /**
-     * Récupération d'une instance unique de jeu : Singleton
+     * Rï¿½cupï¿½ration d'une instance unique de jeu : Singleton
      * @return instance de Jeu
      */
     public static Jeu getInstance() {
@@ -132,7 +133,7 @@ public class Jeu implements Game {
             case ATTAQUE:
                 hero.attaquer();
         }
-        // si une touche de direction enfoncé on déplace le Hero
+        // si une touche de direction enfoncï¿½ on dï¿½place le Hero
         if(dir != null) {
             hero.deplacer(new Point(x,y),dir);
         }
@@ -153,14 +154,14 @@ public class Jeu implements Game {
 
     /**
      * Ajout d'un monstre dans le cimetiere au moment de sa mort
-     * @param m Monstre tué
+     * @param m Monstre tuï¿½
      */
     public void addCimetiere(Monstre m) {
         cimetiere.add(m);
     }
 
     /**
-     * Retire les monstre présent dans le cimetiere de la liste des monstres présent dans le jeu
+     * Retire les monstre prï¿½sent dans le cimetiere de la liste des monstres prï¿½sent dans le jeu
      */
     public void retirerMonstre() {
         for(Monstre m : cimetiere){
@@ -169,21 +170,21 @@ public class Jeu implements Game {
     }
 
     /**
-     * Vérification d'une collision entre 2 entité
-     * @param e Entité en mouvement
-     * @param coord future coordonnées dans l'entité
-     * @return une entité si collision, null sinon
+     * Vï¿½rification d'une collision entre 2 entitï¿½
+     * @param e Entitï¿½ en mouvement
+     * @param coord future coordonnï¿½es dans l'entitï¿½
+     * @return une entitï¿½ si collision, null sinon
      */
     public Entites collisionEntites(Entites e, Rectangle coord) {
 
-        //Vérifie collision avec le hero
+        //Vï¿½rifie collision avec le hero
 
         //VÃ©rifie collision avec le hero
 
         if(!e.equals(hero) && coord.intersects(hero.getSurfaceCollision()))
             return hero;
 
-        //Vérifie Collision avec les monstres
+        //Vï¿½rifie Collision avec les monstres
         for(Monstre m : donjon.get(plateauCourant).getMonstres())
             if(!e.equals(m) && coord.intersects(m.getSurfaceCollision()))
                 return m;
@@ -197,7 +198,7 @@ public class Jeu implements Game {
 
 
     /**
-     * Effectue le deplacement de tout les monstre présent dans le jeu
+     * Effectue le deplacement de tout les monstre prï¿½sent dans le jeu
      */
     public void deplacerMonstre() {
         for( Monstre m : donjon.get(plateauCourant).getMonstres()) {
@@ -223,7 +224,7 @@ public class Jeu implements Game {
 
 
     /**
-     * @return true si partie terminée, false sinon
+     * @return true si partie terminï¿½e, false sinon
      */
     @Override
     public boolean isFinished(){
@@ -231,14 +232,14 @@ public class Jeu implements Game {
     }
 
     /**
-     * @return Le hero lié au jeu
+     * @return Le hero liï¿½ au jeu
      */
     public Hero getHero(){
         return this.hero;
     }
 
     /**
-     * Quand le hero meurt le Jeu est terminé
+     * Quand le hero meurt le Jeu est terminï¿½
      */
     public boolean estMort() {
         if (hero.getVie() <=0)
@@ -247,7 +248,7 @@ public class Jeu implements Game {
     }
 
     /**
-     * Fait subir des dégats aux héro
+     * Fait subir des dï¿½gats aux hï¿½ro
      * @param nbDegats
      */
     public void appliquerDegats(int nbDegats) {
@@ -255,8 +256,8 @@ public class Jeu implements Game {
     }
 
     /**
-     * Vérifie que la case au coordonnée est libre
-     * @param coord Coordonnées de la case
+     * Vï¿½rifie que la case au coordonnï¿½e est libre
+     * @param coord Coordonnï¿½es de la case
      * @return true si traversable false sinon
      */
     public boolean verifLibre(Point coord) {
