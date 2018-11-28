@@ -19,8 +19,8 @@ public class Chevalier<dep> extends Monstre {
  
 
     /**
-     * Constructeur à partir d'une position et d'un plateau avec définition de la vie du chevalier
-     * @param coord Coordonnée du Chevalier sur le plateau
+     * Constructeur a partir d'une position et d'un plateau avec definition de la vie du chevalier
+     * @param coord Coordonnee du Chevalier sur le plateau
      * @param plateau Plateau au qu'elle appartient le Chevalier
      */
     public Chevalier(Point coord, Plateau plateau) {
@@ -32,7 +32,7 @@ public class Chevalier<dep> extends Monstre {
     }
 
     /**
-     * Calcul et vérifie le déplacement du chevalier avant de la deplacer
+     * Calcul et verifie le deplacement du chevalier avant de la deplacer
      */
     @Override
     public void deplacer() {
@@ -111,7 +111,7 @@ public class Chevalier<dep> extends Monstre {
                 }
 
 
-                //Test d'éloignement
+                //Test d'ï¿½loignement
 
                 //Test d'Ã©loignement
 

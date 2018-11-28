@@ -9,19 +9,19 @@ import java.util.Objects;
 public abstract class Entites {
 
     /**
-     * Position de l'entité
+     * Position de l'entite
      */
     protected Point coord;
     /**
-     * Plateau auquel appartient l'entité
+     * Plateau auquel appartient l'entite
      */
     protected Plateau plateau;
     /**
-     * Vie de l'entité
+     * Vie de l'entitï¿½
      */
     protected int vie;
     /**
-     * Numéro identifiant d'une entité
+     * Numero identifiant d'une entite
      */
     protected int id;
     /**
@@ -30,12 +30,12 @@ public abstract class Entites {
     private static int ID = 1;
 
     /**
-     * Dégat de l'entité
+     * Degat de l'entite
      */
     protected int degat;
 
     /**
-     * Direction de l'entité
+     * Direction de l'entite
      */
     protected Direction dir;
 
@@ -45,9 +45,9 @@ public abstract class Entites {
 
     /**
      *
-     * Constructeur à partir d'une position et d'un plateau
-     * @param coord Coordonnée de l'entité sur le plateau
-     * @param plateau Plateau au qu'elle appartient l'entité
+     * Constructeur a partir d'une position et d'un plateau
+     * @param coord Coordonnee de l'entite sur le plateau
+     * @param plateau Plateau au qu'elle appartient l'entite
      */
     public Entites(Point coord, Plateau plateau) {
         this.coord = coord;
