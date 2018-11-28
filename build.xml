@@ -10,10 +10,6 @@
 
    <target name="compile">
       <mkdir dir="${class.dir}"/>
-      <mkdir dir="${jar.dir}/Ressources"/>
-      <copy todir="${jar.dir}/Ressources">
-         <fileset dir="${res.dir}"/>
-      </copy>
       <javac srcdir="${src.dir}" destdir="${class.dir}"/>
    </target>
 
@@ -26,7 +22,7 @@
       <mkdir dir="${jar.dir}"/>
 
       <jar destfile="${jar.dir}/${ant.project.name}.jar" basedir="${class.dir}">
-         <zipfileset dir="${basedir}/Ressources" prefix="Ressources"/>
+         <zipfileset dir="${basedir}/src/Ressources" prefix="Ressources"/>
 
          <manifest>
             <attribute name="Main-Class" value="${main-class}"/>

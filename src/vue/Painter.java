@@ -68,32 +68,32 @@ public class Painter implements GamePainter {
         echelle = (WIDTH) / largeurEcran;
         taille = Jeu.TAILLE;
         try {
-			mur = ImageIO.read(new File("/Ressources/mur.png")).getScaledInstance(echelle,echelle,Image.SCALE_DEFAULT);
-			murBas = ImageIO.read(new File("/Ressources/murbas.png")).getScaledInstance(echelle,echelle,Image.SCALE_DEFAULT);
-            sol = ImageIO.read(new File("/Ressources/sol.png")).getScaledInstance(echelle,echelle,Image.SCALE_DEFAULT);
-            tp = ImageIO.read(new File("/Ressources/tp.png")).getScaledInstance(echelle,echelle,Image.SCALE_DEFAULT);
-            esc = ImageIO.read(new File("/Ressources/esc.png")).getScaledInstance(echelle,echelle,Image.SCALE_DEFAULT);
-            escBas = ImageIO.read(new File("/Ressources/escBas.png")).getScaledInstance(echelle,echelle,Image.SCALE_DEFAULT);
-			hero[0] = ImageIO.read(new File("/Ressources/herobas.png")).getScaledInstance(taille,taille,Image.SCALE_DEFAULT);;
-			hero[1] = ImageIO.read(new File("/Ressources/herohaut.png")).getScaledInstance(taille,taille,Image.SCALE_DEFAULT);
-			hero[2] = ImageIO.read(new File("/Ressources/herogauche.png")).getScaledInstance(taille,taille,Image.SCALE_DEFAULT);
-			hero[3] = ImageIO.read(new File("/Ressources/herodroite.png")).getScaledInstance(taille,taille,Image.SCALE_DEFAULT);
-            sque[0] = ImageIO.read(new File("/Ressources/squelettebas.png")).getScaledInstance(taille,taille,Image.SCALE_DEFAULT);
-            sque[1] = ImageIO.read(new File("/Ressources/squelettehaut.png")).getScaledInstance(taille,taille,Image.SCALE_DEFAULT);
-            sque[2] = ImageIO.read(new File("/Ressources/squelettegauche.png")).getScaledInstance(taille,taille,Image.SCALE_DEFAULT);
-            sque[3] = ImageIO.read(new File("/Ressources/squelettedroite.png")).getScaledInstance(taille,taille,Image.SCALE_DEFAULT);
-			fantome[0] = ImageIO.read(new File("/Ressources/fantomebas.png")).getScaledInstance(taille,taille,Image.SCALE_DEFAULT);
-			fantome[1] = ImageIO.read(new File("/Ressources/fantomehaut.png")).getScaledInstance(taille,taille,Image.SCALE_DEFAULT);
-			fantome[2] = ImageIO.read(new File("/Ressources/fantomegauche.png")).getScaledInstance(taille,taille,Image.SCALE_DEFAULT);
-			fantome[3] = ImageIO.read(new File("/Ressources/fantomedroit.png")).getScaledInstance(taille,taille,Image.SCALE_DEFAULT);
-            attaque = ImageIO.read(new File("/Ressources/explosion.png")).getScaledInstance(taille,taille,Image.SCALE_DEFAULT);
-            vie = ImageIO.read(new File("/Ressources/vie.png")).getScaledInstance(echelle,echelle,Image.SCALE_DEFAULT);
-            tresor = ImageIO.read(new File("/Ressources/tresor.png")).getScaledInstance(echelle,echelle,Image.SCALE_DEFAULT);
-            mort = ImageIO.read(new File("/Ressources/GameOver.png")).getScaledInstance(HEIGHT,HEIGHT+HEIGHTMENU,Image.SCALE_DEFAULT);
-            for (int i = 0; i< 10; i++){
-                int num = i+1;
-                coeur[i] = ImageIO.read(new File("/Ressources/coeur"+ num +".png"));
-            }
+			mur = ImageIO.read(getClass().getResource("/Ressources/mur.png")).getScaledInstance(echelle,echelle,Image.SCALE_DEFAULT);
+			murBas = ImageIO.read(getClass().getResource("/Ressources/murbas.png")).getScaledInstance(echelle,echelle,Image.SCALE_DEFAULT);
+			sol = ImageIO.read(getClass().getResource("/Ressources/sol.png")).getScaledInstance(echelle,echelle,Image.SCALE_DEFAULT);
+			tp = ImageIO.read(getClass().getResource("/Ressources/tp.png")).getScaledInstance(echelle,echelle,Image.SCALE_DEFAULT);
+			esc = ImageIO.read(getClass().getResource("/Ressources/esc.png")).getScaledInstance(echelle,echelle,Image.SCALE_DEFAULT);
+			escBas = ImageIO.read(getClass().getResource("/Ressources/escBas.png")).getScaledInstance(echelle,echelle,Image.SCALE_DEFAULT);
+			hero[0] = ImageIO.read(getClass().getResource("/Ressources/herobas.png")).getScaledInstance(taille,taille,Image.SCALE_DEFAULT);;
+			hero[1] = ImageIO.read(getClass().getResource("/Ressources/herohaut.png")).getScaledInstance(taille,taille,Image.SCALE_DEFAULT);
+			hero[2] = ImageIO.read(getClass().getResource("/Ressources/herogauche.png")).getScaledInstance(taille,taille,Image.SCALE_DEFAULT);
+			hero[3] = ImageIO.read(getClass().getResource("/Ressources/herodroite.png")).getScaledInstance(taille,taille,Image.SCALE_DEFAULT);
+			sque[0] = ImageIO.read(getClass().getResource("/Ressources/squelettebas.png")).getScaledInstance(taille,taille,Image.SCALE_DEFAULT);
+			sque[1] = ImageIO.read(getClass().getResource("/Ressources/squelettehaut.png")).getScaledInstance(taille,taille,Image.SCALE_DEFAULT);
+			sque[2] = ImageIO.read(getClass().getResource("/Ressources/squelettegauche.png")).getScaledInstance(taille,taille,Image.SCALE_DEFAULT);
+			sque[3] = ImageIO.read(getClass().getResource("/Ressources/squelettedroite.png")).getScaledInstance(taille,taille,Image.SCALE_DEFAULT);
+			fantome[0] = ImageIO.read(getClass().getResource("/Ressources/fantomebas.png")).getScaledInstance(taille,taille,Image.SCALE_DEFAULT);
+			fantome[1] = ImageIO.read(getClass().getResource("/Ressources/fantomehaut.png")).getScaledInstance(taille,taille,Image.SCALE_DEFAULT);
+			fantome[2] = ImageIO.read(getClass().getResource("/Ressources/fantomegauche.png")).getScaledInstance(taille,taille,Image.SCALE_DEFAULT);
+			fantome[3] = ImageIO.read(getClass().getResource("/Ressources/fantomedroit.png")).getScaledInstance(taille,taille,Image.SCALE_DEFAULT);
+			attaque = ImageIO.read(getClass().getResource("/Ressources/explosion.png")).getScaledInstance(taille,taille,Image.SCALE_DEFAULT);
+			vie = ImageIO.read(getClass().getResource("/Ressources/vie.png")).getScaledInstance(echelle,echelle,Image.SCALE_DEFAULT);
+			tresor = ImageIO.read(getClass().getResource("/Ressources/tresor.png")).getScaledInstance(echelle,echelle,Image.SCALE_DEFAULT);
+			mort = ImageIO.read(getClass().getResource("/Ressources/GameOver.png")).getScaledInstance(HEIGHT,HEIGHT+HEIGHTMENU,Image.SCALE_DEFAULT);
+			for (int i = 0; i< 10; i++){
+				int num = i+1;
+				coeur[i] = ImageIO.read(getClass().getResource("/Ressources/coeur"+ num +".png"));
+			}
         } catch (Exception e) {
             e.printStackTrace();
         }

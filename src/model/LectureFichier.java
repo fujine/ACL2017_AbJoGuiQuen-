@@ -10,11 +10,10 @@ import model.plateau.objet.ObjetPiege;
 import model.plateau.objet.ObjetTresor;
 
 import java.awt.*;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.*;
 import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -23,14 +22,13 @@ public class LectureFichier {
 
 
 
-    public static Plateau lireFichier(String uri) {
+    public static Plateau lireFichier(InputStream url) {
 
 
         try {
             boolean first = true;
-            File f = new File(uri);
-            FileReader fr = new FileReader(f);
-            BufferedReader br = new BufferedReader(fr);
+
+            BufferedReader br = new BufferedReader(new InputStreamReader(url,"UTF-8"));
             Scanner sc = new Scanner(br);
             String line;
             String splitVirgule[];
@@ -114,7 +112,7 @@ public class LectureFichier {
             sc.close();
             return plateau;
 
-        } catch (FileNotFoundException e) {
+        } catch (UnsupportedEncodingException e) {
             return new Plateau();
         }
     }

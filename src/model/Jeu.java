@@ -1,5 +1,6 @@
 package model;
 
+import com.sun.jndi.toolkit.url.Uri;
 import engine.Cmd;
 import engine.Game;
 import model.entites.*;
@@ -8,8 +9,10 @@ import model.plateau.Plateau;
 import java.awt.*;
 import java.io.File;
 import java.io.FileDescriptor;
+import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.ArrayList;
 
 public class Jeu implements Game {
@@ -20,7 +23,7 @@ public class Jeu implements Game {
     private static Jeu instance;
 
     /**
-     * boolean pour la jeu si termin�
+     * boolean pour la jeu si terminé
      */
     private boolean fini = false;
 
@@ -52,25 +55,23 @@ public class Jeu implements Game {
     public static int TAILLE = 50;
 
     /**
-     * Constructeur du jeu par d�faut qui instancie un plateau un h�ro et des monstre par d�faut.
+     * Constructeur du jeu par d�faut qui instancie un plateau un héro et des monstre par d�faut.
      */
     private Jeu() {
         donjon = new ArrayList<>();
 
-        String uri = null;
+        InputStream url = null;
 
         try {
-            File file = new File("/Ressources/plateau");
-            System.out.println(file.list()[0]);
-            for (String path : file.list()) {
-                uri = "/Ressources/plateau/"+path;
-                plateau = LectureFichier.lireFichier(uri);
+            String[] ch = {"plateau0.csv","plateau1.csv","plateau2.csv",};
+            for (String path : ch) {
+                url = getClass().getResourceAsStream("/Ressources/plateau/"+path);
+                plateau = LectureFichier.lireFichier(url);
                 donjon.add(plateau);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        plateau = LectureFichier.lireFichier(uri);
         donjon.add(new Plateau());
         plateauCourant = 0;
 
