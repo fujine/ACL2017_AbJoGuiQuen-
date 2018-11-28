@@ -60,10 +60,10 @@ public class Jeu implements Game {
         String uri = null;
 
         try {
-            File file = new File("src/Ressources/plateau");
+            File file = new File("/Ressources/plateau");
             System.out.println(file.list()[0]);
             for (String path : file.list()) {
-                uri = "src/Ressources/plateau/"+path;
+                uri = "/Ressources/plateau/"+path;
                 plateau = LectureFichier.lireFichier(uri);
                 donjon.add(plateau);
             }

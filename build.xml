@@ -5,23 +5,29 @@
    <property name="doc.dir"     value="doc"/>
    <property name="class.dir"   value="${build.dir}/classes"/>
    <property name="jar.dir"   value="${build.dir}/jar"/>
-  
+
    <property name="main-class"   value="Main"/>
-   
+
    <target name="compile">
       <mkdir dir="${class.dir}"/>
+      <mkdir dir="${jar.dir}/Ressources"/>
+      <copy todir="${jar.dir}/Ressources">
+         <fileset dir="${res.dir}"/>
+      </copy>
       <javac srcdir="${src.dir}" destdir="${class.dir}"/>
    </target>
 
    <target name="doc" depends="clean-doc">
-         <mkdir dir="${doc.dir}"/>
-         <javadoc sourcepath="${src.dir}" destdir="${doc.dir}" author="false" version="true" use="false" windowtitle="${ant.project.name}"/>
+      <mkdir dir="${doc.dir}"/>
+      <javadoc sourcepath="${src.dir}" destdir="${doc.dir}" author="false" version="true" use="false" windowtitle="${ant.project.name}"/>
    </target>
-   
+
    <target name="jar" depends="compile">
       <mkdir dir="${jar.dir}"/>
-      
+
       <jar destfile="${jar.dir}/${ant.project.name}.jar" basedir="${class.dir}">
+         <zipfileset dir="${basedir}/Ressources" prefix="Ressources"/>
+
          <manifest>
             <attribute name="Main-Class" value="${main-class}"/>
          </manifest>
@@ -31,7 +37,7 @@
    <target name="run" depends="jar">
       <java jar="${jar.dir}/${ant.project.name}.jar" fork="true"/>
    </target>
-      
+
    <target name="clean">
       <delete dir="${build.dir}"/>
    </target>
@@ -41,11 +47,11 @@
    <target name="clean-compile">
       <delete>
          <fileset dir="${class.dir}" includes="**/*.class" />
-      </delete> 
+      </delete>
    </target>
 
    <target name="clean-doc">
-      <delete dir="${doc.dir}"/> 
+      <delete dir="${doc.dir}"/>
    </target>
    <target name="clean-build" depends="clean,jar"/>
 
