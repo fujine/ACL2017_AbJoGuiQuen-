@@ -9,7 +9,7 @@ import javax.swing.*;
  * interface graphique avec son controller et son afficheur
  *
  */
-public class GraphicalInterface  {
+public class GraphicalInterface {
 
 	/**
 	 * le Panel pour l'afficheur
