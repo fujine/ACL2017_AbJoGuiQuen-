@@ -50,8 +50,7 @@
 
 	Interface Monstre extends Entites{
 	    public void deplacer()
-	    public void deplRandom()
-	    public void deplAgress()
+	    public void estMort()
 	}
 
 	Class Plateau {
@@ -223,8 +222,6 @@
 
     class Poule {
         public void deplacer()
-        public void deplRandom()
-        public void deplAgress()
     }
 
     class Camera {

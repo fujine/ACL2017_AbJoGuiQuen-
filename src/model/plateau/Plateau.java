@@ -124,6 +124,8 @@ public class Plateau {
     }
 
     public void appliquerEffetCase(Point coord) {
+        if(coord.x < 0 || coord.x >= largeur || coord.y < 0 || coord.y >= hauteur)
+            return;
         Point coordPlateau = new Point(coord.x/Jeu.ECHELLE, coord.y/Jeu.ECHELLE);
         plateau[coordPlateau.x][coordPlateau.y].appliquerEffet();
     }

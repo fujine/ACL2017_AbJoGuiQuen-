@@ -1,0 +1,8 @@
+﻿Prévu:
+ - Ajout des tests
+ - Ajout diagramme  de séquences
+ - Gérer superpositions des plans
+ - Implementer les effets sur les entité
+ - Ajouter la poule
+ - Ajouter thread Model et Vue
+ - Deplacement aléatoire à refaire
