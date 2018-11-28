@@ -7,9 +7,14 @@ import java.util.Random;
 import java.awt.*;
 
 public abstract class Monstre extends Entites {
-
+    /**
+     * nombre de déplacement à faire lorsque le hero n'est pas proche
+     */
     protected int deplacementRestant;
 
+    /**
+     * distance où le monstre peut repérer le hero
+     */
     protected int distanceObservation;
 
     protected long timer;
@@ -41,6 +46,10 @@ public abstract class Monstre extends Entites {
         }
     }
 
+    /**
+     * Permet à la methode deplacer de suivre le hero
+     * 
+     */
     private void suivreHero(double dist,Jeu mod, Point posM, Point posH){
         
         Direction[] tab = {Direction.HAUT, Direction.BAS,Direction.GAUCHE,Direction.DROITE};
@@ -96,9 +105,16 @@ public abstract class Monstre extends Entites {
     
     }
 
+    /**
+     * Effectue un deplacement aléatoire
+     * 
+     */
     protected void deplacementAlea(Jeu mod){
+
         int posX = getCoord().x;
         int posY = getCoord().y;
+
+        //on deplace le monstre si il a encore déplacements à faire
         if (deplacementRestant > 0){
             if (dir == Direction.HAUT){
                 posY-=vitesse;
@@ -114,15 +130,25 @@ public abstract class Monstre extends Entites {
             }
             if (canMove(posX, posY))
                 coord.move(posX, posY);
-            
+            // on décrement le nombre de déplacement restant même si le monstre n'a pas bougé
+            // sinon il resterait bloqué contre un mur 
             deplacementRestant--;
         }else{
             resetDeplacementAlea();
         }
     }
 
+    /**
+     * Teste si le monstre peut bougé à une position 
+     * @param posX
+     * @param posY
+     * @return true si le montre peut aller à cette position false sinon
+     */
     protected abstract boolean canMove(int posX, int posY);
 
+    /**
+     * Methode qui génère une direction et un nombre de déplacement à faire aléatoirement
+     */
     protected void resetDeplacementAlea(){
         Random r = new Random();
         deplacementRestant = r.nextInt(10)+2;
