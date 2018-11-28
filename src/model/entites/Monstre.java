@@ -2,10 +2,18 @@ package model.entites;
 
 import model.Jeu;
 import model.plateau.Plateau;
+import java.util.Random;
 
 import java.awt.*;
 
 public abstract class Monstre extends Entites {
+
+    protected int deplacementRestant;
+
+    protected int distanceObservation;
+
+    protected long timer;
+    
 
 	/**
      * Constructeur a partir d'une position et d'un plateau
@@ -20,7 +28,121 @@ public abstract class Monstre extends Entites {
     /**
      * Calcul et verifie le deplacement du Monstre avant de la deplacer
      */
-    public abstract void deplacer();
+    public void deplacer(){
+        Jeu mod = Jeu.getInstance();
+        Point posM = this.getCoord();
+        Point posH = new Point(mod.getHero().getCoord());
+        double dist = posM.distance(posH);
+
+        if (dist > this.distanceObservation*Jeu.ECHELLE){
+            deplacementAlea(mod);
+        }else{
+            suivreHero(dist,mod,posM,posH);
+        }
+    }
+
+    private void suivreHero(double dist,Jeu mod, Point posM, Point posH){
+        
+        Direction[] tab = {Direction.HAUT, Direction.BAS,Direction.GAUCHE,Direction.DROITE};
+
+        for (int i = 0; i < 4 ; i++){
+            Direction choix = tab[i];
+            int x = coord.x;
+            int y = coord.y;
+
+            switch (choix) {
+                case HAUT:
+                    y-=vitesse;
+                    break;
+                case BAS:
+                    y+=vitesse;
+                    break;
+                case GAUCHE:
+                    x-=vitesse;
+                    break;
+                case DROITE:
+                    x+=vitesse;
+                    break;
+            }
+
+            //Test d'éloignement
+            if(dist> posH.distance(new Point(x, y))) {
+                //Test Collision mur
+                Point coordBG = new Point(x,y+Jeu.TAILLE-1);
+                Point coordBD = new Point(x + Jeu.TAILLE-1, y + Jeu.TAILLE-1);
+                Point coordHG = new Point(x,y+Jeu.TAILLE + 1 - Jeu.ECHELLE/4);
+                Point coordHD = new Point(x + Jeu.TAILLE-1,y+Jeu.TAILLE-1- Jeu.ECHELLE/4);
+                Rectangle colli = new Rectangle(coordHG,new Dimension(Jeu.TAILLE,Jeu.ECHELLE/4));
+                Entites e = mod.collisionEntites(this,colli);
+                if(e == null) {
+                    if (x >= 0 && y >= 0 && x < mod.getPlateau().getLargeur() && y < mod.getPlateau().getHauteur()) {
+                        coord.move(x, y);
+                        dir = choix;
+                        i = 4;
+                    }
+                }  else if (e instanceof Hero) {
+                    if (timer == 0) {
+                        e.subirDegat(this.degat);
+                        timer = System.currentTimeMillis();
+                    } else {
+                        if(System.currentTimeMillis() - timer > 1000) {
+                            timer = 0;
+                        }
+                    }
+                }
+            }
+
+        }
+    
+    }
+
+    protected void deplacementAlea(Jeu mod){
+        int posX = getCoord().x;
+        int posY = getCoord().y;
+        if (deplacementRestant > 0){
+            if (dir == Direction.HAUT){
+                posY-=vitesse;
+            }
+            if (dir == Direction.BAS){
+                posY+=vitesse;
+            }
+            if (dir == Direction.GAUCHE){
+                posX-=vitesse;
+            }
+            if (dir == Direction.DROITE){
+                posX+=vitesse;
+            }
+            if (canMove(posX, posY))
+                coord.move(posX, posY);
+            
+            deplacementRestant--;
+        }else{
+            resetDeplacementAlea();
+        }
+    }
+
+    protected abstract boolean canMove(int posX, int posY);
+
+    protected void resetDeplacementAlea(){
+        Random r = new Random();
+        deplacementRestant = r.nextInt(10)+2;
+        r = new Random();
+        int d = r.nextInt(4);
+
+        if(d <=0){
+            dir = Direction.HAUT;
+        }
+        else if(d<= 1){
+            
+            dir = Direction.BAS;
+        }
+        else if (d<=2){
+            dir = Direction.GAUCHE;
+        }
+        else {
+            dir = Direction.DROITE;
+        }
+    }
 
     @Override
     public void subirDegat(int degat) {
