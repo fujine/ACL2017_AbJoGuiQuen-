@@ -104,7 +104,8 @@ public class Hero extends Entites {
             if(plateau.estLibre(coordBG) && plateau.estLibre(coordBD) && plateau.estLibre(coordHD) && plateau.estLibre(coordHG) && mod.collisionEntites(this,colli) == null) {
                 this.coord = coord;
                 getPlateau().appliquerEffetCase(coordBD);
-                getPlateau().appliquerEffetCase(coordBG);
+                if(this.coord.equals(coord))
+                    getPlateau().appliquerEffetCase(coordBG);
             } else if (mod.collisionEntites(this,colli) == null){
                 switch (direction) {
                     case DROITE:

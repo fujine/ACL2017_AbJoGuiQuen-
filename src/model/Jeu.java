@@ -55,7 +55,7 @@ public class Jeu implements Game {
     public static int TAILLE = 50;
 
     /**
-     * Constructeur du jeu par d�faut qui instancie un plateau un héro et des monstre par d�faut.
+     * Constructeur du jeu par defaut qui instancie un plateau un héro et des monstre par defaut.
      */
     private Jeu() {
         donjon = new ArrayList<>();
@@ -75,14 +75,13 @@ public class Jeu implements Game {
         donjon.add(new Plateau());
         plateauCourant = 0;
 
-        hero = new Hero(new Point(320,80),getPlateau());
+        hero = new Hero(new Point(80,80),getPlateau());
         cimetiere = new ArrayList<>();
-        donjon.get(plateauCourant).addMonstre(new Chevalier(new Point(80,160),getPlateau()));
         compteur = 0;
     };
 
     /**
-     * M�thode pour ajouter par d�faut des cases sp�cifique. principalement pour test
+     * Methode pour ajouter par defaut des cases specifique. principalement pour test
      */
     public void modifierCasePlateau() {
         plateau.modifierCase();
@@ -94,7 +93,7 @@ public class Jeu implements Game {
     }
 
     /**
-     * R�cup�ration d'une instance unique de jeu : Singleton
+     * Recuperation d'une instance unique de jeu : Singleton
      * @return instance de Jeu
      */
     public static Jeu getInstance() {

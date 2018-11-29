@@ -1,9 +1,8 @@
 
 package model;
 
-import model.entites.Chevalier;
-import model.entites.Fantome;
-import model.entites.Monstre;
+import model.entites.*;
+
 import model.factory.CaseFactory;
 import model.factory.ObjetFactory;
 import model.plateau.*;
@@ -61,12 +60,18 @@ public class LectureFichier {
                                 break;
                             case "V":  plat[j][i] = CaseFactory.creerCase(ECase.VIDE);
                                 break;
+                            case "H": plat[j][i] = CaseFactory.creerCase(ECase.VIE);
+                                break;
                             case "C":
                                 monstres.put(new Point(j*Jeu.ECHELLE, i*Jeu.ECHELLE),"C");
                                 plat[j][i] = CaseFactory.creerCase(ECase.SOL);
                                 break;
                             case "F":
                                 monstres.put(new Point(j*Jeu.ECHELLE,i*Jeu.ECHELLE),"F");
+                                plat[j][i] = CaseFactory.creerCase(ECase.SOL);
+                                break;
+                            case "L":
+                                monstres.put(new Point(j*Jeu.ECHELLE,i*Jeu.ECHELLE),"L");
                                 plat[j][i] = CaseFactory.creerCase(ECase.SOL);
                                 break;
                             default:
@@ -90,10 +95,7 @@ public class LectureFichier {
                                 x = Integer.parseInt(splitRecupInfo[1]);
                                 y = Integer.parseInt(splitRecupInfo[2]);
                                 p = Integer.parseInt(splitRecupInfo[3]);
-                                if (x < splitVirgule.length * Jeu.ECHELLE && y < splitVirgule.length * Jeu.ECHELLE) {
-                                    plat[j][i] = CaseFactory.creerCase(ECase.ESCALIER,new Point(x,y),p);
-                                } else
-                                    plat[j][i] = CaseFactory.creerCase(ECase.SOL);
+                                plat[j][i] = CaseFactory.creerCase(ECase.ESCALIER,new Point(x,y),p);
                                 break;
                         }
                     }
@@ -108,6 +110,10 @@ public class LectureFichier {
                         break;
                     case "F" :
                         plateau.addMonstre(new Fantome(p,plateau));
+                        break;
+                    case "L" :
+                        plateau.addMonstre(new Poule(p,plateau));
+                        break;
                 }
             }
             sc.close();
