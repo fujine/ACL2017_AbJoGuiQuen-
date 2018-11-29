@@ -50,7 +50,7 @@ public abstract class Monstre extends Entites {
      * Permet à la methode deplacer de suivre le hero
      * 
      */
-    private void suivreHero(double dist,Jeu mod, Point posM, Point posH){
+    protected void suivreHero(double dist,Jeu mod, Point posM, Point posH){
         
         Direction[] tab = {Direction.HAUT, Direction.BAS,Direction.GAUCHE,Direction.DROITE};
 
