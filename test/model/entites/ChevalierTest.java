@@ -57,15 +57,15 @@ public class ChevalierTest {
     
     @Test
     void seRapprocherDeHero() {
-        for (int i = 0; i < 10; i++) {
+     
         	Jeu mod = Jeu.getInstance();
           //  mod.getPlateau().addMonstre(c);
             Point coord1 = new Point(5,4);
             Point coord2 = new Point(7,4);
-            Chevalier c = new Chevalier(new Point(coord1),mod.getPlateau());
-           // mod.getPlateau().addMonstre(c);
-          /*  
-            Jeu mod = Jeu.getInstance();
+            Chevalier c = new Chevalier(new Point(coord1),p);
+            
+            
+           
             mod.getPlateau().addMonstre(c);
             Hero h = mod.getHero();
             h.setCoord(coord2);
@@ -73,17 +73,44 @@ public class ChevalierTest {
             p.setCase(CaseFactory.creerCase(ECase.MUR), new Point(4, 4));
             p.setCase(CaseFactory.creerCase(ECase.MUR), new Point(5, 5));
             p.setCase(CaseFactory.creerCase(ECase.MUR), new Point(5, 3));
-            */
+          
             c.deplacer();
-          /*  
-            assertEquals(6, c.getCoord().x);
-            assertEquals(4, c.getCoord().y);
-         */
             
-            System.out.println("x="+c.getCoord().x+" y= "+c.getCoord().y);
+            
+           System.out.println("x= "+c.getCoord().x+" y = "+c.getCoord().y);
+            assertEquals(2, c.getCoord().distance(coord2));
+           
+        }
+        
+        
+        
+    
+    
+    @Test
+    void seRapprocherDeHero1() {
+        for (int i = 0; i < 10; i++) {
+        	Jeu mod = Jeu.getInstance();
+          //  mod.getPlateau().addMonstre(c);
+            Point coord1 = new Point(5,4);
+            Point coord2 = new Point(7,4);
+            Chevalier c = new Chevalier(new Point(coord1),p);
+            
+            
+           
+            mod.getPlateau().addMonstre(c);
+            Hero h = mod.getHero();
+            h.setCoord(coord2);
+            mod.getMonstres().get(0).setCoord(coord1);
+            
+          
+            c.deplacer();
+          
+            assertEquals(2, c.getCoord().distance(coord2));
+           
         }
         
         
         
     }
+    
 }
