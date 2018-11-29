@@ -84,7 +84,7 @@ public abstract class Monstre extends Entites {
                 Rectangle colli = new Rectangle(coordHG,new Dimension(Jeu.TAILLE,Jeu.ECHELLE/4));
                 Entites e = mod.collisionEntites(this,colli);
                 if(e == null) {
-                    if (x >= 0 && y >= 0 && x < mod.getPlateau().getLargeur() && y < mod.getPlateau().getHauteur()) {
+                    if (canMove(x, y)) {
                         coord.move(x, y);
                         dir = choix;
                         i = 4;
