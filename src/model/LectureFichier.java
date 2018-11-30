@@ -1,8 +1,8 @@
+
 package model;
 
-import model.entites.Chevalier;
-import model.entites.Fantome;
-import model.entites.Monstre;
+import model.entites.*;
+
 import model.factory.CaseFactory;
 import model.factory.ObjetFactory;
 import model.plateau.*;
@@ -70,6 +70,10 @@ public class LectureFichier {
                                 monstres.put(new Point(j*Jeu.ECHELLE,i*Jeu.ECHELLE),"F");
                                 plat[j][i] = CaseFactory.creerCase(ECase.SOL);
                                 break;
+                            case "L":
+                                monstres.put(new Point(j*Jeu.ECHELLE,i*Jeu.ECHELLE),"L");
+                                plat[j][i] = CaseFactory.creerCase(ECase.SOL);
+                                break;
                             default:
                                 plat[j][i] = CaseFactory.creerCase(ECase.SOL);
                                 break;
@@ -106,6 +110,10 @@ public class LectureFichier {
                         break;
                     case "F" :
                         plateau.addMonstre(new Fantome(p,plateau));
+                        break;
+                    case "L" :
+                        plateau.addMonstre(new Poule(p,plateau));
+                        break;
                 }
             }
             sc.close();

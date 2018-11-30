@@ -1,18 +1,11 @@
 package model;
 
-import com.sun.jndi.toolkit.url.Uri;
 import engine.Cmd;
 import engine.Game;
 import model.entites.*;
 import model.plateau.Plateau;
-
 import java.awt.*;
-import java.io.File;
-import java.io.FileDescriptor;
 import java.io.InputStream;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.ArrayList;
 
 public class Jeu implements Game {

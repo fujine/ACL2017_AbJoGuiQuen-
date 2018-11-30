@@ -37,6 +37,7 @@ public class Painter implements GamePainter {
 	private Image[] hero = new Image[4];
 	private Image[] sque = new Image[4];
 	private Image[] fantome = new Image[4];
+	private Image[] poule = new Image[4];
 	private Image[] coeur = new Image[10];
 	private Image mort;
 	private int compteur = 0;
@@ -86,6 +87,10 @@ public class Painter implements GamePainter {
 			fantome[1] = ImageIO.read(getClass().getResource("/Ressources/fantomehaut.png")).getScaledInstance(taille,taille,Image.SCALE_DEFAULT);
 			fantome[2] = ImageIO.read(getClass().getResource("/Ressources/fantomegauche.png")).getScaledInstance(taille,taille,Image.SCALE_DEFAULT);
 			fantome[3] = ImageIO.read(getClass().getResource("/Ressources/fantomedroit.png")).getScaledInstance(taille,taille,Image.SCALE_DEFAULT);
+			poule[0] = ImageIO.read(getClass().getResource("/Ressources/poulebas.png")).getScaledInstance(taille,taille,Image.SCALE_DEFAULT);
+			poule[1] = ImageIO.read(getClass().getResource("/Ressources/poulehaut.png")).getScaledInstance(taille,taille,Image.SCALE_DEFAULT);
+			poule[2] = ImageIO.read(getClass().getResource("/Ressources/poulegauche.png")).getScaledInstance(taille,taille,Image.SCALE_DEFAULT);
+			poule[3] = ImageIO.read(getClass().getResource("/Ressources/pouledroite.png")).getScaledInstance(taille,taille,Image.SCALE_DEFAULT);
 			attaque = ImageIO.read(getClass().getResource("/Ressources/explosion.png")).getScaledInstance(taille,taille,Image.SCALE_DEFAULT);
 			vie = ImageIO.read(getClass().getResource("/Ressources/vie.png")).getScaledInstance(echelle,echelle,Image.SCALE_DEFAULT);
 			tresor = ImageIO.read(getClass().getResource("/Ressources/tresor.png")).getScaledInstance(echelle,echelle,Image.SCALE_DEFAULT);
@@ -195,7 +200,9 @@ public class Painter implements GamePainter {
         	if(m instanceof Chevalier)
         		tab = sque;
         	else if (m instanceof Fantome)
-        		tab = fantome;
+				tab = fantome;
+			else if (m instanceof Poule)
+				tab = poule;
             if (cam.dansCadre(m.getCoord())) {
                 posX = m.getCoord().x - cam.getLimXInf();
                 posY = m.getCoord().y - cam.getLimYInf();
