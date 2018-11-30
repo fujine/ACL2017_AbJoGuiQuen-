@@ -1,0 +1,58 @@
+@startuml
+title Deplacement Hero dans teleporteur
+Joueur --> Jeu: evolve(Cmd.LEFT)
+activate Jeu
+
+Jeu --> Hero: deplacer(coord)
+Jeu -[hidden]->
+deactivate Jeu
+activate Hero
+Hero --> Plateau: estLibre()
+activate Plateau
+Hero<-- Plateau: true
+deactivate Plateau
+
+Jeu <-- Hero: collisionEntites()
+activate Jeu
+Jeu --> Hero: null
+deactivate Jeu
+Hero --> Hero: coord = newCoord
+Hero --> Plateau: appliquerEffectCase(coord)
+deactivate Hero
+activate Plateau
+Plateau --> Case : appliquerEffet()
+deactivate Plateau
+activate Case
+Case --> ObjetTp : appliquerEffet()
+deactivate
+activate ObjetTp
+
+Plateau <-- ObjetTp : estLibre(coordTP)
+activate Plateau
+Plateau --> ObjetTp : true
+deactivate Plateau
+Hero <-- ObjetTp : deplacer(coord)
+deactivate ObjetTp
+deactivate Case
+activate Hero
+Hero --> Plateau: estLibre()
+activate Plateau
+Hero<-- Plateau: true
+deactivate Plateau
+Jeu <-- Hero: collisionEntites()
+activate Jeu
+Jeu --> Hero: null
+deactivate Jeu
+Hero --> Hero: coord = newCoord
+Hero --> Plateau: appliquerEffectCase(coord)
+deactivate
+activate Plateau
+Plateau --> Case : appliquerEffet()
+deactivate Plateau
+activate Case
+Case -[hidden]> Case : pas d'objet
+note right : pas d'objet
+deactivate Case
+deactivate Hero
+deactivate Jeu
+@enduml

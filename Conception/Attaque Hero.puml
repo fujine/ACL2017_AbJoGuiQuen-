@@ -1,0 +1,17 @@
+@startuml
+title Tuer un monstre
+Joueur --> Jeu: evolve(Cmd.ATTAQUE)
+activate Jeu
+Jeu --> Hero: attaquer()
+deactivate Jeu
+activate Hero
+Jeu <-- Hero: collisionEntites()
+activate Jeu
+Jeu --> Hero: monstre
+deactivate Jeu
+Hero --> "Monstre : monstre ": subirDegat(degat)
+activate "Monstre : monstre "
+"Monstre : monstre " --> "Monstre : monstre " : estMort()
+deactivate Hero
+deactivate Jeu
+@enduml

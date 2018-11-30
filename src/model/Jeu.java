@@ -170,10 +170,10 @@ public class Jeu implements Game {
     }
 
     /**
-     * V�rification d'une collision entre 2 entit�
-     * @param e Entit� en mouvement
-     * @param coord future coordonn�es dans l'entit�
-     * @return une entit� si collision, null sinon
+     * Verification d'une collision entre 2 entite
+     * @param e Entite en mouvement
+     * @param coord future coordonnees dans l'entite
+     * @return une entite si collision, null sinon
      */
     public Entites collisionEntites(Entites e, Rectangle coord) {
 
