@@ -17,7 +17,7 @@ class HeroTest {
         h.deplacer(new Point(5,6),Direction.BAS);
 
         assertEquals(5,h.getCoord().x);
-        assertEquals(6, h.getCoord().y);
+        assertEquals(30, h.getCoord().y);
     }
 
     @Test
@@ -28,6 +28,6 @@ class HeroTest {
         h.deplacer(new Point(1,0),Direction.BAS);
 
         assertEquals(1,h.getCoord().x);
-        assertEquals(1, h.getCoord().y);
+        assertEquals(30, h.getCoord().y);
     }
 }

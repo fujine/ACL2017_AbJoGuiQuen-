@@ -18,6 +18,7 @@ public class Chevalier<dep> extends Monstre {
      * @param coord Coordonnee du Chevalier sur le plateau
      * @param plateau Plateau au qu'elle appartient le Chevalier
      */
+    
     public Chevalier(Point coord, Plateau plateau) {
         super(coord, plateau);
         vie = 1;
