@@ -1,9 +1,11 @@
 package model.entites;
 
 import model.Jeu;
+import model.effet.Effet;
 import model.plateau.Plateau;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public abstract class Entites {
@@ -43,6 +45,8 @@ public abstract class Entites {
 
     protected int vitesse;
 
+    protected ArrayList<Effet> effets;
+
     /**
      *
      * Constructeur a partir d'une position et d'un plateau
@@ -50,6 +54,7 @@ public abstract class Entites {
      * @param plateau Plateau au qu'elle appartient l'entite
      */
     public Entites(Point coord, Plateau plateau) {
+        this.effets = new ArrayList<Effet>();
         this.coord = coord;
         this.plateau = plateau;
         this.id = ID;

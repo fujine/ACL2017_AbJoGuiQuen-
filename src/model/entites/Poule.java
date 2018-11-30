@@ -45,7 +45,6 @@ public class Poule extends Monstre{
 
             //Test d'éloignement
             if(dist < posH.distance(new Point(x, y))) {
-                System.out.println("truc");
                 //Test Collision mur
                 Point coordBG = new Point(x,y+Jeu.TAILLE-1);
                 Point coordBD = new Point(x + Jeu.TAILLE-1, y + Jeu.TAILLE-1);

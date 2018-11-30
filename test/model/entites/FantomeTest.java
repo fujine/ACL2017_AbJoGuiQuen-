@@ -8,7 +8,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.sun.javafx.geom.Point2D;
 
 import model.Jeu;
 import model.factory.CaseFactory;
