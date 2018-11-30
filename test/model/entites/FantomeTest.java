@@ -63,7 +63,7 @@ class FantomeTest {
 		h.setCoord(new Point(6,4));
 		p.setCase(CaseFactory.creerCase(ECase.MUR), new Point(5, 4));
 		f.deplacer();
-		assertEquals(21,f.getCoord().distance(new Point(6,4)));
+		assertEquals(2,f.getCoord().distance(new Point(6,4)));
 		
 	}
 	
